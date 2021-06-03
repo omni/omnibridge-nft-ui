@@ -1,0 +1,48 @@
+type UserRequest @entity {
+  id: ID!
+  user: Bytes
+  token: Bytes
+  decimals: Int
+  symbol: String
+  amount: BigInt
+  timestamp: BigInt!
+  txHash: Bytes!
+  messageId: Bytes
+  encodedData: Bytes
+  message: Message
+  recipient: Bytes
+}
+
+type Execution @entity {
+  id: ID!
+  user: Bytes
+  token: Bytes
+  amount: BigInt
+  sender: Bytes
+  executor: Bytes
+  messageId: Bytes
+  status: Boolean
+  timestamp: BigInt!
+  txHash: Bytes!
+}
+
+type Message @entity {
+  id: ID!
+  msgId: Bytes
+  txHash: Bytes!
+  msgHash: Bytes
+  msgData: Bytes
+  signatures: [Bytes!]
+}
+
+type Token @entity {
+  id: ID!
+  homeAddress: Bytes!
+  homeName: String!
+  homeChainId: Int!
+  decimals: Int!
+  symbol: String!
+  foreignAddress: Bytes
+  foreignName: String
+  foreignChainId: Int
+}

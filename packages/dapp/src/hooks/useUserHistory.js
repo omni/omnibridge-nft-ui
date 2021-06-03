@@ -1,0 +1,63 @@
+// import { useWeb3Context } from 'contexts/Web3Context';
+// import { useBridgeDirection } from 'hooks/useBridgeDirection';
+// import {
+//   combineRequestsWithExecutions,
+//   getExecutions,
+//   getRequests,
+// } from 'lib/history';
+// import { useEffect, useState } from 'react';
+// import { defer } from 'rxjs';
+
+export const useUserHistory = () => {
+  // const {
+  //   homeChainId,
+  //   foreignChainId,
+  //   getGraphEndpoint,
+  // } = useBridgeDirection();
+  // const { account } = useWeb3Context();
+  // const [transfers, setTransfers] = useState();
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   if (!account) return () => undefined;
+  //   async function update() {
+  //     const [
+  //       { requests: homeRequests },
+  //       { requests: foreignRequests },
+  //     ] = await Promise.all([
+  //       getRequests(account, getGraphEndpoint(homeChainId)),
+  //       getRequests(account, getGraphEndpoint(foreignChainId)),
+  //     ]);
+  //     const [
+  //       { executions: homeExecutions },
+  //       { executions: foreignExecutions },
+  //     ] = await Promise.all([
+  //       getExecutions(getGraphEndpoint(homeChainId), foreignRequests),
+  //       getExecutions(getGraphEndpoint(foreignChainId), homeRequests),
+  //     ]);
+  //     const homeTransfers = combineRequestsWithExecutions(
+  //       homeRequests,
+  //       foreignExecutions,
+  //       homeChainId,
+  //       foreignChainId,
+  //     );
+  //     const foreignTransfers = combineRequestsWithExecutions(
+  //       foreignRequests,
+  //       homeExecutions,
+  //       foreignChainId,
+  //       homeChainId,
+  //     );
+  //     const allTransfers = [...homeTransfers, ...foreignTransfers].sort(
+  //       (a, b) => b.timestamp - a.timestamp,
+  //     );
+  //     setTransfers(allTransfers);
+  //     setLoading(false);
+  //   }
+  //   setTransfers();
+  //   setLoading(true);
+  //   const subscription = defer(() => update()).subscribe();
+  //   return () => subscription.unsubscribe();
+  // }, [homeChainId, foreignChainId, account, getGraphEndpoint]);
+
+  return { transfers: [], loading: false };
+};

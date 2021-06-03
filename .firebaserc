@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "production": "xdai-omnibridge-nft",
+    "staging": "xdai-omnibridge-nft-staging"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "short_name": "OmniBridge NFT",
+  "name": "OmniBridge NFT",
+  "description": "The OmniBridge NFT extension for the Arbitrary Message Bridge is the simplest way to transfer ANY ERC721/ERC1155 token to and from the xDai chain.",
+  "iconPath": "android-chrome-512x512.png",
+  "providedBy": { "name": "xDai Chain", "url": "https://xdaichain.com" },
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#EEF4FD",
+  "background_color": "#EEF4FD"
+}

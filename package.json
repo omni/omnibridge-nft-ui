@@ -1,0 +1,65 @@
+{
+  "name": "@omnibridge-nft/ui",
+  "version": "1.0.0",
+  "keywords": [
+    "ethereum",
+    "react",
+    "workspaces",
+    "yarn"
+  ],
+  "private": true,
+  "scripts": {
+    "subgraph:auth": "yarn workspace @omnibridge-nft/subgraph auth",
+    "subgraph:codegen": "yarn workspace @omnibridge-nft/subgraph codegen",
+    "subgraph:build": "yarn workspace @omnibridge-nft/subgraph build",
+    "subgraph:prepare-kovan": "yarn workspace @omnibridge-nft/subgraph prepare-kovan",
+    "subgraph:deploy-kovan": "yarn workspace @omnibridge-nft/subgraph deploy-kovan",
+    "subgraph:prepare-sokol": "yarn workspace @omnibridge-nft/subgraph prepare-sokol",
+    "subgraph:deploy-sokol": "yarn workspace @omnibridge-nft/subgraph deploy-sokol",
+    "subgraph:prepare-xdai": "yarn workspace @omnibridge-nft/subgraph prepare-xdai",
+    "subgraph:deploy-xdai": "yarn workspace @omnibridge-nft/subgraph deploy-xdai",
+    "subgraph:prepare-mainnet": "yarn workspace @omnibridge-nft/subgraph prepare-mainnet",
+    "subgraph:deploy-mainnet": "yarn workspace @omnibridge-nft/subgraph deploy-mainnet",
+    "subgraph:prepare-xdai-bsc": "yarn workspace @omnibridge-nft/subgraph prepare-xdai-bsc",
+    "subgraph:deploy-xdai-bsc": "yarn workspace @omnibridge-nft/subgraph deploy-xdai-bsc",
+    "subgraph:prepare-bsc-xdai": "yarn workspace @omnibridge-nft/subgraph prepare-bsc-xdai",
+    "subgraph:deploy-bsc-xdai": "yarn workspace @omnibridge-nft/subgraph deploy-bsc-xdai",
+    "dapp:build": "yarn workspace @omnibridge-nft/dapp build",
+    "dapp:eject": "yarn workspace @omnibridge-nft/dapp eject",
+    "dapp:start": "yarn workspace @omnibridge-nft/dapp start",
+    "dapp:test": "yarn workspace @omnibridge-nft/dapp test",
+    "dapp:lint": "yarn workspace @omnibridge-nft/dapp lint",
+    "lint": "eslint --ignore-path .gitignore \"./packages/**/*.{ts,tsx,js,jsx}\"",
+    "format": "prettier --ignore-path .gitignore --write \"{*,**/*}.{ts,tsx,js,jsx,json,md}\"",
+    "prepare": "husky install"
+  },
+  "workspaces": {
+    "nohoist": [
+      "**/@graphprotocol/graph-ts",
+      "**/@graphprotocol/graph-ts/**"
+    ],
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "6.8.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-react": "7.20.3",
+    "eslint-plugin-react-hooks": "4.0.6",
+    "eslint-plugin-simple-import-sort": "5.0.3",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1"
+  },
+  "license": "UNLICENSED",
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": "prettier --write"
+  }
+}
