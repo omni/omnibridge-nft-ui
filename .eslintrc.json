@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["airbnb", "prettier/react", "prettier"],
+  "extends": ["airbnb", "prettier"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -15,7 +15,8 @@
     // Auto-sort imports
     "sort-imports": "off",
     "import/order": "off",
-    "simple-import-sort/sort": "error"
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   },
   "ignorePatterns": ["packages/subgraph/**"]
 }

@@ -23,22 +23,20 @@ const GlobalStyles = css`
   }
 `;
 
-export const App = () => {
-  return (
-    <ChakraProvider theme={theme}>
-      <CSSReset />
-      <Global styles={GlobalStyles} />
-      <ErrorBoundary>
-        <Router>
-          <SettingsProvider>
-            <Web3Provider>
-              <Layout>
-                <Routes />
-              </Layout>
-            </Web3Provider>
-          </SettingsProvider>
-        </Router>
-      </ErrorBoundary>
-    </ChakraProvider>
-  );
-};
+export const App = () => (
+  <ChakraProvider theme={theme}>
+    <CSSReset />
+    <Global styles={GlobalStyles} />
+    <ErrorBoundary>
+      <Router>
+        <SettingsProvider>
+          <Web3Provider>
+            <Layout>
+              <Routes />
+            </Layout>
+          </Web3Provider>
+        </SettingsProvider>
+      </Router>
+    </ErrorBoundary>
+  </ChakraProvider>
+);

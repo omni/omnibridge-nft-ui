@@ -95,7 +95,7 @@ export const Web3Provider = ({ children }) => {
 
       await setWeb3Provider(modalProvider, true);
 
-      const gnosisSafe = !!modalProvider.safe;
+      const gnosisSafe = await web3Modal.isSafeApp();
       setGnosisSafe(gnosisSafe);
 
       if (!gnosisSafe) {
@@ -126,7 +126,7 @@ export const Web3Provider = ({ children }) => {
       window.ethereum.autoRefreshOnNetworkChange = false;
     }
     (async function load() {
-      if ((await web3Modal.canAutoConnect()) || web3Modal.cachedProvider) {
+      if ((await web3Modal.isSafeApp()) || web3Modal.cachedProvider) {
         connectWeb3();
       } else {
         setLoading(false);

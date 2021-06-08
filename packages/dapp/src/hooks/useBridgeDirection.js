@@ -47,16 +47,12 @@ export const useBridgeDirection = () => {
   }, [foreignAmbAddress, foreignChainId, fetchingVersion]);
 
   const getBridgeChainId = useCallback(
-    chainId => {
-      return chainId === homeChainId ? foreignChainId : homeChainId;
-    },
+    chainId => (chainId === homeChainId ? foreignChainId : homeChainId),
     [homeChainId, foreignChainId],
   );
 
   const getMonitorUrl = useCallback(
-    (chainId, hash) => {
-      return `${ambLiveMonitorPrefix}/${chainId}/${hash}`;
-    },
+    (chainId, hash) => `${ambLiveMonitorPrefix}/${chainId}/${hash}`,
     [ambLiveMonitorPrefix],
   );
 
