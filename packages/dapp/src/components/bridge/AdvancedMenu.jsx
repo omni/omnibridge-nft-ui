@@ -56,12 +56,17 @@ export const AdvancedMenu = () => {
               value={receiver}
               onChange={e => setReceiver(e.target.value)}
               isInvalid={!!receiver && !utils.isAddress(receiver)}
+              _focus={{ boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.6)' }}
+              _invalid={{
+                boxShadow: '0 0 0 3px #ef5d5d !important',
+              }}
             />
             <InputRightElement>
               <CloseIcon
-                boxSize="1rem"
+                as="button"
+                boxSize="0.85rem"
                 onClick={onClick}
-                color="greyText"
+                color="grey"
                 transition="color 0.25s"
                 _hover={{ color: 'blue.400', cursor: 'pointer' }}
               />
@@ -69,6 +74,7 @@ export const AdvancedMenu = () => {
           </InputGroup>
         ) : (
           <Flex
+            as="button"
             w="100%"
             onClick={onClick}
             cursor="pointer"

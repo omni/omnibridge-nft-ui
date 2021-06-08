@@ -15,20 +15,14 @@
     }
   },
   "rules": {
-    // Prefer non-default exports
     "import/no-default-export": "error",
     "import/prefer-default-export": "off",
-
-    // Auto-sort imports
     "sort-imports": "off",
     "import/order": "off",
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-
-    // Allow props spreading
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
     "react/jsx-props-no-spreading": "off",
-
-    // disable prop-types
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "arrow-body-style": "warn"
   }
 }

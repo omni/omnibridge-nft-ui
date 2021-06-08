@@ -21,6 +21,11 @@ const GlobalStyles = css`
     outline: none;
     box-shadow: none;
   }
+  *:focus {
+    outline: none;
+    border-color: rgba(66, 153, 225, 0.6);
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6);
+  }
 `;
 
 export const App = () => (

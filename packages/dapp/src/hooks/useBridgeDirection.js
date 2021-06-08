@@ -1,15 +1,20 @@
 import { useSettings } from 'contexts/SettingsContext';
-import { fetchAmbVersion } from 'lib/amb';
-import { networkLabels } from 'lib/constants';
-import { logError } from 'lib/helpers';
+// import { fetchAmbVersion } from 'lib/amb';
+// import { networkLabels } from 'lib/constants';
+// import { logError } from 'lib/helpers';
 import { networks } from 'lib/networks';
-import { getEthersProvider } from 'lib/providers';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+// import { getEthersProvider } from 'lib/providers';
+import {
+  useCallback,
+  // useEffect,
+  useMemo,
+  // useState,
+} from 'react';
 
 export const useBridgeDirection = () => {
   const { bridgeDirection } = useSettings();
-  const [foreignAmbVersion, setForeignAmbVersion] = useState();
-  const [fetchingVersion, setFetchingVersion] = useState(false);
+  // const [foreignAmbVersion, setForeignAmbVersion] = useState();
+  // const [fetchingVersion, setFetchingVersion] = useState(false);
   const bridgeConfig = useMemo(
     () => networks[bridgeDirection] || Object.values(networks)[0],
     [bridgeDirection],
@@ -21,30 +26,30 @@ export const useBridgeDirection = () => {
     ambLiveMonitorPrefix,
     homeGraphName,
     foreignGraphName,
-    foreignAmbAddress,
+    // foreignAmbAddress,
   } = bridgeConfig;
 
-  useEffect(() => {
-    const label = networkLabels[foreignChainId];
-    const key = `${label}-AMB-VERSION`;
-    const fetchVersion = async () => {
-      const provider = await getEthersProvider(foreignChainId);
-      await fetchAmbVersion(foreignAmbAddress, provider)
-        .then(res => {
-          setForeignAmbVersion(res);
-          sessionStorage.setItem(key, JSON.stringify(res));
-        })
-        .catch(versionError => logError({ versionError }));
-      setFetchingVersion(false);
-    };
-    const version = sessionStorage.getItem(key);
-    if (!version && !fetchingVersion) {
-      setFetchingVersion(true);
-      fetchVersion();
-    } else {
-      setForeignAmbVersion(JSON.parse(version));
-    }
-  }, [foreignAmbAddress, foreignChainId, fetchingVersion]);
+  // useEffect(() => {
+  //   const label = networkLabels[foreignChainId];
+  //   const key = `${label}-AMB-VERSION`;
+  //   const fetchVersion = async () => {
+  //     const provider = await getEthersProvider(foreignChainId);
+  //     await fetchAmbVersion(foreignAmbAddress, provider)
+  //       .then(res => {
+  //         setForeignAmbVersion(res);
+  //         sessionStorage.setItem(key, JSON.stringify(res));
+  //       })
+  //       .catch(versionError => logError({ versionError }));
+  //     setFetchingVersion(false);
+  //   };
+  //   const version = sessionStorage.getItem(key);
+  //   if (!version && !fetchingVersion) {
+  //     setFetchingVersion(true);
+  //     fetchVersion();
+  //   } else {
+  //     setForeignAmbVersion(JSON.parse(version));
+  //   }
+  // }, [foreignAmbAddress, foreignChainId, fetchingVersion]);
 
   const getBridgeChainId = useCallback(
     chainId => (chainId === homeChainId ? foreignChainId : homeChainId),
@@ -70,7 +75,7 @@ export const useBridgeDirection = () => {
     getBridgeChainId,
     getMonitorUrl,
     getGraphEndpoint,
-    foreignAmbVersion,
+    // foreignAmbVersion,
     ...bridgeConfig,
   };
 };
