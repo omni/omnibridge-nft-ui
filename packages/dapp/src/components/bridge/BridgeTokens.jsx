@@ -1,7 +1,14 @@
-import { Flex, HStack, Text } from '@chakra-ui/react';
+import {
+  Flex,
+  HStack,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from '@chakra-ui/react';
+import { ActionButton } from 'components/bridge/ActionButton';
 import { AdvancedMenu } from 'components/bridge/AdvancedMenu';
-// import { TransferButton } from 'components/bridge/TransferButton';
-import { UnlockButton } from 'components/bridge/UnlockButton';
+import { LeftVector, RightVector } from 'components/bridge/VectorLines';
+import { Logo } from 'components/common/Logo';
 import { BridgeLoadingModal } from 'components/modals/BridgeLoadingModal';
 import { ClaimTokensModal } from 'components/modals/ClaimTokensModal';
 import { ClaimTransferModal } from 'components/modals/ClaimTransferModal';
@@ -22,59 +29,95 @@ export const BridgeTokens = () => {
 
   const bridgeChainId = getBridgeChainId(chainId);
   const txNeedsClaiming = !!txHash && !loading && chainId === foreignChainId;
+  const isSmallScreen = useBreakpointValue({ base: true, md: false });
   return (
     <Flex
       align="center"
-      justify="center"
       direction="column"
-      w={{ base: undefined, lg: 'calc(100% - 4rem)' }}
+      w="100%"
       maxW="75rem"
-      my="auto"
-      mx={{ base: 4, sm: 8 }}
+      px={{ base: 4, sm: 8 }}
     >
       <GnosisSafeWarning noCheckbox />
       <RPCHealthWarning />
-      <Flex
-        maxW="75rem"
+      <BridgeLoadingModal />
+      {txNeedsClaiming ? <ClaimTransferModal /> : null}
+      {txNeedsClaiming || neverShowClaims || needsSaving ? null : (
+        <ClaimTokensModal />
+      )}
+      <VStack
+        h="100%"
+        w="100%"
         direction="column"
         align="center"
-        p={{ base: 4, md: 8 }}
+        spacing="2rem"
+        py={{ base: 4, sm: 8 }}
       >
-        <BridgeLoadingModal />
-        {txNeedsClaiming ? <ClaimTransferModal /> : null}
-        {txNeedsClaiming || neverShowClaims || needsSaving ? null : (
-          <ClaimTokensModal />
-        )}
-        <Flex direction={{ base: 'column', md: 'row' }} width="100%" my={4}>
-          <HStack spacing="0.5rem">
-            <Flex align="flex-start" direction="column" m={2}>
-              <Text color="greyText" fontSize="sm">
-                From
-              </Text>
-              <Text fontWeight="bold" fontSize="lg">
-                {getNetworkName(chainId)}
-              </Text>
-            </Flex>
-          </HStack>
-          <Flex justify="center" align="center" flex="1">
+        <Flex direction="column" align="center" w="100%">
+          <Flex
+            direction={{ base: 'column', md: 'row' }}
+            width="100%"
+            align="stretch"
+            my="4"
+          >
             <HStack spacing="0.5rem">
-              <UnlockButton />
-              {/* <TransferButton /> */}
+              <Logo w="3rem" h="3rem" />
+              <Flex
+                align="flex-start"
+                direction="column"
+                w="8rem"
+                minW="8rem"
+                maxW="8rem"
+              >
+                <Text color="greyText" fontSize="sm">
+                  From
+                </Text>
+                <Text fontWeight="bold" fontSize="lg">
+                  {getNetworkName(chainId)}
+                </Text>
+              </Flex>
+            </HStack>
+            <Flex
+              justify="center"
+              align="center"
+              flex="1"
+              mx={{ base: 0, md: 'calc(8vw - 10rem)', lg: 0 }}
+              my={{ base: '2rem', md: '0' }}
+            >
+              <HStack
+                spacing="0.5rem"
+                height={{ base: '3rem', md: '2.5rem', lg: '3rem' }}
+                align="stretch"
+              >
+                {!isSmallScreen && <LeftVector />}
+                <ActionButton />
+                {!isSmallScreen && <RightVector />}
+              </HStack>
+            </Flex>
+            <HStack
+              spacing="0.5rem"
+              justify={{ base: 'flex-end', md: 'flex-start' }}
+            >
+              <Flex
+                align="flex-end"
+                direction="column"
+                w="8rem"
+                minW="8rem"
+                maxW="8rem"
+              >
+                <Text color="greyText" fontSize="sm">
+                  To
+                </Text>
+                <Text fontWeight="bold" fontSize="lg" textAlign="right">
+                  {getNetworkName(bridgeChainId)}
+                </Text>
+              </Flex>
+              <Logo w="3rem" h="3rem" reverseFallback />
             </HStack>
           </Flex>
-          <HStack spacing="0.5rem">
-            <Flex align="flex-end" direction="column" m={2}>
-              <Text color="greyText" fontSize="sm">
-                To
-              </Text>
-              <Text fontWeight="bold" fontSize="lg" textAlign="right">
-                {getNetworkName(bridgeChainId)}
-              </Text>
-            </Flex>
-          </HStack>
+          <AdvancedMenu />
         </Flex>
-        <AdvancedMenu />
-      </Flex>
+      </VStack>
     </Flex>
   );
 };

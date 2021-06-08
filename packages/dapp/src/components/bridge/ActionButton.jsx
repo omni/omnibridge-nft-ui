@@ -1,12 +1,10 @@
 import { Flex, Image, Spinner, Text } from '@chakra-ui/react';
 import UnlockIcon from 'assets/unlock.svg';
 import { TxLink } from 'components/common/TxLink';
-// import { isRebasingToken } from 'components/warnings/RebasingTokenWarning';
-// import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import React from 'react';
 
-export const UnlockButton = () => {
+export const ActionButton = () => {
   const { providerChainId } = useWeb3Context();
   const onClick = () => {};
   const approvalTxHash = '';
@@ -16,7 +14,7 @@ export const UnlockButton = () => {
     <Flex
       align="center"
       as="button"
-      color="cyan.500"
+      color="cyan.400"
       _hover={
         buttonDisabled
           ? undefined
@@ -30,9 +28,8 @@ export const UnlockButton = () => {
       opacity={buttonDisabled ? 0.4 : 1}
       onClick={onClick}
       borderRadius="0.25rem"
-      w={{ base: '10rem', sm: '12rem', lg: 'auto' }}
     >
-      <svg width="100%" viewBox="0 0 156 42" fill="none">
+      <svg height="100%" viewBox="0 0 156 42" fill="none">
         <path
           d="M139.086 39.72a4 4 0 01-3.612 2.28H20.526a4 4 0 01-3.612-2.28l-16.19-34C-.54 3.065 1.395 0 4.335 0h147.33c2.94 0 4.875 3.065 3.611 5.72l-16.19 34z"
           fill="currentColor"
@@ -51,10 +48,10 @@ export const UnlockButton = () => {
           </TxLink>
         ) : (
           <>
-            <Text color="white" fontWeight="bold">
+            <Text color="white" fontWeight="bold" fontSize="sm">
               {buttonDisabled ? 'Unlocked' : 'Unlock'}
             </Text>
-            <Image src={UnlockIcon} ml={2} />
+            <Image src={UnlockIcon} ml={2} boxSize="1rem" />
           </>
         )}
       </Flex>

@@ -55,6 +55,7 @@ export const UpdateSettings = ({ close }) => {
         _hover={{ color: 'blue.500', bgColor: 'blackAlpha.100' }}
         onClick={openSettings}
         leftIcon={<SettingsIcon />}
+        px={{ base: 4, md: 2, lg: 4 }}
       >
         <Text color="black"> Settings</Text>
       </Button>

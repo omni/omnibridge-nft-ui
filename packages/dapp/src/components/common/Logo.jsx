@@ -18,7 +18,7 @@ const logos = {
   56: BSCLogo,
 };
 
-export const Logo = ({ uri, reverseFallback = false }) => {
+export const Logo = ({ uri, reverseFallback = false, ...props }) => {
   const { getBridgeChainId } = useBridgeDirection();
   const { providerChainId } = useWeb3Context();
   const chainId = reverseFallback
@@ -39,10 +39,11 @@ export const Logo = ({ uri, reverseFallback = false }) => {
             if (src) BAD_SRCS[src] = true;
             refresh(i => i + 1);
           }}
+          {...props}
         />
       );
     }
   }
 
-  return <Image src={fallbackLogo} />;
+  return <Image src={fallbackLogo} {...props} />;
 };
