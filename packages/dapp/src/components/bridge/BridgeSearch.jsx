@@ -33,7 +33,7 @@ const useInputSize = () => {
 
 export const BridgeSearch = () => {
   const chosenTokens = [];
-  const [searching] = useState(true);
+  const [searching] = useState(false);
   const { inputSize, inputHeight, inputLeftPadding } = useInputSize();
 
   return (
