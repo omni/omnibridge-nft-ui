@@ -21,7 +21,7 @@ export const BridgeHeader = () => {
         justify="space-between"
         position="relative"
         align="stretch"
-        my="4"
+        mb="4"
         px="4"
       >
         <HStack spacing="0.5rem">

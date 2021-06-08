@@ -23,8 +23,6 @@ export const BridgeUI = () => {
   const txNeedsClaiming = !!txHash && !loading && chainId === foreignChainId;
   return (
     <Flex align="center" direction="column" w="100%" maxW="75rem" px={4}>
-      <GnosisSafeWarning noCheckbox />
-      <RPCHealthWarning />
       <BridgeLoadingModal />
       {txNeedsClaiming ? <ClaimTransferModal /> : null}
       {txNeedsClaiming || neverShowClaims || needsSaving ? null : (
@@ -38,6 +36,10 @@ export const BridgeUI = () => {
         spacing="2rem"
         py={{ base: 4, sm: 8 }}
       >
+        <Flex w="100%" direction="column" px={4}>
+          <GnosisSafeWarning noCheckbox />
+          <RPCHealthWarning />
+        </Flex>
         <BridgeHeader />
         <BridgeSearch />
         <BridgeTokensDisplay />
