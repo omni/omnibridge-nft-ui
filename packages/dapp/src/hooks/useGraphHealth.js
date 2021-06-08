@@ -27,7 +27,7 @@
 export const useGraphHealth = (
   description,
   options = { onlyHome: false, disableAlerts: false },
-) => {
+) =>
   // const { onlyHome, disableAlerts } = options;
   // const { bridgeDirection, homeChainId, foreignChainId } = useBridgeDirection();
   // const { providerChainId } = useWeb3Context();
@@ -143,5 +143,4 @@ export const useGraphHealth = (
   //   description,
   // ]);
 
-  return { homeHealthy: true, foreignHealthy: true };
-};
+  ({ homeHealthy: true, foreignHealthy: true });

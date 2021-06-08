@@ -28,9 +28,8 @@ const getTransactionString = hash => {
 export const BridgeLoadingModal = () => {
   const { providerChainId } = useWeb3Context();
   const { getMonitorUrl, homeChainId } = useBridgeDirection();
-  const { loading, fromToken, txHash, totalConfirms } = useContext(
-    BridgeContext,
-  );
+  const { loading, fromToken, txHash, totalConfirms } =
+    useContext(BridgeContext);
   const isHome = providerChainId === homeChainId;
   useGraphHealth(
     'Cannot collect data to finalize the transfer. Wait for a few minutes, reload the application and look for your unclaimed transactions in the History tab',

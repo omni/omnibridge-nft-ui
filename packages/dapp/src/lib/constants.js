@@ -160,6 +160,6 @@ export const LOCAL_STORAGE_KEYS = {
   KOVAN_RPC_URL: 'kovan-rpc-url',
   SOKOL_RPC_URL: 'sokol-rpc-url',
   NEVER_SHOW_CLAIMS: 'never-show-claims',
-  CUSTOM_TOKENS: 'customTokens',
+  INFINITE_UNLOCK: 'infinite-unlock',
   BRIDGE_DIRECTION: 'bridge-direction',
 };

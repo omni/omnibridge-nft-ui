@@ -30,14 +30,8 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   const { isGnosisSafe, account } = useWeb3Context();
 
   const { homeChainId, foreignChainId } = useBridgeDirection();
-  const {
-    receiver,
-    fromToken,
-    toToken,
-    fromAmount,
-    toAmount,
-    transfer,
-  } = useBridgeContext();
+  const { receiver, fromToken, toToken, fromAmount, toAmount, transfer } =
+    useBridgeContext();
   const [fee, setFee] = useState(0);
   useEffect(() => {
     if (fromAmount.gt(0)) {
@@ -49,9 +43,8 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
 
   const smallScreen = useBreakpointValue({ base: true, md: false });
   const toast = useToast();
-  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] = useState(
-    false,
-  );
+  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] =
+    useState(false);
 
   if (!fromToken || !toToken) return null;
 

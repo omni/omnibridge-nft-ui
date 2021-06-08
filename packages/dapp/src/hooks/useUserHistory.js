@@ -8,7 +8,7 @@
 // import { useEffect, useState } from 'react';
 // import { defer } from 'rxjs';
 
-export const useUserHistory = () => {
+export const useUserHistory = () =>
   // const {
   //   homeChainId,
   //   foreignChainId,
@@ -59,5 +59,4 @@ export const useUserHistory = () => {
   //   return () => subscription.unsubscribe();
   // }, [homeChainId, foreignChainId, account, getGraphEndpoint]);
 
-  return { transfers: [], loading: false };
-};
+  ({ transfers: [], loading: false });

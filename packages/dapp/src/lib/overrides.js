@@ -125,25 +125,41 @@ const DATATokenOverride = {
 };
 
 const ETH_XDAI_OVERRIDES = {
-  ['0x0905Ab807F8FD040255F0cF8fa14756c1D824931'.toLowerCase()]: OWLTokenOverride,
-  ['0x1a5f9352af8af974bfc03399e3767df6370d82e4'.toLowerCase()]: OWLTokenOverride,
-  ['0xE2e73A1c69ecF83F464EFCE6A5be353a37cA09b2'.toLowerCase()]: LINKTokenOverride,
-  ['0x514910771af9ca656af840dff83e8264ecf986ca'.toLowerCase()]: LINKTokenOverride,
-  ['0x0Ae055097C6d159879521C384F1D2123D1f195e6'.toLowerCase()]: STAKETokenOverride,
-  ['0xb7D311E2Eb55F2f68a9440da38e7989210b9A05e'.toLowerCase()]: STAKETokenOverride,
-  ['0xFD2df5dCe4c89B007A43CF88d8161dAf1A17C7AB'.toLowerCase()]: STAKETokenOverrideSokol,
-  ['0x408ec1bb883da0ea0fb3c955ea6befcd05aa7c3a'.toLowerCase()]: STAKETokenOverrideSokol,
-  ['0xe1cA72ff3434B131765c62Cbcbc26060F7Aba03D'.toLowerCase()]: MOONTokenOverride,
-  ['0x1e16aa4Df73d29C029d94CeDa3e3114EC191E25A'.toLowerCase()]: MOONTokenOverride,
-  ['0xc3589f56b6869824804a5ea29f2c9886af1b0fce'.toLowerCase()]: HNYTokenOverride,
-  ['0x71850b7e9ee3f13ab46d67167341e4bdc905eef9'.toLowerCase()]: HNYTokenOverride,
-  ['0x0cf0ee63788a0849fe5297f3407f701e122cc023'.toLowerCase()]: DATATokenOverride,
-  ['0xE4a2620edE1058D61BEe5F45F6414314fdf10548'.toLowerCase()]: DATATokenOverride,
+  ['0x0905Ab807F8FD040255F0cF8fa14756c1D824931'.toLowerCase()]:
+    OWLTokenOverride,
+  ['0x1a5f9352af8af974bfc03399e3767df6370d82e4'.toLowerCase()]:
+    OWLTokenOverride,
+  ['0xE2e73A1c69ecF83F464EFCE6A5be353a37cA09b2'.toLowerCase()]:
+    LINKTokenOverride,
+  ['0x514910771af9ca656af840dff83e8264ecf986ca'.toLowerCase()]:
+    LINKTokenOverride,
+  ['0x0Ae055097C6d159879521C384F1D2123D1f195e6'.toLowerCase()]:
+    STAKETokenOverride,
+  ['0xb7D311E2Eb55F2f68a9440da38e7989210b9A05e'.toLowerCase()]:
+    STAKETokenOverride,
+  ['0xFD2df5dCe4c89B007A43CF88d8161dAf1A17C7AB'.toLowerCase()]:
+    STAKETokenOverrideSokol,
+  ['0x408ec1bb883da0ea0fb3c955ea6befcd05aa7c3a'.toLowerCase()]:
+    STAKETokenOverrideSokol,
+  ['0xe1cA72ff3434B131765c62Cbcbc26060F7Aba03D'.toLowerCase()]:
+    MOONTokenOverride,
+  ['0x1e16aa4Df73d29C029d94CeDa3e3114EC191E25A'.toLowerCase()]:
+    MOONTokenOverride,
+  ['0xc3589f56b6869824804a5ea29f2c9886af1b0fce'.toLowerCase()]:
+    HNYTokenOverride,
+  ['0x71850b7e9ee3f13ab46d67167341e4bdc905eef9'.toLowerCase()]:
+    HNYTokenOverride,
+  ['0x0cf0ee63788a0849fe5297f3407f701e122cc023'.toLowerCase()]:
+    DATATokenOverride,
+  ['0xE4a2620edE1058D61BEe5F45F6414314fdf10548'.toLowerCase()]:
+    DATATokenOverride,
 };
 
 const KOVAN_SOKOL_OVERRIDES = {
-  ['0xd846B096949E15b42ABCaEB82137c5a3495B1Ed4'.toLowerCase()]: DEMO2712TokenOverrideSokol,
-  ['0xa4764045851F17AA60B6c8E8b62072Bea9538521'.toLowerCase()]: DEMO2712TokenOverrideSokol,
+  ['0xd846B096949E15b42ABCaEB82137c5a3495B1Ed4'.toLowerCase()]:
+    DEMO2712TokenOverrideSokol,
+  ['0xa4764045851F17AA60B6c8E8b62072Bea9538521'.toLowerCase()]:
+    DEMO2712TokenOverrideSokol,
 };
 
 const RINKEBY_XDAI_OVERRIDES = {};

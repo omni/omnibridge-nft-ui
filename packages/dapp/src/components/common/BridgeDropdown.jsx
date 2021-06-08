@@ -47,6 +47,7 @@ export const BridgeDropdown = ({ close }) => {
         color="grey"
         bg="none"
         _hover={{ color: 'blue.500', bgColor: 'blackAlpha.100' }}
+        p={{ base: 4, md: 2, lg: 4 }}
       >
         <Text color="black" textTransform="uppercase" fontSize="0.9rem">
           {networks[currentBridgeDirection].label}

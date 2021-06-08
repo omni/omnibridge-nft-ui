@@ -121,7 +121,11 @@ export const HistoryItem = ({
     } else {
       try {
         setLoading(true);
-        const { data: tx, alreadyClaimed, error } = await executeSignatures(
+        const {
+          data: tx,
+          alreadyClaimed,
+          error,
+        } = await executeSignatures(
           ethersProvider,
           foreignAmbAddress,
           foreignAmbVersion,

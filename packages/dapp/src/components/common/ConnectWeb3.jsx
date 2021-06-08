@@ -22,13 +22,8 @@ export const ConnectWeb3 = () => {
     foreignChainId,
     label: bridgeLabel,
   } = useBridgeDirection();
-  const {
-    connectWeb3,
-    loading,
-    account,
-    disconnect,
-    ethersProvider,
-  } = useWeb3Context();
+  const { connectWeb3, loading, account, disconnect, ethersProvider } =
+    useWeb3Context();
   const toast = useToast();
 
   const showError = useCallback(
@@ -113,14 +108,15 @@ export const ConnectWeb3 = () => {
     [bridgeLabel],
   );
 
-  const renderHelperBox = useCallback(() => {
-    return (
+  const renderHelperBox = useCallback(
+    () => (
       <Text color="greyText" mb={4} textAlign="center">
         To access the {renderBridgeLabel()} OmniBridge, please switch to
         {renderChain(homeChainId)}or{renderChain(foreignChainId)}
       </Text>
-    );
-  }, [homeChainId, foreignChainId, renderBridgeLabel, renderChain]);
+    ),
+    [homeChainId, foreignChainId, renderBridgeLabel, renderChain],
+  );
 
   return (
     <Flex

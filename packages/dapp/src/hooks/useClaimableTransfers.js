@@ -9,7 +9,7 @@
 // import { useContext, useEffect, useState } from 'react';
 // import { defer } from 'rxjs';
 
-export const useClaimableTransfers = () => {
+export const useClaimableTransfers = () =>
   // const {
   //   homeChainId,
   //   foreignChainId,
@@ -48,5 +48,4 @@ export const useClaimableTransfers = () => {
   //   return () => subscription.unsubscribe();
   // }, [account, txHash, homeChainId, foreignChainId, getGraphEndpoint]);
 
-  return { transfers: [], loading: false };
-};
+  ({ transfers: [], loading: false });

@@ -21,24 +21,27 @@ const GlobalStyles = css`
     outline: none;
     box-shadow: none;
   }
+  *:focus {
+    outline: none;
+    border-color: rgba(66, 153, 225, 0.6);
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6);
+  }
 `;
 
-export const App = () => {
-  return (
-    <ChakraProvider theme={theme}>
-      <CSSReset />
-      <Global styles={GlobalStyles} />
-      <ErrorBoundary>
-        <Router>
-          <SettingsProvider>
-            <Web3Provider>
-              <Layout>
-                <Routes />
-              </Layout>
-            </Web3Provider>
-          </SettingsProvider>
-        </Router>
-      </ErrorBoundary>
-    </ChakraProvider>
-  );
-};
+export const App = () => (
+  <ChakraProvider theme={theme}>
+    <CSSReset />
+    <Global styles={GlobalStyles} />
+    <ErrorBoundary>
+      <Router>
+        <SettingsProvider>
+          <Web3Provider>
+            <Layout>
+              <Routes />
+            </Layout>
+          </Web3Provider>
+        </SettingsProvider>
+      </Router>
+    </ErrorBoundary>
+  </ChakraProvider>
+);

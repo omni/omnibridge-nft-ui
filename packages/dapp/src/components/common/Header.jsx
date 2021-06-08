@@ -28,6 +28,7 @@ const HistoryLink = ({ close }) => {
         close();
       }}
       leftIcon={<HistoryIcon />}
+      px={{ base: 4, md: 2, lg: 4 }}
     >
       <Text color="black"> History</Text>
     </Button>
@@ -66,7 +67,12 @@ export const Header = () => {
       <Flex justify="space-between" h={20} align="center">
         <Link to="/">
           <Flex justify="space-around" align="center">
-            <Image w="3rem" src={Logo} mr={4} />
+            <Image
+              minW="3rem"
+              w="3rem"
+              src={Logo}
+              mr={{ base: 4, md: 2, lg: 4 }}
+            />
             <Text fontWeight="bold">OmniBridge</Text>
           </Flex>
         </Link>
@@ -106,6 +112,7 @@ export const Header = () => {
         h={{ base: '100%', md: 'auto' }}
         align="center"
         justify="center"
+        spacing={{ base: 2, md: 0, lg: 2 }}
       >
         {valid && (
           <>
