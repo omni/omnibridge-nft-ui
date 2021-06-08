@@ -25,6 +25,8 @@ import React, { useCallback, useRef } from 'react';
 export const UpdateSettings = ({ close }) => {
   const initialRef = useRef();
   const {
+    infiniteUnlock,
+    setInfiniteUnlock,
     homeRPC,
     setHomeRPC,
     foreignRPC,
@@ -86,6 +88,13 @@ export const UpdateSettings = ({ close }) => {
             />
             <ModalBody px={6} py={0}>
               <Flex direction="column">
+                <Text mb={2}>Infinite Unlock</Text>
+                <Switch
+                  mb={4}
+                  colorScheme="blue"
+                  isChecked={infiniteUnlock}
+                  onChange={e => setInfiniteUnlock(e.target.checked)}
+                />
                 <Text mb={2}>
                   Custom {getNetworkLabel(foreignChainId)} RPC URL
                 </Text>
