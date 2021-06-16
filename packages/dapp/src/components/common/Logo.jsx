@@ -4,10 +4,7 @@ import EthLogo from 'assets/eth-logo.png';
 import xDAILogo from 'assets/xdai-logo.png';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
-import { uriToHttp } from 'lib/helpers';
-import React, { useState } from 'react';
-
-const BAD_SRCS = {};
+import React from 'react';
 
 const logos = {
   1: EthLogo,
@@ -18,32 +15,12 @@ const logos = {
   56: BSCLogo,
 };
 
-export const Logo = ({ uri, reverseFallback = false, ...props }) => {
-  const { getBridgeChainId } = useBridgeDirection();
+export const Logo = ({ reverseFallback = false, ...props }) => {
   const { providerChainId } = useWeb3Context();
+  const { getBridgeChainId } = useBridgeDirection();
   const chainId = reverseFallback
     ? getBridgeChainId(providerChainId)
     : providerChainId;
   const fallbackLogo = logos[chainId];
-  const [, refresh] = useState(0);
-
-  if (uri) {
-    const srcs = uriToHttp(uri);
-    const src = srcs.find(s => !BAD_SRCS[s]);
-
-    if (src) {
-      return (
-        <Image
-          src={src}
-          onError={() => {
-            if (src) BAD_SRCS[src] = true;
-            refresh(i => i + 1);
-          }}
-          {...props}
-        />
-      );
-    }
-  }
-
   return <Image src={fallbackLogo} {...props} />;
 };

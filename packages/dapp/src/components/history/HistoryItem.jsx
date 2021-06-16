@@ -9,10 +9,9 @@ import {
 } from '@chakra-ui/react';
 import BlueTickImage from 'assets/blue-tick.svg';
 import RightArrowImage from 'assets/right-arrow.svg';
-import { AddToMetamask } from 'components/common/AddToMetamask';
 import { TxLink } from 'components/common/TxLink';
+import { DisplayTokens } from 'components/history/DisplayTokens';
 import { useWeb3Context } from 'contexts/Web3Context';
-import { BigNumber, utils } from 'ethers';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import {
   executeSignatures,
@@ -22,8 +21,6 @@ import {
 import { POLLING_INTERVAL } from 'lib/constants';
 import { getExplorerUrl, getNetworkName, logError } from 'lib/helpers';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-
-const { formatUnits } = utils;
 
 const shortenHash = hash =>
   `${hash.slice(0, 6)}...${hash.slice(hash.length - 4, hash.length)}`;
@@ -48,6 +45,7 @@ const Tag = ({ bg, txt }) => (
 const networkTags = {
   100: <Tag bg="#4DA9A6" txt="xDai" />,
   1: <Tag bg="#5A74DA" txt="Ethereum" />,
+  4: <Tag bg="#5A74DA" txt="Rinkeby" />,
   42: <Tag bg="#5A74DA" txt="Kovan" />,
   77: <Tag bg="#4DA9A6" txt="POA Sokol" />,
   56: <Tag bg="#5A74DA" txt="BSC" />,
@@ -57,13 +55,15 @@ const getNetworkTag = chainId => networkTags[chainId];
 
 export const HistoryItem = ({
   data: {
-    user,
     chainId,
     timestamp,
     sendingTx,
     receivingTx: inputReceivingTx,
-    amount,
-    toToken,
+    token,
+    tokenIds,
+    values,
+    tokenUris,
+    is1155,
     message: inputMessage,
   },
   handleClaimError,
@@ -137,7 +137,7 @@ export const HistoryItem = ({
         }
 
         if (alreadyClaimed && !tx) {
-          handleClaimError(toToken);
+          handleClaimError();
           return;
         }
         setTxHash(tx.hash);
@@ -165,7 +165,6 @@ export const HistoryItem = ({
     claimable,
     message,
     handleClaimError,
-    toToken,
     showError,
   ]);
 
@@ -224,8 +223,6 @@ export const HistoryItem = ({
     getGraphEndpoint,
   ]);
 
-  const { symbol: tokenSymbol } = toToken;
-
   return (
     <Flex
       w="100%"
@@ -235,12 +232,13 @@ export const HistoryItem = ({
       fontSize="sm"
       p={4}
       mb={4}
+      direction="column"
     >
       <Grid
         templateColumns={{
           base: '1fr',
-          md: '0.5fr 1.75fr 1fr 1fr 1.25fr 0.5fr',
-          lg: '1fr 1.25fr 1fr 1fr 1.25fr 0.5fr',
+          md: '0.5fr 1.75fr 1fr 1fr 1.75fr',
+          lg: '1fr 1.25fr 1fr 1fr 1.75fr',
         }}
         w="100%"
       >
@@ -302,24 +300,12 @@ export const HistoryItem = ({
             <Text />
           )}
         </Flex>
-        <Flex
-          align="center"
-          justify={{ base: 'space-between', md: 'center' }}
-          mb={{ base: 1, md: 0 }}
-        >
-          <Text display={{ base: 'inline-block', md: 'none' }} color="greyText">
-            Amount
-          </Text>
-          <Text my="auto" textAlign="center">
-            {`${formatUnits(
-              BigNumber.from(amount),
-              toToken.decimals,
-            )} ${tokenSymbol}`}
-          </Text>
-          <AddToMetamask token={toToken} ml="0.25rem" />
-        </Flex>
         {receivingTx ? (
-          <Flex align="center" justify={{ base: 'center', md: 'flex-end' }}>
+          <Flex
+            align="center"
+            justify={{ base: 'center', md: 'flex-end' }}
+            w="100%"
+          >
             <Image src={BlueTickImage} mr="0.5rem" />
             <Text color="blue.500">Claimed</Text>
           </Flex>
@@ -342,6 +328,17 @@ export const HistoryItem = ({
           </Flex>
         )}
       </Grid>
+      <Flex mt="4" bg="#EEf4FD" borderRadius="1rem" p="4" direction="column">
+        <Text> Items </Text>
+        <DisplayTokens
+          token={token}
+          tokenIds={tokenIds}
+          values={values}
+          tokenUris={tokenUris}
+          is1155={is1155}
+          chainId={chainId}
+        />
+      </Flex>
     </Flex>
   );
 };

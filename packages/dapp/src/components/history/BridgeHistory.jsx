@@ -8,6 +8,7 @@ import { LoadingModal } from 'components/modals/LoadingModal';
 import { AuspiciousGasWarning } from 'components/warnings/AuspiciousGasWarning';
 import { GraphHealthWarning } from 'components/warnings/GraphHealthWarning';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
+import { useUserHistory } from 'hooks/useUserHistory';
 import {
   getGasPrice,
   getLowestHistoricalEthGasPrice,
@@ -21,21 +22,17 @@ const TOTAL_PER_PAGE = 20;
 export const BridgeHistory = ({ page }) => {
   const [onlyUnReceived, setOnlyUnReceived] = useState(false);
   const [claimErrorShow, setClaimErrorShow] = useState(false);
-  const [claimErrorToken, setClaimErrorToken] = useState(null);
   const { foreignChainId } = useBridgeDirection();
 
-  // const { transfers, loading } = useUserHistory();
-  const loading = false;
+  const { transfers, loading } = useUserHistory();
 
-  const handleClaimError = useCallback(toToken => {
-    toToken && setClaimErrorToken(toToken);
+  const handleClaimError = useCallback(() => {
     setClaimErrorShow(true);
   }, []);
 
   const handleModalClose = useCallback(() => {
     setClaimErrorShow(false);
-    claimErrorToken && setClaimErrorToken(null);
-  }, [claimErrorToken]);
+  }, []);
 
   if (loading) {
     return (
@@ -45,10 +42,9 @@ export const BridgeHistory = ({ page }) => {
     );
   }
 
-  // const filteredTransfers = onlyUnReceived
-  //   ? transfers.filter(i => i.receivingTx === null)
-  //   : transfers;
-  const filteredTransfers = [];
+  const filteredTransfers = onlyUnReceived
+    ? transfers.filter(i => i.receivingTx === null)
+    : transfers;
 
   const numPages = Math.ceil(filteredTransfers.length / TOTAL_PER_PAGE);
   const displayHistory = filteredTransfers.slice(
@@ -74,7 +70,6 @@ export const BridgeHistory = ({ page }) => {
     >
       <ClaimErrorModal
         claimErrorShow={claimErrorShow}
-        claimErrorToken={claimErrorToken}
         onClose={handleModalClose}
       />
       {foreignChainId === 1 && medianGasPrice.gt(currentGasPrice) && (
@@ -107,8 +102,8 @@ export const BridgeHistory = ({ page }) => {
           <Grid
             templateColumns={{
               base: '1fr',
-              md: '0.5fr 1.75fr 1fr 1fr 1.25fr 0.5fr',
-              lg: '1fr 1.25fr 1fr 1fr 1.25fr 0.5fr',
+              md: '0.5fr 1.75fr 1fr 1fr 1.75fr',
+              lg: '1fr 1.25fr 1fr 1fr 1.75fr',
             }}
             color="grey"
             fontSize="sm"
@@ -120,7 +115,6 @@ export const BridgeHistory = ({ page }) => {
             <Text>Direction</Text>
             <Text textAlign="center">Sending Tx</Text>
             <Text textAlign="center">Receiving Tx</Text>
-            <Text textAlign="center">Amount</Text>
             <Text textAlign="right">Status</Text>
           </Grid>
           {displayHistory.map(item => (

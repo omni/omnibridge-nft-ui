@@ -1,9 +1,9 @@
 import { CheckIcon } from '@chakra-ui/icons';
 import { Flex, Link, Text, useBoolean, VStack } from '@chakra-ui/react';
+import { ImageAsArray as Image } from 'components/bridge/TokenImage';
 import { TopRightArrowIcon } from 'icons/TopRightArrowIcon';
 import { getAccountString, getExplorerUrl } from 'lib/helpers';
-import { fetchImageUri } from 'lib/uriHelpers';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const Checkbox = ({ isChecked = false, ...props }) => (
   <Flex
@@ -47,7 +47,7 @@ export const ERC721TokenDisplay = ({
   isDisabled = false,
   disableCheckbox = false,
 }) => {
-  const { chainId, imageUri, tokenId, address } = token;
+  const { chainId, tokenUri, tokenId, address } = token;
   const [isChecked, { toggle: toggleCheck }] = useBoolean(false);
   return (
     <Flex
@@ -65,10 +65,6 @@ export const ERC721TokenDisplay = ({
     >
       <Flex
         bgColor="white"
-        bgImage={imageUri ? `url(${imageUri})` : undefined}
-        bgPos="center"
-        bgSize="contain"
-        bgRepeat="no-repeat"
         borderRadius="0.375rem"
         overflow="hidden"
         w="100%"
@@ -78,7 +74,18 @@ export const ERC721TokenDisplay = ({
         justify="space-between"
         role="group"
       >
-        <Flex justify="flex-end">
+        <Image
+          src={tokenUri}
+          w="calc(100% - 1rem)"
+          h="calc(100% - 1rem)"
+          objectFit="contain"
+          objectPosition="center"
+          position="absolute"
+          top="0.5rem"
+          left="0.5rem"
+          pointerEvents="none"
+        />
+        <Flex justify="flex-end" transform="translate(0%, 0%)">
           {isDisabled || disableCheckbox ? null : (
             <Checkbox
               isChecked={isChecked}
@@ -88,6 +95,7 @@ export const ERC721TokenDisplay = ({
           )}
         </Flex>
         <VStack
+          transform="translate(0%, 0%)"
           spacing="0.3125rem"
           w="100%"
           align="flex-start"
@@ -117,7 +125,7 @@ export const ERC1155TokenDisplay = ({
   isDisabled = false,
   disableCheckbox = false,
 }) => {
-  const { chainId, imageUri, tokenId, amount, address } = token;
+  const { chainId, tokenUri, tokenId, amount, address } = token;
   const [isChecked, { toggle: toggleCheck }] = useBoolean(false);
   return (
     <Flex
@@ -160,10 +168,6 @@ export const ERC1155TokenDisplay = ({
       >
         <Flex
           bgColor="white"
-          bgImage={imageUri ? `url(${imageUri})` : undefined}
-          bgPos="center"
-          bgSize="contain"
-          bgRepeat="no-repeat"
           borderRadius="0.375rem"
           overflow="hidden"
           w="100%"
@@ -173,7 +177,18 @@ export const ERC1155TokenDisplay = ({
           justify="space-between"
           role="group"
         >
-          <Flex justify="space-between">
+          <Image
+            src={tokenUri}
+            w="calc(100% - 1rem)"
+            h="calc(100% - 1rem)"
+            objectFit="contain"
+            objectPosition="center"
+            position="absolute"
+            top="0.5rem"
+            left="0.5rem"
+            pointerEvents="none"
+          />
+          <Flex justify="space-between" transform="translate(0%, 0%)">
             <TokenTag>{`x${amount}`}</TokenTag>
             {isDisabled || disableCheckbox ? null : (
               <Checkbox
@@ -184,6 +199,7 @@ export const ERC1155TokenDisplay = ({
             )}
           </Flex>
           <VStack
+            transform="translate(0%, 0%)"
             spacing="0.3125rem"
             w="100%"
             align="flex-start"
@@ -209,20 +225,24 @@ export const ERC1155TokenDisplay = ({
   );
 };
 
-export const TokenDisplay = ({ token: inputToken }) => {
-  const { is1155, uri } = inputToken;
-
-  const [imageUri, setImageUri] = useState(uri);
-
-  useEffect(() => {
-    fetchImageUri(uri).then(setImageUri);
-  }, [uri]);
-
-  const token = { ...inputToken, imageUri };
+export const TokenDisplay = ({
+  token,
+  disableCheckbox = false,
+  isDisabled = false,
+}) => {
+  const { is1155 } = token;
 
   return is1155 ? (
-    <ERC1155TokenDisplay token={token} />
+    <ERC1155TokenDisplay
+      token={token}
+      disableCheckbox={disableCheckbox}
+      isDisabled={isDisabled}
+    />
   ) : (
-    <ERC721TokenDisplay token={token} />
+    <ERC721TokenDisplay
+      token={token}
+      disableCheckbox={disableCheckbox}
+      isDisabled={isDisabled}
+    />
   );
 };

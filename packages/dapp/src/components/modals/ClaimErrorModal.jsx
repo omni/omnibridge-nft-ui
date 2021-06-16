@@ -13,12 +13,11 @@ import {
   Text,
 } from '@chakra-ui/react';
 import BlueTickImage from 'assets/blue-tick.svg';
-import { AddToMetamask } from 'components/common/AddToMetamask';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { getNetworkName } from 'lib/helpers';
 import React from 'react';
 
-const ClaimErrorModal = ({ onClose, claimErrorShow, claimErrorToken }) => {
+export const ClaimErrorModal = ({ onClose, claimErrorShow }) => {
   const { foreignChainId } = useBridgeDirection();
   return (
     <Modal isOpen={claimErrorShow} onClose={onClose} isCentered>
@@ -44,20 +43,9 @@ const ClaimErrorModal = ({ onClose, claimErrorShow, claimErrorToken }) => {
             <Flex align="center" direction="column">
               <Box w="100%">
                 <Text as="span">
-                  The transfer was already executed. Check your balance of this
-                  token in <strong>{getNetworkName(foreignChainId)}</strong>.
+                  The transfer was already executed. Check for your token in{' '}
+                  <strong>{getNetworkName(foreignChainId)}</strong>.
                 </Text>
-                {claimErrorToken && (
-                  <>
-                    {' '}
-                    <Text as="span">Add the token </Text>
-                    <AddToMetamask
-                      token={claimErrorToken}
-                      display="inline-block"
-                    />{' '}
-                    <Text as="span">in your wallet if needed.</Text>
-                  </>
-                )}
               </Box>
             </Flex>
           </ModalBody>
@@ -84,5 +72,3 @@ const ClaimErrorModal = ({ onClose, claimErrorShow, claimErrorToken }) => {
     </Modal>
   );
 };
-
-export { ClaimErrorModal };

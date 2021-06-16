@@ -19,14 +19,14 @@ export const BridgeTokensDisplay = () => {
     is1155: false,
     address: '0x2d5c035f99a7df3067edacded0e117d7076abf7c',
     tokenId: 5644,
-    uri: 'https://openmoji.org/data/color/svg/1F3F3-FE0F-200D-1F308.svg',
+    tokenUri: 'https://openmoji.org/data/color/svg/1F3F3-FE0F-200D-1F308.svg',
   };
   const example721Two = {
     chainId: providerChainId,
     is1155: false,
     address: '0x2d5c035f99a7df3067edacded0e117d7076abf7c',
     tokenId: 5674,
-    uri: 'https://openmoji.org/data/color/svg/1F3F3-FE0F-200D-1F308.svg',
+    tokenUri: 'https://openmoji.org/data/color/svg/1F3F3-FE0F-200D-1F308.svg',
   };
   const example1155 = {
     chainId: providerChainId,
@@ -35,7 +35,8 @@ export const BridgeTokensDisplay = () => {
     address: '0x2d5c035f99a7df3067edacded0e117d7076abf7c',
     tokenId: 155,
     amount: 5,
-    uri: 'https://abcoathup.github.io/SampleERC1155/api/token/0000000000000000000000000000000000000000000000000000000000000000.json',
+    tokenUri:
+      'https://abcoathup.github.io/SampleERC1155/api/token/0000000000000000000000000000000000000000000000000000000000000000.json',
   };
   const example1155Two = {
     chainId: providerChainId,
@@ -43,7 +44,8 @@ export const BridgeTokensDisplay = () => {
     address: '0x2d5c035f99a7df3067edacded0e117d7076abf7c',
     tokenId: 145,
     amount: 5,
-    uri: 'https://abcoathup.github.io/SampleERC1155/api/token/0000000000000000000000000000000000000000000000000000000000000002.json',
+    tokenUri:
+      'https://abcoathup.github.io/SampleERC1155/api/token/0000000000000000000000000000000000000000000000000000000000000002.json',
   };
   const erc721Tokens = [example721, example721Two];
   const erc1155Tokens = [example1155, example1155Two];

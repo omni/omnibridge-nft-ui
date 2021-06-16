@@ -1,13 +1,11 @@
 import { gql, request } from 'graphql-request';
 
-import { ADDRESS_ZERO } from './constants';
-
 const pageSize = 1000;
 
 const requestsUserQuery = gql`
   query getRequests($user: String!, $first: Int!, $skip: Int!) {
     requests: userRequests(
-      where: { user: $user }
+      where: { sender: $user }
       orderBy: txHash
       orderDirection: desc
       first: $first
@@ -17,10 +15,10 @@ const requestsUserQuery = gql`
       txHash
       messageId
       timestamp
-      amount
       token
-      decimals
-      symbol
+      tokenIds
+      values
+      tokenUris
       message {
         txHash
         msgId
@@ -34,7 +32,7 @@ const requestsUserQuery = gql`
 const requestsRecipientQuery = gql`
   query getRequests($user: String!, $first: Int!, $skip: Int!) {
     requests: userRequests(
-      where: { user_not: $user, recipient: $user }
+      where: { sender_not: $user, recipient: $user }
       orderBy: txHash
       orderDirection: desc
       first: $first
@@ -44,10 +42,10 @@ const requestsRecipientQuery = gql`
       txHash
       messageId
       timestamp
-      amount
       token
-      decimals
-      symbol
+      tokenIds
+      values
+      tokenUris
       message {
         txHash
         msgId
@@ -131,12 +129,7 @@ export const getRequestsWithQuery = async (user, graphEndpoint, query) => {
   return { requests };
 };
 
-export const combineRequestsWithExecutions = (
-  requests,
-  executions,
-  chainId,
-  bridgeChainId,
-) =>
+export const combineRequestsWithExecutions = (requests, executions, chainId) =>
   requests.map(req => {
     const execution = executions.find(exec => exec.messageId === req.messageId);
     return {
@@ -145,19 +138,11 @@ export const combineRequestsWithExecutions = (
       timestamp: req.timestamp,
       sendingTx: req.txHash,
       receivingTx: execution ? execution.txHash : null,
-      amount: req.amount,
-      fromToken: {
-        address: req.token,
-        decimals: req.decimals,
-        symbol: req.symbol,
-        chainId,
-      },
-      toToken: {
-        address: execution ? execution.token : ADDRESS_ZERO,
-        decimals: req.decimals,
-        symbol: req.symbol,
-        chainId: bridgeChainId,
-      },
+      values: req.values,
+      token: req.token,
+      tokenIds: req.tokenIds,
+      tokenUris: req.tokenUris,
+      is1155: req.values.length > 0,
       message: { ...req.message, messageId: req.messageId },
     };
   });

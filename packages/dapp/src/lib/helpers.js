@@ -62,30 +62,6 @@ export const parseValue = (num, dec) => {
   return utils.parseUnits(num, dec);
 };
 
-export const uriToHttp = uri => {
-  const protocol = uri.split(':')[0].toLowerCase();
-  const hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
-  const name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];
-  switch (protocol) {
-    case 'https':
-      return [uri];
-    case 'http':
-      return [`https${uri.substr(4)}`, uri];
-    case 'ipfs':
-      return [
-        `https://cloudflare-ipfs.com/ipfs/${hash}/`,
-        `https://ipfs.io/ipfs/${hash}/`,
-      ];
-    case 'ipns':
-      return [
-        `https://cloudflare-ipfs.com/ipns/${name}/`,
-        `https://ipfs.io/ipns/${name}/`,
-      ];
-    default:
-      return [];
-  }
-};
-
 export const fetchQueryParams = search => {
   if (!search || !search.trim().length) return null;
   return search
