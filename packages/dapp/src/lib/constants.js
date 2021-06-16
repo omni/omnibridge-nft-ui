@@ -119,19 +119,19 @@ const {
 export const chainUrls = {
   1: {
     rpc: REACT_APP_MAINNET_RPC_URL.split(' '),
-    explorer: 'https://blockscout.com/eth/mainnet',
+    explorer: 'https://etherscan.io',
     chainId: 1,
     name: networkNames[1],
   },
   4: {
     rpc: REACT_APP_RINKEBY_RPC_URL.split(' '),
-    explorer: 'https://blockscout.com/eth/rinkeby',
+    explorer: 'https://rinkeby.etherscan.io',
     chainId: 4,
     name: networkNames[4],
   },
   42: {
     rpc: REACT_APP_KOVAN_RPC_URL.split(' '),
-    explorer: 'https://blockscout.com/eth/kovan',
+    explorer: 'https://kovan.etherscan.io',
     chainId: 42,
     name: networkNames[42],
   },
