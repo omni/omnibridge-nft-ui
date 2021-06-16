@@ -1,10 +1,10 @@
 type UserRequest @entity {
   id: ID!
-  user: Bytes
+  sender: Bytes
   token: Bytes
-  decimals: Int
-  symbol: String
-  amount: BigInt
+  tokenIds: [BigInt!]
+  tokenUris: [String!]
+  values: [BigInt!]
   timestamp: BigInt!
   txHash: Bytes!
   messageId: Bytes
@@ -15,11 +15,12 @@ type UserRequest @entity {
 
 type Execution @entity {
   id: ID!
-  user: Bytes
   token: Bytes
+  tokenIds: [BigInt!]
+  values: [BigInt!]
   amount: BigInt
   sender: Bytes
-  executor: Bytes
+  recipient: Bytes
   messageId: Bytes
   status: Boolean
   timestamp: BigInt!
@@ -35,14 +36,9 @@ type Message @entity {
   signatures: [Bytes!]
 }
 
-type Token @entity {
-  id: ID!
-  homeAddress: Bytes!
-  homeName: String!
-  homeChainId: Int!
-  decimals: Int!
-  symbol: String!
-  foreignAddress: Bytes
-  foreignName: String
-  foreignChainId: Int
-}
+# type Token @entity {
+#   id: ID!
+#   name: String!
+#   symbol: String!
+#   tokenId: String!
+# }
