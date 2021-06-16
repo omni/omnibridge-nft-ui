@@ -69,8 +69,6 @@ export function handleRelayedMessage(event: RelayedMessage): void {
   }
   execution.txHash = txHash;
   execution.timestamp = event.block.timestamp;
-  execution.sender = event.params.sender;
-  execution.executor = event.params.executor;
   execution.messageId = event.params.messageId;
   execution.status = event.params.status;
   execution.save();
@@ -85,8 +83,6 @@ export function handleAffirmationCompleted(event: AffirmationCompleted): void {
   }
   execution.txHash = txHash;
   execution.timestamp = event.block.timestamp;
-  execution.sender = event.params.sender;
-  execution.executor = event.params.executor;
   execution.messageId = event.params.messageId;
   execution.status = event.params.status;
   execution.save();
