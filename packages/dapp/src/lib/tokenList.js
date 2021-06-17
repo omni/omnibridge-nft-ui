@@ -3,7 +3,6 @@ import { gql, request } from 'graphql-request';
 import { logError } from './helpers';
 
 const getTokenUri = (tokenUri, tokenId) => {
-  console.log(tokenUri);
   if (tokenUri && tokenId && /\{id\}/.test(tokenUri)) {
     return tokenUri.replace(/\{id\}/, tokenId.toString());
   }

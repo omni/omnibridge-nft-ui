@@ -1,6 +1,6 @@
 import { CheckIcon } from '@chakra-ui/icons';
 import { Flex, Link, Text, useBoolean, VStack } from '@chakra-ui/react';
-import { ImageAsArray as Image } from 'components/bridge/TokenImage';
+import { ImageAsArray as Image } from 'components/common/TokenImage';
 import { TopRightArrowIcon } from 'icons/TopRightArrowIcon';
 import { getExplorerUrl } from 'lib/helpers';
 import { getTruncatedAddress, truncateText } from 'lib/stringHelpers';

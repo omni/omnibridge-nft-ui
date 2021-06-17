@@ -13,7 +13,7 @@ import {
   Wrap,
   WrapItem,
 } from '@chakra-ui/react';
-import { TokenDisplay } from 'components/bridge/TokenDisplay';
+import { TokenDisplay } from 'components/common/TokenDisplay';
 import React, { useState } from 'react';
 
 const useInputSize = () => {
