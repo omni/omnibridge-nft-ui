@@ -1,10 +1,11 @@
 import { CheckIcon } from '@chakra-ui/icons';
 import { Flex, Link, Text, useBoolean, VStack } from '@chakra-ui/react';
 import { ImageAsArray as Image } from 'components/common/TokenImage';
+import { useBridgeContext } from 'contexts/BridgeContext';
 import { TopRightArrowIcon } from 'icons/TopRightArrowIcon';
 import { getExplorerUrl } from 'lib/helpers';
 import { getTruncatedAddress, truncateText } from 'lib/stringHelpers';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 const Checkbox = ({ isChecked = false, ...props }) => (
   <Flex
@@ -45,11 +46,37 @@ const TokenTag = ({ children, showArrow = false, ...props }) => (
 
 export const ERC721TokenDisplay = ({
   token,
-  isDisabled = false,
   disableCheckbox = false,
+  isChecked: inputIsChecked = false,
 }) => {
+  const [isDisabled, setDisabled] = useState(false);
   const { chainId, tokenUri, tokenId, address } = token;
-  const [isChecked, { toggle: toggleCheck }] = useBoolean(false);
+  const [isChecked, setChecked] = useState(inputIsChecked);
+  const {
+    tokens: selectedTokens,
+    selectToken,
+    unselectToken,
+  } = useBridgeContext();
+
+  const onCheck = useCallback(() => {
+    if (disableCheckbox) return;
+    if (!isChecked) {
+      selectToken(token);
+      setChecked(true);
+    } else {
+      unselectToken(token);
+      setChecked(false);
+    }
+  }, [disableCheckbox, isChecked, selectToken, unselectToken, token]);
+
+  useEffect(() => {
+    if (disableCheckbox) return;
+    setDisabled(selectedTokens ? selectedTokens.address !== address : false);
+    setChecked(
+      selectedTokens ? selectedTokens.tokenIds.includes(tokenId) : false,
+    );
+  }, [disableCheckbox, selectedTokens, address, tokenId]);
+
   return (
     <Flex
       w="7.5rem"
@@ -90,7 +117,7 @@ export const ERC721TokenDisplay = ({
           {isDisabled || disableCheckbox ? null : (
             <Checkbox
               isChecked={isChecked}
-              onClick={toggleCheck}
+              onClick={onCheck}
               cursor="pointer"
             />
           )}
@@ -123,11 +150,12 @@ export const ERC721TokenDisplay = ({
 
 export const ERC1155TokenDisplay = ({
   token,
-  isDisabled = false,
   disableCheckbox = false,
+  isChecked: inputIsChecked = false,
 }) => {
+  const [isDisabled] = useState(false);
   const { chainId, tokenUri, tokenId, amount, address } = token;
-  const [isChecked, { toggle: toggleCheck }] = useBoolean(false);
+  const [isChecked, { toggle: toggleCheck }] = useBoolean(inputIsChecked);
   return (
     <Flex
       w="7.5rem"
@@ -229,6 +257,7 @@ export const ERC1155TokenDisplay = ({
 export const TokenDisplay = ({
   token,
   disableCheckbox = false,
+  isChecked = false,
   isDisabled = false,
 }) => {
   const { is1155 } = token;
@@ -237,11 +266,13 @@ export const TokenDisplay = ({
     <ERC1155TokenDisplay
       token={token}
       disableCheckbox={disableCheckbox}
+      isChecked={isChecked}
       isDisabled={isDisabled}
     />
   ) : (
     <ERC721TokenDisplay
       token={token}
+      isChecked={isChecked}
       disableCheckbox={disableCheckbox}
       isDisabled={isDisabled}
     />

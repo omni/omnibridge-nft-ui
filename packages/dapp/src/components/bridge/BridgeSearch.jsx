@@ -14,6 +14,7 @@ import {
   WrapItem,
 } from '@chakra-ui/react';
 import { TokenDisplay } from 'components/common/TokenDisplay';
+import { useBridgeContext } from 'contexts/BridgeContext';
 import React, { useState } from 'react';
 
 const useInputSize = () => {
@@ -31,8 +32,17 @@ const useInputSize = () => {
   return { inputSize, inputHeight, inputLeftPadding };
 };
 
+const getChosenTokens = ({ address, tokenIds, amounts, is1155 }) =>
+  tokenIds.map((id, i) => ({
+    tokenId: id,
+    amount: amounts[i],
+    address,
+    is1155,
+  }));
+
 export const BridgeSearch = () => {
-  const chosenTokens = [];
+  const { tokens } = useBridgeContext();
+  const chosenTokens = tokens ? getChosenTokens(tokens) : [];
   const [searching] = useState(false);
   const { inputSize, inputHeight, inputLeftPadding } = useInputSize();
 
@@ -56,7 +66,7 @@ export const BridgeSearch = () => {
               <Wrap spacing="6">
                 {chosenTokens.map((token, index) => (
                   <WrapItem key={index.toString()}>
-                    <TokenDisplay token={token} />
+                    <TokenDisplay token={token} isChecked />
                   </WrapItem>
                 ))}
               </Wrap>
