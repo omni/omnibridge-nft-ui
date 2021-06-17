@@ -98,7 +98,7 @@ export const ERC721TokenDisplay = ({
     <Flex
       w="8.75rem"
       h="8.75rem"
-      p="0.5rem"
+      p="0.625rem"
       justify="center"
       align="center"
       borderRadius="0.375rem"
@@ -115,20 +115,20 @@ export const ERC721TokenDisplay = ({
         overflow="hidden"
         w="100%"
         h="100%"
-        p="1"
+        p="0.3125rem"
         direction="column"
         justify="space-between"
         role="group"
       >
         <Image
           src={tokenUri}
-          w="calc(100% - 1rem)"
-          h="calc(100% - 1rem)"
+          w="calc(100% - 1.25rem)"
+          h="calc(100% - 1.25rem)"
           objectFit="contain"
           objectPosition="center"
           position="absolute"
-          top="0.5rem"
-          left="0.5rem"
+          top="0.625rem"
+          left="0.625rem"
           pointerEvents="none"
         />
         <Flex justify="flex-end" transform="translate(0%, 0%)">
@@ -239,7 +239,7 @@ export const ERC1155TokenDisplay = ({
       <Flex
         w="8.75rem"
         h="8.75rem"
-        p="0.5rem"
+        p="0.625rem"
         justify="center"
         align="center"
         borderRadius="0.375rem"
@@ -255,20 +255,20 @@ export const ERC1155TokenDisplay = ({
           overflow="hidden"
           w="100%"
           h="100%"
-          p="1"
+          p="0.3125rem"
           direction="column"
           justify="space-between"
           role="group"
         >
           <Image
             src={tokenUri}
-            w="calc(100% - 1rem)"
-            h="calc(100% - 1rem)"
+            w="calc(100% - 1.25rem)"
+            h="calc(100% - 1.25rem)"
             objectFit="contain"
             objectPosition="center"
             position="absolute"
-            top="0.5rem"
-            left="0.5rem"
+            top="0.625rem"
+            left="0.625rem"
             pointerEvents="none"
           />
           <Flex justify="space-between" transform="translate(0%, 0%)">

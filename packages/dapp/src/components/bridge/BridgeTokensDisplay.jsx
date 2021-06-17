@@ -31,7 +31,7 @@ export const BridgeTokensDisplay = () => {
           </Text>
           <AccordionIcon boxSize="1.5rem" />
         </AccordionButton>
-        <AccordionPanel pt="4">
+        <AccordionPanel p="4">
           <Wrap spacing="6">
             {eip721Tokens.map((token, index) => (
               <WrapItem key={index.toString()}>
@@ -53,7 +53,7 @@ export const BridgeTokensDisplay = () => {
           </Text>
           <AccordionIcon boxSize="1.5rem" />
         </AccordionButton>
-        <AccordionPanel pt="4">
+        <AccordionPanel p="4">
           <Wrap spacing="6">
             {eip1155Tokens.map((token, index) => (
               <WrapItem key={index.toString()}>

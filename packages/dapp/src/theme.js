@@ -13,13 +13,13 @@ export const theme = {
     blue: {
       50: '#edf9ff',
       100: '#ddf3ff',
-      200: '#afd7ff',
-      300: '#7ebcff',
-      400: '#4da1ff',
-      500: '#2086fe',
-      600: '#0a6ce5',
-      700: '#0054b3',
-      800: '#003c81',
+      200: '#b4eafb',
+      300: '#afd7ff',
+      400: '#7ebcff',
+      500: '#4da1ff',
+      600: '#2086fe',
+      700: '#0a6ce5',
+      800: '#0054b3',
       900: '#002450',
     },
     cyan: {
@@ -67,6 +67,6 @@ export const theme = {
   },
   fonts: {
     ...chakraTheme.fonts,
-    body: 'Roboto, sans-serif',
+    body: `'Roboto', sans-serif`,
   },
 };

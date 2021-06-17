@@ -134,15 +134,17 @@ export const combineRequestsWithExecutions = (requests, executions, chainId) =>
     const execution = executions.find(exec => exec.messageId === req.messageId);
     return {
       user: req.user,
-      chainId,
       timestamp: req.timestamp,
       sendingTx: req.txHash,
       receivingTx: execution ? execution.txHash : null,
-      values: req.values,
-      token: req.token,
-      tokenIds: req.tokenIds,
-      tokenUris: req.tokenUris,
-      is1155: req.values.length > 0,
       message: { ...req.message, messageId: req.messageId },
+      tokens: {
+        chainId,
+        amounts: req.values,
+        address: req.token,
+        tokenIds: req.tokenIds,
+        tokenUris: req.tokenUris,
+        is1155: req.values.length > 0,
+      },
     };
   });

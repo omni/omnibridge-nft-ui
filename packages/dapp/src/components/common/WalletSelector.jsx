@@ -23,12 +23,8 @@ export const WalletSelector = ({ close }) => {
     <Flex>
       <Popover placement={placement}>
         <PopoverTrigger>
-          <Button
-            colorScheme="blue"
-            px={{ base: 4, md: 2, lg: 4 }}
-            leftIcon={<WalletIcon />}
-          >
-            <Text> {getTruncatedAddress(account)} </Text>
+          <Button colorScheme="blue" px={3} leftIcon={<WalletIcon />}>
+            <Text fontSize="sm"> {getTruncatedAddress(account)} </Text>
             <Flex
               justify="center"
               align="center"
@@ -39,7 +35,7 @@ export const WalletSelector = ({ close }) => {
               fontSize="sm"
               color="blue.500"
               fontWeight="600"
-              ml={{ base: 4, md: 2, lg: 4 }}
+              ml={3}
             >
               {getNetworkLabel(providerChainId)}
             </Flex>

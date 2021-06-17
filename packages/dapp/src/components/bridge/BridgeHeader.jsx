@@ -36,7 +36,7 @@ export const BridgeHeader = () => {
             <Text color="greyText" fontSize="sm">
               From
             </Text>
-            <Text fontWeight="bold" fontSize="lg">
+            <Text fontWeight="500" fontSize="lg">
               {getNetworkName(chainId)}
             </Text>
           </Flex>
@@ -73,7 +73,7 @@ export const BridgeHeader = () => {
             <Text color="greyText" fontSize="sm">
               To
             </Text>
-            <Text fontWeight="bold" fontSize="lg" textAlign="right">
+            <Text fontWeight="500" fontSize="lg" textAlign="right">
               {getNetworkName(bridgeChainId)}
             </Text>
           </Flex>

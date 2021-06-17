@@ -44,6 +44,7 @@ export const AdvancedMenu = () => {
         justify="center"
         direction="column"
         transition="all 0.25s"
+        mx={4}
       >
         {isMenuOpen ? (
           <InputGroup>

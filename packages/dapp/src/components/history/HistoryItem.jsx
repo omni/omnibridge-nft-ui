@@ -9,8 +9,8 @@ import {
 } from '@chakra-ui/react';
 import BlueTickImage from 'assets/blue-tick.svg';
 import RightArrowImage from 'assets/right-arrow.svg';
+import { DisplayTokens } from 'components/common/DisplayTokens';
 import { TxLink } from 'components/common/TxLink';
-import { DisplayTokens } from 'components/history/DisplayTokens';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import {
@@ -55,19 +55,15 @@ const getNetworkTag = chainId => networkTags[chainId];
 
 export const HistoryItem = ({
   data: {
-    chainId,
+    tokens,
     timestamp,
     sendingTx,
     receivingTx: inputReceivingTx,
-    token,
-    tokenIds,
-    values,
-    tokenUris,
-    is1155,
     message: inputMessage,
   },
   handleClaimError,
 }) => {
+  const { chainId } = tokens;
   const {
     homeChainId,
     foreignChainId,
@@ -316,7 +312,7 @@ export const HistoryItem = ({
               hash={loading ? txHash : undefined}
             >
               <Button
-                w="100%"
+                w="auto"
                 size="sm"
                 colorScheme="blue"
                 onClick={claimTokens}
@@ -330,14 +326,7 @@ export const HistoryItem = ({
       </Grid>
       <Flex mt="4" bg="#EEf4FD" borderRadius="1rem" p="4" direction="column">
         <Text> Items </Text>
-        <DisplayTokens
-          token={token}
-          tokenIds={tokenIds}
-          values={values}
-          tokenUris={tokenUris}
-          is1155={is1155}
-          chainId={chainId}
-        />
+        <DisplayTokens tokens={tokens} />
       </Flex>
     </Flex>
   );

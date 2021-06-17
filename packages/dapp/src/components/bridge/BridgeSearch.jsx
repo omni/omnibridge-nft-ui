@@ -22,8 +22,8 @@ const useInputSize = () => {
   const inputSize = useBreakpointValue({ base: 'md', md: 'lg' });
   const inputHeight = useBreakpointValue({
     base: '3.25rem',
-    sm: '3.5rem',
-    md: '4rem',
+    sm: '3.75rem',
+    md: '4.375rem',
   });
   const inputLeftPadding = useBreakpointValue({
     base: '0.75rem',
@@ -64,7 +64,7 @@ export const BridgeSearch = () => {
             </Text>
             <AccordionIcon boxSize="1.5rem" />
           </AccordionButton>
-          <AccordionPanel minH="3rem" pt="1rem">
+          <AccordionPanel minH="3rem" p="1rem">
             <Collapse in={showTokens} w="100%">
               <Wrap spacing="6" minH="10.25rem">
                 {chosenTokens.map((token, index) => (
@@ -93,9 +93,10 @@ export const BridgeSearch = () => {
           bg="white"
           boxShadow="0px 15px 30px rgba(204, 218, 238, 0.8)"
           placeholder="Search ..."
-          _placeholder={{ color: 'greyText' }}
+          _placeholder={{ color: 'greyText', fontWeight: 500 }}
           _focus={{ boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.6)' }}
           color="black"
+          fontWeight="500"
           h={inputHeight}
           pl={inputLeftPadding}
           pr={inputHeight}
