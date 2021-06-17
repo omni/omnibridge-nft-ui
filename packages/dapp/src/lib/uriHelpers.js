@@ -1,5 +1,3 @@
-import NoImageAvailable from 'assets/no-image-available.svg';
-
 export const uriToHttp = uri => {
   if (!uri) return '';
   const protocol = uri.split(':')[0].toLowerCase();
@@ -19,7 +17,7 @@ export const uriToHttp = uri => {
     case 'ipns':
       return `https://ipfs.io/ipns/${name}/`;
     default:
-      return NoImageAvailable;
+      return '';
   }
 };
 

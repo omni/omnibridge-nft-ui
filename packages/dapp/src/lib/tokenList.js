@@ -3,7 +3,6 @@ import { gql, request } from 'graphql-request';
 import { logError } from './helpers';
 
 const getTokenUri = (tokenUri, tokenId) => {
-  console.log(tokenUri);
   if (tokenUri && tokenId && /\{id\}/.test(tokenUri)) {
     return tokenUri.replace(/\{id\}/, tokenId.toString());
   }
@@ -18,6 +17,8 @@ const eip721TokensQuery = gql`
         tokenId: tokenID
         token: contract {
           address: id
+          name
+          symbol
           supportsMetadata: supportsEIP721Metadata
         }
       }
@@ -38,17 +39,24 @@ export const fetch721TokenList = async (chainId, account, graphEndpoint) => {
       data.owner.tokens.length > 0
     ) {
       return data.owner.tokens
-        .map(({ tokenUri, tokenId, token: { address, supportsMetadata } }) =>
-          supportsMetadata && tokenUri
-            ? {
-                chainId,
-                address,
-                tokenId,
-                tokenUri: getTokenUri(tokenUri, tokenId),
-                amount: 1,
-                is1155: false,
-              }
-            : undefined,
+        .map(
+          ({
+            tokenUri,
+            tokenId,
+            token: { address, name, symbol, supportsMetadata },
+          }) =>
+            supportsMetadata && tokenUri
+              ? {
+                  chainId,
+                  address,
+                  name,
+                  symbol,
+                  tokenId,
+                  tokenUri: getTokenUri(tokenUri, tokenId),
+                  amount: 1,
+                  is1155: false,
+                }
+              : undefined,
         )
         .filter(t => !!t);
     }

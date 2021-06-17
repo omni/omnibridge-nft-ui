@@ -15,6 +15,8 @@ export const BridgeProvider = ({ children }) => {
   const [receiver, setReceiver] = useState('');
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState();
+  const [tokens, setTokens] = useState();
+  const [searchText, setSearchText] = useState('');
 
   const totalConfirms = useTotalConfirms();
 
@@ -32,7 +34,7 @@ export const BridgeProvider = ({ children }) => {
       if (isGnosisSafe && !receiver) {
         throw new Error('Must set receiver for Gnosis Safe');
       }
-      const tx = { hash: '' }; // relayTokens();
+      const tx = { hash: '' }; // await relayTokens();
       setTxHash(tx.hash);
     } catch (transferError) {
       logError({
@@ -46,6 +48,62 @@ export const BridgeProvider = ({ children }) => {
     }
   }, [isGnosisSafe, account, receiver]);
 
+  const selectToken = useCallback(
+    inputToken => {
+      const { address, tokenId, tokenUri, amount, is1155 } = inputToken;
+      if (tokens && tokens.address === address) {
+        const { tokenIds, tokenUris, amounts } = tokens;
+        const index = tokenIds.indexOf(tokenId);
+        if (index >= 0) {
+          tokenIds.splice(index, 1);
+          tokenUris.splice(index, 1);
+          amounts.splice(index, 1);
+        }
+        setTokens({
+          ...tokens,
+          tokenIds: [...tokenIds, tokenId],
+          tokenUris: [...tokenUris, tokenUri],
+          amounts: [...amounts, amount],
+        });
+      } else {
+        setTokens({
+          address,
+          tokenIds: [tokenId],
+          tokenUris: [tokenUri],
+          amounts: [amount],
+          is1155,
+        });
+      }
+    },
+    [tokens],
+  );
+
+  const unselectToken = useCallback(
+    inputToken => {
+      const { address, tokenId } = inputToken;
+      if (tokens && tokens.address === address) {
+        const { tokenIds, tokenUris, amounts } = tokens;
+        const index = tokenIds.indexOf(tokenId);
+        if (index >= 0) {
+          tokenIds.splice(index, 1);
+          tokenUris.splice(index, 1);
+          amounts.splice(index, 1);
+          if (tokenIds.length > 0) {
+            setTokens({
+              ...tokens,
+              tokenIds,
+              tokenUris,
+              amounts,
+            });
+          } else {
+            setTokens();
+          }
+        }
+      }
+    },
+    [tokens],
+  );
+
   return (
     <BridgeContext.Provider
       value={{
@@ -57,6 +115,11 @@ export const BridgeProvider = ({ children }) => {
         totalConfirms,
         receiver,
         setReceiver,
+        tokens,
+        selectToken,
+        unselectToken,
+        searchText,
+        setSearchText,
         // allowed,
         // approve,
         // updateAllowance,

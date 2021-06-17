@@ -4,6 +4,7 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Collapse,
   Input,
   InputGroup,
   InputRightElement,
@@ -13,7 +14,8 @@ import {
   Wrap,
   WrapItem,
 } from '@chakra-ui/react';
-import { TokenDisplay } from 'components/bridge/TokenDisplay';
+import { TokenDisplay } from 'components/common/TokenDisplay';
+import { useBridgeContext } from 'contexts/BridgeContext';
 import React, { useState } from 'react';
 
 const useInputSize = () => {
@@ -31,10 +33,21 @@ const useInputSize = () => {
   return { inputSize, inputHeight, inputLeftPadding };
 };
 
+const getChosenTokens = ({ address, tokenIds, tokenUris, amounts, is1155 }) =>
+  tokenIds.map((id, i) => ({
+    tokenId: id,
+    tokenUri: tokenUris[i],
+    amount: amounts[i],
+    address,
+    is1155,
+  }));
+
 export const BridgeSearch = () => {
-  const chosenTokens = [];
+  const { tokens, searchText, setSearchText } = useBridgeContext();
+  const chosenTokens = tokens ? getChosenTokens(tokens) : [];
   const [searching] = useState(false);
   const { inputSize, inputHeight, inputLeftPadding } = useInputSize();
+  const showTokens = chosenTokens.length > 0;
 
   return (
     <>
@@ -51,20 +64,21 @@ export const BridgeSearch = () => {
             </Text>
             <AccordionIcon boxSize="1.5rem" />
           </AccordionButton>
-          <AccordionPanel pt="4">
-            {chosenTokens.length ? (
-              <Wrap spacing="6">
+          <AccordionPanel minH="3rem" pt="1rem">
+            <Collapse in={showTokens} w="100%">
+              <Wrap spacing="6" minH="10.25rem">
                 {chosenTokens.map((token, index) => (
                   <WrapItem key={index.toString()}>
-                    <TokenDisplay token={token} />
+                    <TokenDisplay token={token} isChecked />
                   </WrapItem>
                 ))}
               </Wrap>
-            ) : (
+            </Collapse>
+            <Collapse in={!showTokens} w="100%">
               <Text color="greyText" fontSize="sm" w="100%">
                 Choose token from your wallet
               </Text>
-            )}
+            </Collapse>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
@@ -85,6 +99,8 @@ export const BridgeSearch = () => {
           h={inputHeight}
           pl={inputLeftPadding}
           pr={inputHeight}
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
         />
         {searching ? (
           <InputRightElement h={inputHeight} w={inputHeight}>
