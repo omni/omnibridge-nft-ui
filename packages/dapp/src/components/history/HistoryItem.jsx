@@ -312,7 +312,7 @@ export const HistoryItem = ({
               hash={loading ? txHash : undefined}
             >
               <Button
-                w="100%"
+                w="auto"
                 size="sm"
                 colorScheme="blue"
                 onClick={claimTokens}
