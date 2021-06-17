@@ -2,7 +2,8 @@ import { CheckIcon } from '@chakra-ui/icons';
 import { Flex, Link, Text, useBoolean, VStack } from '@chakra-ui/react';
 import { ImageAsArray as Image } from 'components/bridge/TokenImage';
 import { TopRightArrowIcon } from 'icons/TopRightArrowIcon';
-import { getAccountString, getExplorerUrl } from 'lib/helpers';
+import { getExplorerUrl } from 'lib/helpers';
+import { getTruncatedAddress, truncateText } from 'lib/stringHelpers';
 import React from 'react';
 
 const Checkbox = ({ isChecked = false, ...props }) => (
@@ -105,13 +106,13 @@ export const ERC721TokenDisplay = ({
           _groupHover={{ visibility: 'visible', opacity: 1 }}
         >
           <TokenTag>EIP-1155</TokenTag>
-          <TokenTag>{`ID: ${tokenId}`}</TokenTag>
+          <TokenTag>{`ID: ${truncateText(tokenId.toString(), 10)}`}</TokenTag>
           <Link
             href={`${getExplorerUrl(chainId)}/address/${address}`}
             isExternal
           >
             <TokenTag cursor="pointer" showArrow>
-              {getAccountString(address)}
+              {getTruncatedAddress(address)}
             </TokenTag>
           </Link>
         </VStack>
@@ -209,13 +210,13 @@ export const ERC1155TokenDisplay = ({
             _groupHover={{ visibility: 'visible', opacity: 1 }}
           >
             <TokenTag>EIP-1155</TokenTag>
-            <TokenTag>{`ID: ${tokenId}`}</TokenTag>
+            <TokenTag>{`ID: ${truncateText(tokenId.toString(), 10)}`}</TokenTag>
             <Link
               href={`${getExplorerUrl(chainId)}/address/${address}`}
               isExternal
             >
               <TokenTag cursor="pointer" showArrow>
-                {getAccountString(address)}
+                {getTruncatedAddress(address)}
               </TokenTag>
             </Link>
           </VStack>

@@ -1,5 +1,4 @@
 import { BigNumber, utils } from 'ethers';
-import { getAddress } from 'ethers/lib/utils';
 import {
   chainUrls,
   LOCAL_STORAGE_KEYS,
@@ -74,12 +73,6 @@ export const fetchQueryParams = search => {
     }, {});
 };
 
-export const getAccountString = address => {
-  const account = getAddress(address);
-  const len = account.length;
-  return `0x${account.substr(2, 4)}...${account.substr(len - 4, len - 1)}`;
-};
-
 export const logError = error => {
   // eslint-disable-next-line no-console
   console.error(error);
@@ -136,13 +129,4 @@ export const getMediatorAddress = (bridgeDirection, token) => {
     return getOverriddenMediator(bridgeDirection, token);
   }
   return getMediatorAddressWithoutOverride(bridgeDirection, token.chainId);
-};
-
-export const truncateText = (text, maxLength) => {
-  let truncated = text;
-
-  if (truncated.length > maxLength - 3) {
-    truncated = `${truncated.substr(0, maxLength - 3)}...`;
-  }
-  return truncated;
 };

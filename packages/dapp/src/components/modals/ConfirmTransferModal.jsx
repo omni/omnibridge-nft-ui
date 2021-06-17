@@ -23,7 +23,8 @@ import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { getGasPrice, getMedianHistoricalEthGasPrice } from 'lib/gasPrice';
-import { formatValue, getAccountString, getNetworkLabel } from 'lib/helpers';
+import { formatValue, getNetworkLabel } from 'lib/helpers';
+import { getTruncatedAddress } from 'lib/stringHelpers';
 import React, { useEffect, useState } from 'react';
 
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
@@ -179,7 +180,7 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
               {receiver ? (
                 <>
                   <Text as="span">{` and `}</Text>
-                  <Text as="b">{getAccountString(receiver)}</Text>
+                  <Text as="b">{getTruncatedAddress(receiver)}</Text>
                   <Text as="span">{` will receive `}</Text>
                 </>
               ) : (

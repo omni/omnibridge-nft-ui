@@ -1,6 +1,7 @@
 import NoImageAvailable from 'assets/no-image-available.svg';
 
 export const uriToHttp = uri => {
+  if (!uri) return '';
   const protocol = uri.split(':')[0].toLowerCase();
   const hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
   const name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];
@@ -23,6 +24,7 @@ export const uriToHttp = uri => {
 };
 
 export const uriToHttpAsArray = uri => {
+  if (!uri) return [];
   const protocol = uri.split(':')[0].toLowerCase();
   const hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
   const name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];

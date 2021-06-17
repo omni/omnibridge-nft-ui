@@ -1,6 +1,6 @@
 import { useWeb3Context } from 'contexts/Web3Context';
-// import { useApproval } from 'hooks/useApproval';
 import { useTotalConfirms } from 'hooks/useTotalConfirms';
+// import { useApproval } from 'hooks/useApproval';
 // import { relayTokens } from 'lib/bridge';
 import { logError } from 'lib/helpers';
 import React, { useCallback, useContext, useState } from 'react';
@@ -49,17 +49,17 @@ export const BridgeProvider = ({ children }) => {
   return (
     <BridgeContext.Provider
       value={{
-        // allowed,
-        // approve,
         transfer,
         loading,
         setLoading,
         txHash,
         setTxHash,
         totalConfirms,
-        // updateAllowance,
         receiver,
         setReceiver,
+        // allowed,
+        // approve,
+        // updateAllowance,
         // unlockLoading,
         // approvalTxHash,
       }}
