@@ -26,7 +26,8 @@ const eip721TokensQuery = gql`
   }
 `;
 
-export const fetch721TokenList = async (chainId, account, graphEndpoint) => {
+export const fetch721TokenList = async (chainId, _account, graphEndpoint) => {
+  const account = '0x2d5c035f99a7df3067edacded0e117d7076abf7c';
   if (!account || !chainId || !graphEndpoint) return [];
   try {
     const data = await request(graphEndpoint, eip721TokensQuery, {
@@ -88,7 +89,8 @@ const eip1155TokensQuery = gql`
   }
 `;
 
-export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
+export const fetch1155TokenList = async (chainId, _account, graphEndpoint) => {
+  const account = '0x2d5c035f99a7df3067edacded0e117d7076abf7c';
   if (!account || !chainId || !graphEndpoint) return [];
   try {
     const data = await request(graphEndpoint, eip1155TokensQuery, {
@@ -110,7 +112,7 @@ export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
             },
             amount,
           }) =>
-            tokenUri
+            tokenId // tokenUri
               ? {
                   chainId,
                   address,
