@@ -22,7 +22,13 @@ export const BridgeUI = () => {
 
   const txNeedsClaiming = !!txHash && !loading && chainId === foreignChainId;
   return (
-    <Flex align="center" direction="column" w="100%" maxW="75rem" px={4}>
+    <Flex
+      align="center"
+      direction="column"
+      w="100%"
+      maxW="75rem"
+      px={{ base: 0, sm: 4 }}
+    >
       <BridgeLoadingModal />
       {txNeedsClaiming ? <ClaimTransferModal /> : null}
       {txNeedsClaiming || neverShowClaims || needsSaving ? null : (

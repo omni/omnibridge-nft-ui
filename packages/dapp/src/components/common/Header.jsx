@@ -28,7 +28,8 @@ const HistoryLink = ({ close }) => {
         close();
       }}
       leftIcon={<HistoryIcon />}
-      px={{ base: 4, md: 2, lg: 4 }}
+      px={2}
+      fontSize="sm"
     >
       <Text color="black"> History</Text>
     </Button>

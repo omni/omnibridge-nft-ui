@@ -67,6 +67,6 @@ export const theme = {
   },
   fonts: {
     ...chakraTheme.fonts,
-    body: 'Roboto, sans-serif',
+    body: `'Roboto', sans-serif`,
   },
 };
