@@ -1,16 +1,17 @@
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useTotalConfirms } from 'hooks/useTotalConfirms';
-// import { useApproval } from 'hooks/useApproval';
+import { useUnlock } from 'hooks/useUnlock';
 // import { relayTokens } from 'lib/bridge';
 import { logError } from 'lib/helpers';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 export const BridgeContext = React.createContext({});
 
 export const useBridgeContext = () => useContext(BridgeContext);
 
 export const BridgeProvider = ({ children }) => {
-  const { isGnosisSafe, account } = useWeb3Context();
+  const { isGnosisSafe, account, providerChainId, ethersProvider } =
+    useWeb3Context();
 
   const [receiver, setReceiver] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,14 +20,7 @@ export const BridgeProvider = ({ children }) => {
   const [searchText, setSearchText] = useState('');
 
   const totalConfirms = useTotalConfirms();
-
-  // const {
-  //   allowed,
-  //   updateAllowance,
-  //   unlockLoading,
-  //   approvalTxHash,
-  //   approve,
-  // } = useApproval(fromToken, fromAmount);
+  const { unlocked, unlockLoading, unlockTxHash, unlock } = useUnlock(tokens);
 
   const transfer = useCallback(async () => {
     setLoading(true);
@@ -50,7 +44,8 @@ export const BridgeProvider = ({ children }) => {
 
   const selectToken = useCallback(
     inputToken => {
-      const { address, tokenId, tokenUri, amount, is1155 } = inputToken;
+      const { address, tokenId, tokenUri, amount, is1155, chainId } =
+        inputToken;
       if (tokens && tokens.address === address) {
         const { tokenIds, tokenUris, amounts } = tokens;
         const index = tokenIds.indexOf(tokenId);
@@ -72,6 +67,7 @@ export const BridgeProvider = ({ children }) => {
           tokenUris: [tokenUri],
           amounts: [amount],
           is1155,
+          chainId,
         });
       }
     },
@@ -104,6 +100,8 @@ export const BridgeProvider = ({ children }) => {
     [tokens],
   );
 
+  useEffect(() => setTokens(), [providerChainId, account, ethersProvider]);
+
   return (
     <BridgeContext.Provider
       value={{
@@ -120,11 +118,10 @@ export const BridgeProvider = ({ children }) => {
         unselectToken,
         searchText,
         setSearchText,
-        // allowed,
-        // approve,
-        // updateAllowance,
-        // unlockLoading,
-        // approvalTxHash,
+        unlocked,
+        unlockLoading,
+        unlockTxHash,
+        unlock,
       }}
     >
       {children}

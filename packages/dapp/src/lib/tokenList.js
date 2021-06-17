@@ -110,7 +110,7 @@ export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
             },
             amount,
           }) =>
-            tokenUri
+            tokenId // tokenUri
               ? {
                   chainId,
                   address,

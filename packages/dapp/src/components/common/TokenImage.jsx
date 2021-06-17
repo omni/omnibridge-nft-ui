@@ -3,7 +3,7 @@ import NoImageAvailable from 'assets/no-image-available.svg';
 import { fetchImageUri, uriToHttp, uriToHttpAsArray } from 'lib/uriHelpers';
 import React, { useEffect, useState } from 'react';
 
-export const Image = ({ src: uri, ...props }) => {
+export const Image = React.memo(({ src: uri, ...props }) => {
   const [src, setSrc] = useState(uri);
 
   useEffect(() => {
@@ -21,11 +21,11 @@ export const Image = ({ src: uri, ...props }) => {
   }
 
   return <ChakraImage src={NoImageAvailable} p="1.5rem" {...props} />;
-};
+});
 
 const BAD_SRCS = {};
 
-export const ImageAsArray = ({ src: uri, ...props }) => {
+export const ImageAsArray = React.memo(({ src: uri, ...props }) => {
   const [, refresh] = useState(0);
   const [srcs, setSrcs] = useState([]);
 
@@ -61,4 +61,4 @@ export const ImageAsArray = ({ src: uri, ...props }) => {
   }
 
   return <ChakraImage src={NoImageAvailable} p="1.5rem" {...props} />;
-};
+});

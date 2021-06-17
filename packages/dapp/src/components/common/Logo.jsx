@@ -15,7 +15,7 @@ const logos = {
   56: BSCLogo,
 };
 
-export const Logo = ({ reverseFallback = false, ...props }) => {
+export const Logo = React.memo(({ reverseFallback = false, ...props }) => {
   const { providerChainId } = useWeb3Context();
   const { getBridgeChainId } = useBridgeDirection();
   const chainId = reverseFallback
@@ -23,4 +23,4 @@ export const Logo = ({ reverseFallback = false, ...props }) => {
     : providerChainId;
   const fallbackLogo = logos[chainId];
   return <Image src={fallbackLogo} {...props} />;
-};
+});

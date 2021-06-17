@@ -1,9 +1,7 @@
 import {
-  Box,
   Button,
-  Divider,
   Flex,
-  Image,
+  HStack,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,10 +10,11 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  useBreakpointValue,
-  useToast,
+  // useBreakpointValue,
+  // useToast,
 } from '@chakra-ui/react';
-import TransferImage from 'assets/confirm-transfer.svg';
+import { DisplayTokens } from 'components/common/DisplayTokens';
+import { Logo } from 'components/common/Logo';
 import { GnosisSafeWarning } from 'components/warnings/GnosisSafeWarning';
 import { MedianGasWarning } from 'components/warnings/MedianGasWarning';
 import { NeedsTransactionsWarning } from 'components/warnings/NeedsTransactionsWarning';
@@ -23,61 +22,50 @@ import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { getGasPrice, getMedianHistoricalEthGasPrice } from 'lib/gasPrice';
-import { formatValue, getNetworkLabel } from 'lib/helpers';
-import { getTruncatedAddress } from 'lib/stringHelpers';
-import React, { useEffect, useState } from 'react';
+import { getNetworkName } from 'lib/helpers';
+import React, { useState } from 'react';
 
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   const { isGnosisSafe, account } = useWeb3Context();
 
-  const { homeChainId, foreignChainId } = useBridgeDirection();
-  const { receiver, fromToken, toToken, fromAmount, toAmount, transfer } =
-    useBridgeContext();
-  const [fee, setFee] = useState(0);
-  useEffect(() => {
-    if (fromAmount.gt(0)) {
-      setFee(
-        ((Number(fromAmount) - Number(toAmount)) * 100) / Number(fromAmount),
-      );
-    }
-  }, [fromAmount, toAmount]);
+  const { homeChainId, foreignChainId, getBridgeChainId } =
+    useBridgeDirection();
+  const { receiver, tokens } = useBridgeContext();
 
-  const smallScreen = useBreakpointValue({ base: true, md: false });
-  const toast = useToast();
+  // const smallScreen = useBreakpointValue({ base: true, md: false });
+  // const toast = useToast();
   const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] =
     useState(false);
 
-  if (!fromToken || !toToken) return null;
+  if (!tokens) return null;
 
-  const isHome = fromToken.chainId === homeChainId;
-  const fromAmt = formatValue(fromAmount, fromToken.decimals);
-  const fromUnit = fromToken.symbol;
-  const toAmt = formatValue(toAmount, toToken.decimals);
-  const toUnit = toToken.symbol;
+  const { chainId } = tokens;
+  const isHome = chainId !== homeChainId;
+
   const currentGasPrice = getGasPrice();
   const medianGasPrice = getMedianHistoricalEthGasPrice();
 
-  const showError = msg => {
-    if (msg) {
-      toast({
-        title: 'Error',
-        description: msg,
-        status: 'error',
-        isClosable: 'true',
-      });
-    }
-  };
+  // const showError = msg => {
+  //   if (msg) {
+  //     toast({
+  //       title: 'Error',
+  //       description: msg,
+  //       status: 'error',
+  //       isClosable: 'true',
+  //     });
+  //   }
+  // };
 
   const onClick = () => {
-    transfer().catch(error => {
-      if (error && error.message) {
-        showError(error.message);
-      } else {
-        showError(
-          'Impossible to perform the operation. Reload the application and try again.',
-        );
-      }
-    });
+    // transfer().catch(error => {
+    //   if (error && error.message) {
+    //     showError(error.message);
+    //   } else {
+    //     showError(
+    //       'Impossible to perform the operation. Reload the application and try again.',
+    //     );
+    //   }
+    // });
     onClose();
   };
 
@@ -93,7 +81,7 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
         <ModalContent
           boxShadow="0px 1rem 2rem #617492"
           borderRadius="1rem"
-          maxW="38rem"
+          maxW="34.25rem"
           mx={{ base: 12, lg: 0 }}
         >
           <ModalHeader p={6}>
@@ -107,88 +95,61 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
             p={2}
           />
           <ModalBody px={6} py={0}>
-            <Flex align="center" direction={{ base: 'column', md: 'row' }}>
-              <Flex
-                justify="center"
-                align="center"
-                direction="column"
-                border="1px solid #DAE3F0"
-                borderRadius="0.25rem"
-                w="10rem"
-                h="4rem"
-                px={4}
+            <Flex
+              direction={{ base: 'column', md: 'row' }}
+              width="100%"
+              justify="space-between"
+              position="relative"
+              align="stretch"
+              mb="4"
+            >
+              <HStack spacing="0.5rem">
+                <Logo w="3rem" h="3rem" />
+                <Flex
+                  align="flex-start"
+                  direction="column"
+                  w="9rem"
+                  minW="9rem"
+                  maxW="9rem"
+                >
+                  <Text color="greyText" fontSize="sm">
+                    From
+                  </Text>
+                  <Text fontWeight="500" fontSize="lg">
+                    {getNetworkName(chainId)}
+                  </Text>
+                </Flex>
+              </HStack>
+              <HStack
+                spacing="0.5rem"
+                justify={{ base: 'flex-end', md: 'flex-start' }}
               >
-                <Text textAlign="center" fontWeight="bold">
-                  {fromAmt}
-                </Text>
-                <Text textAlign="center" fontSize="sm">
-                  {fromUnit}
-                </Text>
-              </Flex>
-              <Flex
-                flex={1}
-                minH="5rem"
-                h="5rem"
-                w={{ base: '10rem', md: 'auto' }}
-                justify="center"
-                align="center"
-                position="relative"
-              >
-                <Divider
-                  color="#DAE3F0"
-                  orientation={smallScreen ? 'vertical' : 'horizontal'}
-                />
-                <Image
-                  src={TransferImage}
-                  position="absolute"
-                  left="50%"
-                  top="50%"
-                  transform={{
-                    base: 'translate(-50%, -50%) rotate(90deg)',
-                    md: 'translate(-50%, -50%)',
-                  }}
-                />
-              </Flex>
-              <Flex
-                justify="center"
-                align="center"
-                direction="column"
-                border="1px solid #DAE3F0"
-                borderRadius="0.25rem"
-                w="10rem"
-                h="4rem"
-                px={4}
-              >
-                <Text textAlign="center" fontWeight="bold">
-                  {toAmt}
-                </Text>
-                <Text textAlign="center" fontSize="sm">
-                  {toUnit}
-                </Text>
-              </Flex>
+                <Flex
+                  align="flex-end"
+                  direction="column"
+                  w="9rem"
+                  minW="9rem"
+                  maxW="9rem"
+                >
+                  <Text color="greyText" fontSize="sm">
+                    To
+                  </Text>
+                  <Text fontWeight="500" fontSize="lg" textAlign="right">
+                    {getNetworkName(getBridgeChainId(chainId))}
+                  </Text>
+                </Flex>
+                <Logo w="3rem" h="3rem" reverseFallback />
+              </HStack>
             </Flex>
-            <Flex align="center" fontSize="sm" justify="center" mt={4}>
-              {`Bridge Fees ${Number(fee.toFixed(3))}%`}
+            <Flex
+              mt="4"
+              bg="#EEf4FD"
+              borderRadius="1rem"
+              p="4"
+              direction="column"
+            >
+              <DisplayTokens tokens={tokens} />
             </Flex>
-            <Divider color="#DAE3F0" my={4} />
-            <Box w="100%" fontSize="sm" color={isHome ? 'black' : 'grey'}>
-              <Text as="span">{`Please confirm that you would like to send `}</Text>
-              <Text as="b">{`${fromAmt} ${fromUnit}`}</Text>
-              <Text as="span">{` from ${getNetworkLabel(
-                fromToken.chainId,
-              )}`}</Text>
-              {receiver ? (
-                <>
-                  <Text as="span">{` and `}</Text>
-                  <Text as="b">{getTruncatedAddress(receiver)}</Text>
-                  <Text as="span">{` will receive `}</Text>
-                </>
-              ) : (
-                <Text as="span">{` and receive `}</Text>
-              )}
-              <Text as="b">{`${toAmt} ${toUnit}`}</Text>
-              <Text as="span">{` on ${getNetworkLabel(toToken.chainId)}`}</Text>
-            </Box>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">
             {isHome && <NeedsTransactionsWarning noShadow />}

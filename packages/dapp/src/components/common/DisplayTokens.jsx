@@ -3,19 +3,14 @@ import { TokenDisplay } from 'components/common/TokenDisplay';
 import React from 'react';
 
 export const DisplayTokens = ({
-  chainId,
-  token: address,
-  tokenIds,
-  values,
-  tokenUris,
-  is1155,
+  tokens: { chainId, address, tokenIds, tokenUris, amounts, is1155 },
 }) => {
   const tokens = tokenIds.map((id, i) => ({
     chainId,
     address,
     tokenId: id,
-    amount: values[i] || 0,
     tokenUri: tokenUris[i] || '',
+    amount: amounts[i] || 0,
     is1155,
   }));
   return (
