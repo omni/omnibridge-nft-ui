@@ -345,7 +345,7 @@ export const SelectEIP1155TokenModal = ({
     selectToken({ ...token, amount: amount.toString() });
     setChecked(true);
     onClose();
-  }, [token, amount, setChecked, onClose]);
+  }, [token, amount, setChecked, onClose, selectToken]);
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay background="modalBG">
