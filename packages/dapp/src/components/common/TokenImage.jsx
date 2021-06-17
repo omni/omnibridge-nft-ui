@@ -20,7 +20,7 @@ export const Image = ({ src: uri, ...props }) => {
     return <ChakraImage src={src} {...props} />;
   }
 
-  return <ChakraImage src={NoImageAvailable} {...props} />;
+  return <ChakraImage src={NoImageAvailable} p="1.5rem" {...props} />;
 };
 
 const BAD_SRCS = {};
@@ -60,5 +60,5 @@ export const ImageAsArray = ({ src: uri, ...props }) => {
     );
   }
 
-  return <ChakraImage src={NoImageAvailable} {...props} />;
+  return <ChakraImage src={NoImageAvailable} p="1.5rem" {...props} />;
 };
