@@ -16,6 +16,7 @@ export const BridgeProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState();
   const [tokens, setTokens] = useState();
+  const [searchText, setSearchText] = useState('');
 
   const totalConfirms = useTotalConfirms();
 
@@ -49,21 +50,29 @@ export const BridgeProvider = ({ children }) => {
 
   const selectToken = useCallback(
     inputToken => {
-      const { address, tokenId, amount, is1155 } = inputToken;
+      const { address, tokenId, tokenUri, amount, is1155 } = inputToken;
       if (tokens && tokens.address === address) {
-        const { tokenIds, amounts } = tokens;
+        const { tokenIds, tokenUris, amounts } = tokens;
         const index = tokenIds.indexOf(tokenId);
         if (index >= 0) {
           tokenIds.splice(index, 1);
+          tokenUris.splice(index, 1);
           amounts.splice(index, 1);
         }
         setTokens({
           ...tokens,
           tokenIds: [...tokenIds, tokenId],
+          tokenUris: [...tokenUris, tokenUri],
           amounts: [...amounts, amount],
         });
       } else {
-        setTokens({ address, tokenIds: [tokenId], amounts: [amount], is1155 });
+        setTokens({
+          address,
+          tokenIds: [tokenId],
+          tokenUris: [tokenUri],
+          amounts: [amount],
+          is1155,
+        });
       }
     },
     [tokens],
@@ -73,15 +82,17 @@ export const BridgeProvider = ({ children }) => {
     inputToken => {
       const { address, tokenId } = inputToken;
       if (tokens && tokens.address === address) {
-        const { tokenIds, amounts } = tokens;
+        const { tokenIds, tokenUris, amounts } = tokens;
         const index = tokenIds.indexOf(tokenId);
         if (index >= 0) {
           tokenIds.splice(index, 1);
+          tokenUris.splice(index, 1);
           amounts.splice(index, 1);
           if (tokenIds.length > 0) {
             setTokens({
               ...tokens,
               tokenIds,
+              tokenUris,
               amounts,
             });
           } else {
@@ -107,6 +118,8 @@ export const BridgeProvider = ({ children }) => {
         tokens,
         selectToken,
         unselectToken,
+        searchText,
+        setSearchText,
         // allowed,
         // approve,
         // updateAllowance,

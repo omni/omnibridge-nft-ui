@@ -88,6 +88,7 @@ export const ERC721TokenDisplay = ({
       overflow="hidden"
       bgColor="white"
       position="relative"
+      cursor={isDisabled ? 'not-allowed' : 'initial'}
       opacity={isDisabled ? 0.5 : 1}
       disabled={isDisabled}
     >
@@ -130,9 +131,11 @@ export const ERC721TokenDisplay = ({
           visibility="hidden"
           opacity={0}
           transition="all 0.25s"
-          _groupHover={{ visibility: 'visible', opacity: 1 }}
+          _groupHover={
+            isDisabled ? undefined : { visibility: 'visible', opacity: 1 }
+          }
         >
-          <TokenTag>EIP-1155</TokenTag>
+          <TokenTag>EIP-721</TokenTag>
           <TokenTag>{`ID: ${truncateText(tokenId.toString(), 10)}`}</TokenTag>
           <Link
             href={`${getExplorerUrl(chainId)}/address/${address}`}

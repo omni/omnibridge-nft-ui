@@ -32,16 +32,17 @@ const useInputSize = () => {
   return { inputSize, inputHeight, inputLeftPadding };
 };
 
-const getChosenTokens = ({ address, tokenIds, amounts, is1155 }) =>
+const getChosenTokens = ({ address, tokenIds, tokenUris, amounts, is1155 }) =>
   tokenIds.map((id, i) => ({
     tokenId: id,
+    tokenUri: tokenUris[i],
     amount: amounts[i],
     address,
     is1155,
   }));
 
 export const BridgeSearch = () => {
-  const { tokens } = useBridgeContext();
+  const { tokens, searchText, setSearchText } = useBridgeContext();
   const chosenTokens = tokens ? getChosenTokens(tokens) : [];
   const [searching] = useState(false);
   const { inputSize, inputHeight, inputLeftPadding } = useInputSize();
@@ -95,6 +96,8 @@ export const BridgeSearch = () => {
           h={inputHeight}
           pl={inputLeftPadding}
           pr={inputHeight}
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
         />
         {searching ? (
           <InputRightElement h={inputHeight} w={inputHeight}>

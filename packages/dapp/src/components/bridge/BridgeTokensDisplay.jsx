@@ -9,11 +9,13 @@ import {
   WrapItem,
 } from '@chakra-ui/react';
 import { TokenDisplay } from 'components/common/TokenDisplay';
+import { useBridgeContext } from 'contexts/BridgeContext';
 import { useUserTokens } from 'hooks/useUserTokens';
 import React from 'react';
 
 export const BridgeTokensDisplay = () => {
-  const { eip721Tokens, eip1155Tokens } = useUserTokens();
+  const { searchText } = useBridgeContext();
+  const { eip721Tokens, eip1155Tokens } = useUserTokens(searchText);
 
   return (
     <Accordion allowToggle allowMultiple w="100%" defaultIndex={[0, 1]}>
