@@ -10,7 +10,8 @@ import {
 } from '@chakra-ui/react';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { WalletIcon } from 'icons/WalletIcon';
-import { getAccountString, getNetworkLabel, getNetworkName } from 'lib/helpers';
+import { getNetworkLabel, getNetworkName } from 'lib/helpers';
+import { getTruncatedAddress } from 'lib/stringHelpers';
 import React from 'react';
 
 export const WalletSelector = ({ close }) => {
@@ -27,7 +28,7 @@ export const WalletSelector = ({ close }) => {
             px={{ base: 4, md: 2, lg: 4 }}
             leftIcon={<WalletIcon />}
           >
-            <Text> {getAccountString(account)} </Text>
+            <Text> {getTruncatedAddress(account)} </Text>
             <Flex
               justify="center"
               align="center"

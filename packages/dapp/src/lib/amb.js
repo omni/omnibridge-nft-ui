@@ -22,11 +22,7 @@ export const fetchAmbVersion = async (address, ethersProvider) => {
   const ambVersion = await ambContract
     .getBridgeInterfacesVersion()
     .catch(versionError => logError({ versionError }));
-  return {
-    major: ambVersion[0].toNumber(),
-    minor: ambVersion[1].toNumber(),
-    patch: ambVersion[2].toNumber(),
-  };
+  return ambVersion.join('.');
 };
 
 function strip0x(input) {
@@ -61,19 +57,14 @@ export const executeSignatures = async (
   version,
   { msgData, signatures, messageId },
 ) => {
-  let abi = [
+  const abi = [
+    'function safeExecuteSignaturesWithAutoGasLimit(bytes _data, bytes _signatures) external',
     'function executeSignatures(bytes messageData, bytes signatures) external',
     'function messageCallStatus(bytes32 _messageId) external view returns (bool)',
   ];
-  let ambContract = new Contract(address, abi, ethersProvider.getSigner());
+  const ambContract = new Contract(address, abi, ethersProvider.getSigner());
   let executeSignaturesFunc = ambContract.executeSignatures;
-  if (version.major > 5 || (version.major === 5 && version.minor > 6)) {
-    abi = [
-      'function safeExecuteSignaturesWithAutoGasLimit(bytes _data, bytes _signatures) external',
-      'function messageCallStatus(bytes32 _messageId) external view returns (bool)',
-    ];
-
-    ambContract = new Contract(address, abi, ethersProvider.getSigner());
+  if (version > '5.6.0') {
     executeSignaturesFunc = ambContract.safeExecuteSignaturesWithAutoGasLimit;
   }
   try {
@@ -100,10 +91,9 @@ const messagesTXQuery = gql`
     requests: userRequests(where: { txHash_contains: $txHash }, first: 1) {
       user
       recipient
-      amount
       token
-      decimals
-      symbol
+      tokenIds
+      values
       message {
         msgId
         msgData

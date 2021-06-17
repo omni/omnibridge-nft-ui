@@ -1,20 +1,15 @@
 import { useSettings } from 'contexts/SettingsContext';
-// import { fetchAmbVersion } from 'lib/amb';
-// import { networkLabels } from 'lib/constants';
-// import { logError } from 'lib/helpers';
+import { fetchAmbVersion } from 'lib/amb';
+import { networkLabels } from 'lib/constants';
+import { logError } from 'lib/helpers';
 import { networks } from 'lib/networks';
-// import { getEthersProvider } from 'lib/providers';
-import {
-  useCallback,
-  // useEffect,
-  useMemo,
-  // useState,
-} from 'react';
+import { getEthersProvider } from 'lib/providers';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const useBridgeDirection = () => {
   const { bridgeDirection } = useSettings();
-  // const [foreignAmbVersion, setForeignAmbVersion] = useState();
-  // const [fetchingVersion, setFetchingVersion] = useState(false);
+  const [foreignAmbVersion, setForeignAmbVersion] = useState();
+  const [fetchingVersion, setFetchingVersion] = useState(false);
   const bridgeConfig = useMemo(
     () => networks[bridgeDirection] || Object.values(networks)[0],
     [bridgeDirection],
@@ -24,32 +19,36 @@ export const useBridgeDirection = () => {
     homeChainId,
     foreignChainId,
     ambLiveMonitorPrefix,
-    homeGraphName,
-    foreignGraphName,
-    // foreignAmbAddress,
+    homeBridgeSubgraph,
+    foreignBridgeSubgraph,
+    home721Subgraph,
+    foreign721Subgraph,
+    home1155Subgraph,
+    foreign1155Subgraph,
+    foreignAmbAddress,
   } = bridgeConfig;
 
-  // useEffect(() => {
-  //   const label = networkLabels[foreignChainId];
-  //   const key = `${label}-AMB-VERSION`;
-  //   const fetchVersion = async () => {
-  //     const provider = await getEthersProvider(foreignChainId);
-  //     await fetchAmbVersion(foreignAmbAddress, provider)
-  //       .then(res => {
-  //         setForeignAmbVersion(res);
-  //         sessionStorage.setItem(key, JSON.stringify(res));
-  //       })
-  //       .catch(versionError => logError({ versionError }));
-  //     setFetchingVersion(false);
-  //   };
-  //   const version = sessionStorage.getItem(key);
-  //   if (!version && !fetchingVersion) {
-  //     setFetchingVersion(true);
-  //     fetchVersion();
-  //   } else {
-  //     setForeignAmbVersion(JSON.parse(version));
-  //   }
-  // }, [foreignAmbAddress, foreignChainId, fetchingVersion]);
+  useEffect(() => {
+    const label = networkLabels[foreignChainId];
+    const key = `${label}-AMB-VERSION`;
+    const fetchVersion = async () => {
+      const provider = await getEthersProvider(foreignChainId);
+      await fetchAmbVersion(foreignAmbAddress, provider)
+        .then(res => {
+          setForeignAmbVersion(res);
+          sessionStorage.setItem(key, res);
+        })
+        .catch(versionError => logError({ versionError }));
+      setFetchingVersion(false);
+    };
+    const version = sessionStorage.getItem(key);
+    if (!version && !fetchingVersion) {
+      setFetchingVersion(true);
+      fetchVersion();
+    } else {
+      setForeignAmbVersion(version);
+    }
+  }, [foreignAmbAddress, foreignChainId, fetchingVersion]);
 
   const getBridgeChainId = useCallback(
     chainId => (chainId === homeChainId ? foreignChainId : homeChainId),
@@ -64,10 +63,28 @@ export const useBridgeDirection = () => {
   const getGraphEndpoint = useCallback(
     chainId => {
       const subgraphName =
-        homeChainId === chainId ? homeGraphName : foreignGraphName;
+        homeChainId === chainId ? homeBridgeSubgraph : foreignBridgeSubgraph;
       return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },
-    [foreignGraphName, homeChainId, homeGraphName],
+    [foreignBridgeSubgraph, homeChainId, homeBridgeSubgraph],
+  );
+
+  const getEIP721GraphEndpoint = useCallback(
+    chainId => {
+      const subgraphName =
+        homeChainId === chainId ? home721Subgraph : foreign721Subgraph;
+      return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
+    },
+    [foreign721Subgraph, homeChainId, home721Subgraph],
+  );
+
+  const getEIP1155GraphEndpoint = useCallback(
+    chainId => {
+      const subgraphName =
+        homeChainId === chainId ? home1155Subgraph : foreign1155Subgraph;
+      return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
+    },
+    [foreign1155Subgraph, homeChainId, home1155Subgraph],
   );
 
   return {
@@ -75,7 +92,9 @@ export const useBridgeDirection = () => {
     getBridgeChainId,
     getMonitorUrl,
     getGraphEndpoint,
-    // foreignAmbVersion,
+    getEIP721GraphEndpoint,
+    getEIP1155GraphEndpoint,
+    foreignAmbVersion,
     ...bridgeConfig,
   };
 };

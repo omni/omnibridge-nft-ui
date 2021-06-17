@@ -1,45 +1,127 @@
 import { gql, request } from 'graphql-request';
 
-export const fetchTokenList = async (
-  _chainId,
-  homeEndpoint,
-  foreignEndpoint,
-) => {
-  const tokens = fetchTokensFromSubgraph(homeEndpoint, foreignEndpoint);
-  return tokens;
+import { logError } from './helpers';
+
+const getTokenUri = (tokenUri, tokenId) => {
+  console.log(tokenUri);
+  if (tokenUri && tokenId && /\{id\}/.test(tokenUri)) {
+    return tokenUri.replace(/\{id\}/, tokenId.toString());
+  }
+  return tokenUri;
 };
 
-const homeTokensQuery = gql`
-  query homeTokens {
-    tokens(where: { homeAddress_contains: "0x" }, first: 1000) {
-      chainId: homeChainId
-      address: homeAddress
-      name: homeName
-      symbol
-      decimals
+const eip721TokensQuery = gql`
+  query Get721Tokens($owner: ID) {
+    owner(id: $owner) {
+      tokens {
+        tokenUri: tokenURI
+        tokenId: tokenID
+        token: contract {
+          address: id
+          supportsMetadata: supportsEIP721Metadata
+        }
+      }
     }
   }
 `;
 
-const foreignTokensQuery = gql`
-  query foreignTokens {
-    tokens(where: { foreignAddress_contains: "0x" }, first: 1000) {
-      chainId: foreignChainId
-      address: foreignAddress
-      name: foreignName
-      symbol
-      decimals
+export const fetch721TokenList = async (chainId, account, graphEndpoint) => {
+  if (!account || !chainId || !graphEndpoint) return [];
+  try {
+    const data = await request(graphEndpoint, eip721TokensQuery, {
+      owner: account.toLowerCase(),
+    });
+    if (
+      data &&
+      data.owner &&
+      data.owner.tokens &&
+      data.owner.tokens.length > 0
+    ) {
+      return data.owner.tokens
+        .map(({ tokenUri, tokenId, token: { address, supportsMetadata } }) =>
+          supportsMetadata && tokenUri
+            ? {
+                chainId,
+                address,
+                tokenId,
+                tokenUri: getTokenUri(tokenUri, tokenId),
+                amount: 1,
+                is1155: false,
+              }
+            : undefined,
+        )
+        .filter(t => !!t);
+    }
+  } catch (graphError) {
+    logError({
+      graphError,
+      chainId,
+      owner: account.toLowerCase(),
+      graphEndpoint,
+    });
+  }
+  return [];
+};
+
+const eip1155TokensQuery = gql`
+  query Get1155Tokens($owner: ID) {
+    account(id: $owner) {
+      balances {
+        amount: value
+        token {
+          registry {
+            address: id
+          }
+          tokenUri: URI
+          tokenId: identifier
+        }
+      }
     }
   }
 `;
 
-const fetchTokensFromSubgraph = async (homeEndpoint, foreignEndpoint) => {
-  const [homeData, foreignData] = await Promise.all([
-    request(homeEndpoint, homeTokensQuery),
-    request(foreignEndpoint, foreignTokensQuery),
-  ]);
-  const homeTokens = homeData && homeData.tokens ? homeData.tokens : [];
-  const foreignTokens =
-    foreignData && foreignData.tokens ? foreignData.tokens : [];
-  return homeTokens.concat(foreignTokens);
+export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
+  if (!account || !chainId || !graphEndpoint) return [];
+  try {
+    const data = await request(graphEndpoint, eip1155TokensQuery, {
+      owner: account.toLowerCase(),
+    });
+    if (
+      data &&
+      data.account &&
+      data.account.balances &&
+      data.account.balances.length > 0
+    ) {
+      return data.account.balances
+        .map(
+          ({
+            token: {
+              tokenUri,
+              tokenId,
+              registry: { address },
+            },
+            amount,
+          }) =>
+            tokenUri
+              ? {
+                  chainId,
+                  address,
+                  tokenId,
+                  tokenUri: getTokenUri(tokenUri, tokenId),
+                  amount,
+                  is1155: true,
+                }
+              : undefined,
+        )
+        .filter(t => !!t);
+    }
+  } catch (graphError) {
+    logError({
+      graphError,
+      chainId,
+      owner: account.toLowerCase(),
+      graphEndpoint,
+    });
+  }
+  return [];
 };
