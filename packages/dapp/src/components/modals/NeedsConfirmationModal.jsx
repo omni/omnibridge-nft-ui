@@ -13,22 +13,23 @@ import {
   Text,
 } from '@chakra-ui/react';
 import ChangeNetworkImage from 'assets/change-network.png';
-import { BridgeContext } from 'contexts/BridgeContext';
+import { useBridgeContext } from 'contexts/BridgeContext';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { getNetworkName } from 'lib/helpers';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
-export const NeedsConfirmationModal = ({ setNeedsConfirmation }) => {
+export const NeedsConfirmationModal = ({
+  setNeedsConfirmation,
+  setMessage,
+}) => {
   const { foreignChainId } = useBridgeDirection();
-  const { fromToken, toToken, setTxHash } = useContext(BridgeContext);
-  const toUnit =
-    (toToken !== undefined && toToken.symbol) ||
-    (fromToken !== undefined && fromToken.symbol);
+  const { setTxHash } = useBridgeContext();
 
   const [isOpen, setOpen] = useState(true);
   const onClose = () => {
     setNeedsConfirmation(false);
     setTxHash();
+    setMessage();
     setOpen(false);
   };
 
@@ -64,7 +65,7 @@ export const NeedsConfirmationModal = ({ setNeedsConfirmation }) => {
                   <Text fontSize="small">
                     After you switch networks, you will complete a second
                     transaction on {getNetworkName(foreignChainId)} to claim
-                    your {toUnit} tokens.
+                    your tokens.
                   </Text>
                 </Alert>
               </Flex>

@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["airbnb", "prettier", "react-app"],
+  "extends": ["airbnb", "prettier", "react-app", "plugin:import/recommended"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -17,6 +17,7 @@
   "rules": {
     "import/no-default-export": "error",
     "import/prefer-default-export": "off",
+    "import/no-relative-packages": "warn",
     "sort-imports": "off",
     "import/order": "off",
     "simple-import-sort/imports": "warn",

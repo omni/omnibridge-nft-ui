@@ -33,13 +33,21 @@ const useInputSize = () => {
   return { inputSize, inputHeight, inputLeftPadding };
 };
 
-const getChosenTokens = ({ address, tokenIds, tokenUris, amounts, is1155 }) =>
+const getChosenTokens = ({
+  address,
+  tokenIds,
+  tokenUris,
+  amounts,
+  is1155,
+  chainId,
+}) =>
   tokenIds.map((id, i) => ({
     tokenId: id,
     tokenUri: tokenUris[i],
     amount: amounts[i],
     address,
     is1155,
+    chainId,
   }));
 
 export const BridgeSearch = () => {

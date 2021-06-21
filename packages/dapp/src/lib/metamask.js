@@ -7,19 +7,6 @@ import {
   getRPCUrl,
 } from './helpers';
 
-export const addTokenToMetamask = async token =>
-  window.ethereum.request({
-    method: 'wallet_watchAsset',
-    params: {
-      type: 'ERC20',
-      options: {
-        address: token.address,
-        symbol: token.symbol,
-        decimals: token.decimals,
-      },
-    },
-  });
-
 export const addChainToMetaMask = async ethereumChain => {
   const { chainId } = ethereumChain;
   const { name, symbol } = getNetworkCurrency(chainId);

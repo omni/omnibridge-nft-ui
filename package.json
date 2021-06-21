@@ -12,18 +12,18 @@
     "subgraph:auth": "yarn workspace @omnibridge-nft/subgraph auth",
     "subgraph:codegen": "yarn workspace @omnibridge-nft/subgraph codegen",
     "subgraph:build": "yarn workspace @omnibridge-nft/subgraph build",
-    "subgraph:prepare-kovan": "yarn workspace @omnibridge-nft/subgraph prepare-kovan",
-    "subgraph:deploy-kovan": "yarn workspace @omnibridge-nft/subgraph deploy-kovan",
-    "subgraph:prepare-sokol": "yarn workspace @omnibridge-nft/subgraph prepare-sokol",
-    "subgraph:deploy-sokol": "yarn workspace @omnibridge-nft/subgraph deploy-sokol",
-    "subgraph:prepare-xdai": "yarn workspace @omnibridge-nft/subgraph prepare-xdai",
-    "subgraph:deploy-xdai": "yarn workspace @omnibridge-nft/subgraph deploy-xdai",
-    "subgraph:prepare-mainnet": "yarn workspace @omnibridge-nft/subgraph prepare-mainnet",
-    "subgraph:deploy-mainnet": "yarn workspace @omnibridge-nft/subgraph deploy-mainnet",
-    "subgraph:prepare-xdai-bsc": "yarn workspace @omnibridge-nft/subgraph prepare-xdai-bsc",
-    "subgraph:deploy-xdai-bsc": "yarn workspace @omnibridge-nft/subgraph deploy-xdai-bsc",
-    "subgraph:prepare-bsc-xdai": "yarn workspace @omnibridge-nft/subgraph prepare-bsc-xdai",
-    "subgraph:deploy-bsc-xdai": "yarn workspace @omnibridge-nft/subgraph deploy-bsc-xdai",
+    "subgraph:prepare-xdai-mainnet": "yarn workspace @omnibridge-nft/subgraph prepare-xdai-mainnet",
+    "subgraph:deploy-xdai-mainnet": "yarn workspace @omnibridge-nft/subgraph deploy-xdai-mainnet",
+    "subgraph:prepare-mainnet-xdai": "yarn workspace @omnibridge-nft/subgraph prepare-mainnet-xdai",
+    "subgraph:deploy-mainnet-xdai": "yarn workspace @omnibridge-nft/subgraph deploy-mainnet-xdai",
+    "subgraph:prepare-xdai-rinkeby": "yarn workspace @omnibridge-nft/subgraph prepare-xdai-rinkeby",
+    "subgraph:deploy-xdai-rinkeby": "yarn workspace @omnibridge-nft/subgraph deploy-xdai-rinkeby",
+    "subgraph:prepare-rinkeby-xdai": "yarn workspace @omnibridge-nft/subgraph prepare-rinkeby-xdai",
+    "subgraph:deploy-rinkeby-xdai": "yarn workspace @omnibridge-nft/subgraph deploy-rinkeby-xdai",
+    "subgraph:prepare-sokol-kovan": "yarn workspace @omnibridge-nft/subgraph prepare-sokol-kovan",
+    "subgraph:deploy-sokol-kovan": "yarn workspace @omnibridge-nft/subgraph deploy-sokol-kovan",
+    "subgraph:prepare-kovan-sokol": "yarn workspace @omnibridge-nft/subgraph prepare-kovan-sokol",
+    "subgraph:deploy-kovan-sokol": "yarn workspace @omnibridge-nft/subgraph deploy-kovan-sokol",
     "dapp:build": "yarn workspace @omnibridge-nft/dapp build",
     "dapp:eject": "yarn workspace @omnibridge-nft/dapp eject",
     "dapp:start": "yarn workspace @omnibridge-nft/dapp start",
@@ -43,13 +43,14 @@
     ]
   },
   "devDependencies": {
-    "eslint": "7.28.0",
+    "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-import": "2.23.4",
-    "eslint-plugin-react": "7.24.0",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "eslint-plugin-simple-import-sort": "7.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.1"
@@ -61,5 +62,8 @@
       "prettier --write"
     ],
     "*.{json,md}": "prettier --write"
+  },
+  "resolutions": {
+    "assemblyscript": "git+https://github.com/AssemblyScript/assemblyscript.git#v0.6"
   }
 }

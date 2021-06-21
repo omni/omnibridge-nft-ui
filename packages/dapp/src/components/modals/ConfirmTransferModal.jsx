@@ -11,7 +11,7 @@ import {
   ModalOverlay,
   Text,
   // useBreakpointValue,
-  // useToast,
+  useToast,
 } from '@chakra-ui/react';
 import { DisplayTokens } from 'components/common/DisplayTokens';
 import { Logo } from 'components/common/Logo';
@@ -23,19 +23,37 @@ import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { getGasPrice, getMedianHistoricalEthGasPrice } from 'lib/gasPrice';
 import { getNetworkName } from 'lib/helpers';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   const { isGnosisSafe, account } = useWeb3Context();
 
-  const { homeChainId, foreignChainId, getBridgeChainId } =
-    useBridgeDirection();
-  const { receiver, tokens } = useBridgeContext();
+  const {
+    homeChainId,
+    foreignChainId,
+    getBridgeChainId,
+  } = useBridgeDirection();
+  const { receiver, tokens, transfer } = useBridgeContext();
 
   // const smallScreen = useBreakpointValue({ base: true, md: false });
-  // const toast = useToast();
-  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] =
-    useState(false);
+  const toast = useToast();
+  const showError = useCallback(
+    msg => {
+      if (msg) {
+        toast({
+          title: 'Error',
+          description: msg,
+          status: 'error',
+          isClosable: 'true',
+        });
+      }
+    },
+    [toast],
+  );
+
+  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] = useState(
+    false,
+  );
 
   if (!tokens) return null;
 
@@ -45,27 +63,16 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   const currentGasPrice = getGasPrice();
   const medianGasPrice = getMedianHistoricalEthGasPrice();
 
-  // const showError = msg => {
-  //   if (msg) {
-  //     toast({
-  //       title: 'Error',
-  //       description: msg,
-  //       status: 'error',
-  //       isClosable: 'true',
-  //     });
-  //   }
-  // };
-
   const onClick = () => {
-    // transfer().catch(error => {
-    //   if (error && error.message) {
-    //     showError(error.message);
-    //   } else {
-    //     showError(
-    //       'Impossible to perform the operation. Reload the application and try again.',
-    //     );
-    //   }
-    // });
+    transfer().catch(error => {
+      if (error && error.message) {
+        showError(error.message);
+      } else {
+        showError(
+          'Impossible to perform the operation. Reload the application and try again.',
+        );
+      }
+    });
     onClose();
   };
 
@@ -152,7 +159,7 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
             </Flex>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">
-            {isHome && <NeedsTransactionsWarning noShadow />}
+            {!isHome && <NeedsTransactionsWarning noShadow />}
             {foreignChainId === 1 && medianGasPrice.lt(currentGasPrice) && (
               <MedianGasWarning
                 medianPrice={medianGasPrice}
