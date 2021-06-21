@@ -49,7 +49,7 @@ const {
 } = process.env;
 
 const DEFAULT_GAS_PRICE_SPEED_TYPE = 'standard';
-const DEFAULT_GAS_PRICE_UPDATE_INTERVAL = 15000;
+const DEFAULT_GAS_PRICE_UPDATE_INTERVAL = 60000;
 
 class GasPriceStore {
   gasPrice = BigNumber.from('0');

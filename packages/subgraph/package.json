@@ -2,25 +2,25 @@
   "name": "@omnibridge-nft/subgraph",
   "version": "1.0.0",
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.20.0",
-    "@graphprotocol/graph-ts": "0.20.0"
+    "@graphprotocol/graph-cli": "^0.20.1",
+    "@graphprotocol/graph-ts": "^0.20.0"
   },
   "license": "MIT",
   "scripts": {
     "auth": "graph auth https://api.thegraph.com/deploy/ $GRAPH_ACCESS_TOKEN",
-    "prepare-mainnet-xdai": "mustache config/mainnet-xdai.json subgraph.template.yaml > subgraph.yaml",
-    "prepare-xdai-mainnet": "mustache config/xdai-mainnet.json subgraph.template.yaml > subgraph.yaml",
-    "prepare-rinkeby-xdai": "mustache config/rinkeby-xdai.json subgraph.template.yaml > subgraph.yaml",
-    "prepare-xdai-rinkeby": "mustache config/xdai-rinkeby.json subgraph.template.yaml > subgraph.yaml",
-    "prepare-kovan-sokol": "mustache config/kovan-sokol.json subgraph.template.yaml > subgraph.yaml",
-    "prepare-sokol-kovan": "mustache config/sokol-kovan.json subgraph.template.yaml > subgraph.yaml",
     "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
+    "prepare-mainnet-xdai": "mustache config/mainnet-xdai.json subgraph.template.yaml > subgraph.yaml",
     "deploy-mainnet-xdai": "graph deploy dan13ram/mainnet-xdai-omnibridge-nft --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "prepare-xdai-mainnet": "mustache config/xdai-mainnet.json subgraph.template.yaml > subgraph.yaml",
     "deploy-xdai-mainnet": "graph deploy dan13ram/xdai-mainnet-omnibridge-nft --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "prepare-rinkeby-xdai": "mustache config/rinkeby-xdai.json subgraph.template.yaml > subgraph.yaml",
     "deploy-rinkeby-xdai": "graph deploy dan13ram/rinkeby-xdai-omnibridge-nft --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "prepare-xdai-rinkeby": "mustache config/xdai-rinkeby.json subgraph.template.yaml > subgraph.yaml",
     "deploy-xdai-rinkeby": "graph deploy dan13ram/xdai-rinkeby-omnibridge-nft --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "prepare-kovan-sokol": "mustache config/kovan-sokol.json subgraph.template.yaml > subgraph.yaml",
     "deploy-kovan-sokol": "graph deploy dan13ram/kovan-sokol-omnibridge-nft --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "prepare-sokol-kovan": "mustache config/sokol-kovan.json subgraph.template.yaml > subgraph.yaml",
     "deploy-sokol-kovan": "graph deploy dan13ram/sokol-kovan-omnibridge-nft --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/"
   },
   "devDependencies": {

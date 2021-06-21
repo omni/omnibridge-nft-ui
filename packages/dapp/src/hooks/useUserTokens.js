@@ -4,27 +4,30 @@ import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { fetch721TokenList, fetch1155TokenList } from 'lib/tokenList';
 import { useEffect, useState } from 'react';
 
-const tokenSearchFilter =
-  searchText =>
-  ({ name, symbol, address, tokenId }) => {
-    const nameSearch = name
-      ? name.toLowerCase().indexOf(searchText) >= 0
-      : false;
-    const symbolSearch = symbol
-      ? symbol.toLowerCase().indexOf(searchText) >= 0
-      : false;
-    const addressSearch = address
-      ? address.toLowerCase().indexOf(searchText) >= 0
-      : false;
-    const tokenIdSearch = tokenId
-      ? tokenId.toLowerCase().indexOf(searchText) >= 0
-      : false;
-    return nameSearch || symbolSearch || addressSearch || tokenIdSearch;
-  };
+const tokenSearchFilter = searchText => ({
+  name,
+  symbol,
+  address,
+  tokenId,
+}) => {
+  const nameSearch = name ? name.toLowerCase().indexOf(searchText) >= 0 : false;
+  const symbolSearch = symbol
+    ? symbol.toLowerCase().indexOf(searchText) >= 0
+    : false;
+  const addressSearch = address
+    ? address.toLowerCase().indexOf(searchText) >= 0
+    : false;
+  const tokenIdSearch = tokenId
+    ? tokenId.toLowerCase().indexOf(searchText) >= 0
+    : false;
+  return nameSearch || symbolSearch || addressSearch || tokenIdSearch;
+};
 
 export const useUserTokens = () => {
-  const { getEIP721GraphEndpoint, getEIP1155GraphEndpoint } =
-    useBridgeDirection();
+  const {
+    getEIP721GraphEndpoint,
+    getEIP1155GraphEndpoint,
+  } = useBridgeDirection();
   const { searchText, txHash } = useBridgeContext();
   const { account, providerChainId } = useWeb3Context();
   const [allEIP721Tokens, setAllEIP721Tokens] = useState([]);

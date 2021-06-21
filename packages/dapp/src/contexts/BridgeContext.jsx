@@ -17,14 +17,18 @@ export const BridgeContext = React.createContext({});
 export const useBridgeContext = () => useContext(BridgeContext);
 
 export const BridgeProvider = ({ children }) => {
-  const { isGnosisSafe, account, providerChainId, ethersProvider } =
-    useWeb3Context();
+  const {
+    isGnosisSafe,
+    account,
+    providerChainId,
+    ethersProvider,
+  } = useWeb3Context();
 
   const { getMediatorAddress } = useBridgeDirection();
-  const mediatorAddress = useMemo(
-    () => getMediatorAddress(providerChainId),
-    [getMediatorAddress, providerChainId],
-  );
+  const mediatorAddress = useMemo(() => getMediatorAddress(providerChainId), [
+    getMediatorAddress,
+    providerChainId,
+  ]);
 
   const [receiver, setReceiver] = useState('');
   const [loading, setLoading] = useState(false);
@@ -71,8 +75,14 @@ export const BridgeProvider = ({ children }) => {
 
   const selectToken = useCallback(
     inputToken => {
-      const { address, tokenId, tokenUri, amount, is1155, chainId } =
-        inputToken;
+      const {
+        address,
+        tokenId,
+        tokenUri,
+        amount,
+        is1155,
+        chainId,
+      } = inputToken;
       if (tokens && tokens.address === address && tokens.is1155 === true) {
         const { tokenIds, tokenUris, amounts } = tokens;
         const index = tokenIds.indexOf(tokenId);

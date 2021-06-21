@@ -28,8 +28,11 @@ import React, { useCallback, useState } from 'react';
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   const { isGnosisSafe, account } = useWeb3Context();
 
-  const { homeChainId, foreignChainId, getBridgeChainId } =
-    useBridgeDirection();
+  const {
+    homeChainId,
+    foreignChainId,
+    getBridgeChainId,
+  } = useBridgeDirection();
   const { receiver, tokens, transfer } = useBridgeContext();
 
   // const smallScreen = useBreakpointValue({ base: true, md: false });
@@ -48,8 +51,9 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
     [toast],
   );
 
-  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] =
-    useState(false);
+  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] = useState(
+    false,
+  );
 
   if (!tokens) return null;
 

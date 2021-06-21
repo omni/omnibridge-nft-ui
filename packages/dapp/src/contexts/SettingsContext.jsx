@@ -3,8 +3,11 @@ import { DEFAULT_BRIDGE_DIRECTION, LOCAL_STORAGE_KEYS } from 'lib/constants';
 import { getRPCKeys } from 'lib/helpers';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-const { INFINITE_UNLOCK, NEVER_SHOW_CLAIMS, BRIDGE_DIRECTION } =
-  LOCAL_STORAGE_KEYS;
+const {
+  INFINITE_UNLOCK,
+  NEVER_SHOW_CLAIMS,
+  BRIDGE_DIRECTION,
+} = LOCAL_STORAGE_KEYS;
 
 const SettingsContext = React.createContext({});
 

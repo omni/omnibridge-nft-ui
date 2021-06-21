@@ -22,8 +22,13 @@ export const ConnectWeb3 = () => {
     foreignChainId,
     label: bridgeLabel,
   } = useBridgeDirection();
-  const { connectWeb3, loading, account, disconnect, ethersProvider } =
-    useWeb3Context();
+  const {
+    connectWeb3,
+    loading,
+    account,
+    disconnect,
+    ethersProvider,
+  } = useWeb3Context();
   const toast = useToast();
 
   const showError = useCallback(
