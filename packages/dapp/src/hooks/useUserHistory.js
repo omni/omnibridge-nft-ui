@@ -6,7 +6,6 @@ import {
   getRequests,
 } from 'lib/history';
 import { useEffect, useState } from 'react';
-import { defer } from 'rxjs';
 
 export const useUserHistory = () => {
   const { homeChainId, foreignChainId, getGraphEndpoint } =
@@ -17,7 +16,10 @@ export const useUserHistory = () => {
 
   useEffect(() => {
     if (!account) return () => undefined;
+    let isSubscribed = true;
     async function update() {
+      setTransfers();
+      setLoading(true);
       const [{ requests: homeRequests }, { requests: foreignRequests }] =
         await Promise.all([
           getRequests(account, getGraphEndpoint(homeChainId)),
@@ -43,13 +45,15 @@ export const useUserHistory = () => {
       const allTransfers = [...homeTransfers, ...foreignTransfers].sort(
         (a, b) => b.timestamp - a.timestamp,
       );
-      setTransfers(allTransfers);
-      setLoading(false);
+      if (isSubscribed) {
+        setTransfers(allTransfers);
+        setLoading(false);
+      }
     }
-    setTransfers();
-    setLoading(true);
-    const subscription = defer(() => update()).subscribe();
-    return () => subscription.unsubscribe();
+    update();
+    return () => {
+      isSubscribed = false;
+    };
   }, [homeChainId, foreignChainId, account, getGraphEndpoint]);
 
   return { transfers, loading };

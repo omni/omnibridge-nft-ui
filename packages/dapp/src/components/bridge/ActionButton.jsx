@@ -20,8 +20,15 @@ export const ActionButton = () => {
   const { providerChainId, ethersProvider, isGnosisSafe } = useWeb3Context();
   const { homeChainId } = useBridgeDirection();
   const isHome = providerChainId === homeChainId;
-  const { tokens, receiver, unlock, unlockLoading, unlockTxHash, unlocked } =
-    useBridgeContext();
+  const {
+    tokens,
+    receiver,
+    // , unlock, unlockLoading, unlockTxHash, unlocked
+  } = useBridgeContext();
+  const unlock = useCallback(() => undefined, []);
+  const unlockLoading = false;
+  const unlockTxHash = '';
+  const unlocked = true;
 
   const { color, hoverColor, text, icon } = useMemo(() => {
     let buttonColor = 'cyan.400';

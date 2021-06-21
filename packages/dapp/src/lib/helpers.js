@@ -1,4 +1,3 @@
-import { BigNumber, utils } from 'ethers';
 import {
   chainUrls,
   LOCAL_STORAGE_KEYS,
@@ -10,11 +9,8 @@ import {
 import {
   ETH_XDAI_BRIDGE,
   KOVAN_SOKOL_BRIDGE,
-  networks,
   RINKEBY_XDAI_BRIDGE,
 } from 'lib/networks';
-
-import { getOverriddenMediator, isOverridden } from './overrides';
 
 export const getWalletProviderName = provider =>
   provider?.connection?.url || null;
@@ -34,32 +30,6 @@ export const getRPCUrl = (chainId, returnAsArray = false) =>
 
 export const getExplorerUrl = chainId =>
   (chainUrls[chainId] || chainUrls[1]).explorer;
-
-export const removeElement = (array, index) => {
-  const cloneArr = [...array];
-  cloneArr.splice(index, 1);
-  return cloneArr;
-};
-
-export const formatValue = (num, dec) => {
-  const str = utils.formatUnits(num, dec);
-  if (str.length > 50) {
-    const expStr = Number(str).toExponential().replace(/e\+?/, ' x 10^');
-    const split = expStr.split(' x 10^');
-    const first = Number(split[0]).toLocaleString('en', {
-      maximumFractionDigits: 4,
-    });
-    return `${first} x 10^${split[1]}`;
-  }
-  return Number(str).toLocaleString('en', { maximumFractionDigits: 4 });
-};
-
-export const parseValue = (num, dec) => {
-  if (!num || isNaN(Number(num))) {
-    return BigNumber.from(0);
-  }
-  return utils.parseUnits(num, dec);
-};
 
 export const fetchQueryParams = search => {
   if (!search || !search.trim().length) return null;
@@ -112,21 +82,4 @@ export const getRPCKeys = bridgeDirection => {
         foreignRPCKey: KOVAN_RPC_URL,
       };
   }
-};
-
-export const getMediatorAddressWithoutOverride = (bridgeDirection, chainId) => {
-  if (!bridgeDirection || !chainId) return null;
-  const { homeChainId, homeMediatorAddress, foreignMediatorAddress } =
-    networks[bridgeDirection];
-  return homeChainId === chainId
-    ? homeMediatorAddress.toLowerCase()
-    : foreignMediatorAddress.toLowerCase();
-};
-
-export const getMediatorAddress = (bridgeDirection, token) => {
-  if (!token || !token.chainId || !token.address) return null;
-  if (isOverridden(bridgeDirection, token)) {
-    return getOverriddenMediator(bridgeDirection, token);
-  }
-  return getMediatorAddressWithoutOverride(bridgeDirection, token.chainId);
 };

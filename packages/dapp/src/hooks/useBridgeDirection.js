@@ -1,54 +1,38 @@
 import { useSettings } from 'contexts/SettingsContext';
-import { fetchAmbVersion } from 'lib/amb';
-import { networkLabels } from 'lib/constants';
-import { logError } from 'lib/helpers';
+import { useAmbVersion } from 'hooks/useAmbVersion';
+import { useRequiredSignatures } from 'hooks/useRequiredSignatures';
 import { networks } from 'lib/networks';
-import { getEthersProvider } from 'lib/providers';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export const useBridgeDirection = () => {
   const { bridgeDirection } = useSettings();
-  const [foreignAmbVersion, setForeignAmbVersion] = useState();
-  const [fetchingVersion, setFetchingVersion] = useState(false);
   const bridgeConfig = useMemo(
     () => networks[bridgeDirection] || Object.values(networks)[0],
     [bridgeDirection],
   );
 
   const {
+    ambLiveMonitorPrefix,
     homeChainId,
     foreignChainId,
-    ambLiveMonitorPrefix,
     homeBridgeSubgraph,
     foreignBridgeSubgraph,
     home721Subgraph,
     foreign721Subgraph,
     home1155Subgraph,
     foreign1155Subgraph,
+    homeAmbAddress,
     foreignAmbAddress,
+    homeMediatorAddress,
+    foreignMediatorAddress,
   } = bridgeConfig;
 
-  useEffect(() => {
-    const label = networkLabels[foreignChainId];
-    const key = `${label}-AMB-VERSION`;
-    const fetchVersion = async () => {
-      const provider = await getEthersProvider(foreignChainId);
-      await fetchAmbVersion(foreignAmbAddress, provider)
-        .then(res => {
-          setForeignAmbVersion(res);
-          sessionStorage.setItem(key, res);
-        })
-        .catch(versionError => logError({ versionError }));
-      setFetchingVersion(false);
-    };
-    const version = sessionStorage.getItem(key);
-    if (!version && !fetchingVersion) {
-      setFetchingVersion(true);
-      fetchVersion();
-    } else {
-      setForeignAmbVersion(version);
-    }
-  }, [foreignAmbAddress, foreignChainId, fetchingVersion]);
+  const foreignAmbVersion = useAmbVersion(foreignChainId, foreignAmbAddress);
+
+  const homeRequiredSignatures = useRequiredSignatures(
+    homeChainId,
+    homeAmbAddress,
+  );
 
   const getBridgeChainId = useCallback(
     chainId => (chainId === homeChainId ? foreignChainId : homeChainId),
@@ -87,6 +71,17 @@ export const useBridgeDirection = () => {
     [foreign1155Subgraph, homeChainId, home1155Subgraph],
   );
 
+  const getAMBAddress = useCallback(
+    chainId => (chainId === homeChainId ? homeAmbAddress : foreignAmbAddress),
+    [homeChainId, homeAmbAddress, foreignAmbAddress],
+  );
+
+  const getMediatorAddress = useCallback(
+    chainId =>
+      chainId === homeChainId ? homeMediatorAddress : foreignMediatorAddress,
+    [homeChainId, homeMediatorAddress, foreignMediatorAddress],
+  );
+
   return {
     bridgeDirection,
     getBridgeChainId,
@@ -94,7 +89,10 @@ export const useBridgeDirection = () => {
     getGraphEndpoint,
     getEIP721GraphEndpoint,
     getEIP1155GraphEndpoint,
+    getAMBAddress,
+    getMediatorAddress,
     foreignAmbVersion,
+    homeRequiredSignatures,
     ...bridgeConfig,
   };
 };

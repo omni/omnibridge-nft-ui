@@ -1,3 +1,4 @@
+import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { fetch721TokenList, fetch1155TokenList } from 'lib/tokenList';
@@ -21,9 +22,10 @@ const tokenSearchFilter =
     return nameSearch || symbolSearch || addressSearch || tokenIdSearch;
   };
 
-export const useUserTokens = searchText => {
+export const useUserTokens = () => {
   const { getEIP721GraphEndpoint, getEIP1155GraphEndpoint } =
     useBridgeDirection();
+  const { searchText, txHash } = useBridgeContext();
   const { account, providerChainId } = useWeb3Context();
   const [allEIP721Tokens, setAllEIP721Tokens] = useState([]);
   const [allEIP1155Tokens, setAllEIP1155Tokens] = useState([]);
@@ -32,21 +34,24 @@ export const useUserTokens = searchText => {
 
   useEffect(() => {
     if (!providerChainId || !account) return;
-    fetch721TokenList(
-      providerChainId,
-      account,
-      getEIP721GraphEndpoint(providerChainId),
-    ).then(setAllEIP721Tokens);
-    fetch1155TokenList(
-      providerChainId,
-      account,
-      getEIP1155GraphEndpoint(providerChainId),
-    ).then(setAllEIP1155Tokens);
+    if (!txHash) {
+      fetch721TokenList(
+        providerChainId,
+        account,
+        getEIP721GraphEndpoint(providerChainId),
+      ).then(setAllEIP721Tokens);
+      fetch1155TokenList(
+        providerChainId,
+        account,
+        getEIP1155GraphEndpoint(providerChainId),
+      ).then(setAllEIP1155Tokens);
+    }
   }, [
     account,
     providerChainId,
     getEIP721GraphEndpoint,
     getEIP1155GraphEndpoint,
+    txHash,
   ]);
 
   useEffect(() => {

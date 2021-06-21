@@ -61,5 +61,8 @@
       "prettier --write"
     ],
     "*.{json,md}": "prettier --write"
+  },
+  "resolutions": {
+    "assemblyscript": "git+https://github.com/AssemblyScript/assemblyscript.git#v0.6"
   }
 }

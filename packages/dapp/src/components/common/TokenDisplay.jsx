@@ -88,7 +88,14 @@ export const ERC721TokenDisplay = ({
 
   useEffect(() => {
     if (disableCheckbox) return;
-    setDisabled(selectedTokens ? selectedTokens.address !== address : false);
+    setDisabled(
+      selectedTokens
+        ? !(
+            selectedTokens.address === address &&
+            selectedTokens.tokenIds.includes(tokenId)
+          )
+        : false,
+    );
     setChecked(
       selectedTokens ? selectedTokens.tokenIds.includes(tokenId) : false,
     );

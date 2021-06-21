@@ -59,15 +59,21 @@ const KOVAN_SOKOL_BRIDGE_CONFIG = {
   foreign1155Subgraph: '',
 };
 
-const ENABLE_SOKOL = process.env.REACT_APP_ENABLE_SOKOL_BRIDGE === 'true';
+const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
+  b => b.toLowerCase(),
+);
 
-export const networks = ENABLE_SOKOL
-  ? {
-      [ETH_XDAI_BRIDGE]: ETH_XDAI_BRIDGE_CONFIG,
-      [RINKEBY_XDAI_BRIDGE]: RINKEBY_XDAI_BRIDGE_CONFIG,
-      [KOVAN_SOKOL_BRIDGE]: KOVAN_SOKOL_BRIDGE_CONFIG,
-    }
-  : {
-      [ETH_XDAI_BRIDGE]: ETH_XDAI_BRIDGE_CONFIG,
-      [RINKEBY_XDAI_BRIDGE]: RINKEBY_XDAI_BRIDGE_CONFIG,
-    };
+const bridgeInfo = {
+  [ETH_XDAI_BRIDGE]: ETH_XDAI_BRIDGE_CONFIG,
+  [RINKEBY_XDAI_BRIDGE]: RINKEBY_XDAI_BRIDGE_CONFIG,
+  [KOVAN_SOKOL_BRIDGE]: KOVAN_SOKOL_BRIDGE_CONFIG,
+};
+
+const getNetworkConfig = bridges => {
+  if (bridges && bridges.length > 0 && bridgeInfo) {
+    return bridges.reduce((t, b) => ({ ...t, [b]: bridgeInfo[b] }), {});
+  }
+  return bridgeInfo;
+};
+
+export const networks = getNetworkConfig(ENABLED_BRIDGES);

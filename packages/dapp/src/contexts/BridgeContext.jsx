@@ -1,9 +1,16 @@
 import { useWeb3Context } from 'contexts/Web3Context';
+import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { useTotalConfirms } from 'hooks/useTotalConfirms';
 import { useUnlock } from 'hooks/useUnlock';
-// import { relayTokens } from 'lib/bridge';
+import { relayTokens } from 'lib/bridge';
 import { logError } from 'lib/helpers';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 export const BridgeContext = React.createContext({});
 
@@ -12,6 +19,12 @@ export const useBridgeContext = () => useContext(BridgeContext);
 export const BridgeProvider = ({ children }) => {
   const { isGnosisSafe, account, providerChainId, ethersProvider } =
     useWeb3Context();
+
+  const { getMediatorAddress } = useBridgeDirection();
+  const mediatorAddress = useMemo(
+    () => getMediatorAddress(providerChainId),
+    [getMediatorAddress, providerChainId],
+  );
 
   const [receiver, setReceiver] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,25 +41,39 @@ export const BridgeProvider = ({ children }) => {
       if (isGnosisSafe && !receiver) {
         throw new Error('Must set receiver for Gnosis Safe');
       }
-      const tx = { hash: '' }; // await relayTokens();
+      const tx = await relayTokens(
+        ethersProvider,
+        account,
+        tokens,
+        mediatorAddress,
+        receiver || account,
+      );
       setTxHash(tx.hash);
+      setTokens();
     } catch (transferError) {
+      setLoading(false);
       logError({
         transferError,
+        tokens,
         receiver: receiver || account,
         account,
       });
       throw transferError;
-    } finally {
-      setLoading(false);
     }
-  }, [isGnosisSafe, account, receiver]);
+  }, [
+    isGnosisSafe,
+    account,
+    receiver,
+    tokens,
+    ethersProvider,
+    mediatorAddress,
+  ]);
 
   const selectToken = useCallback(
     inputToken => {
       const { address, tokenId, tokenUri, amount, is1155, chainId } =
         inputToken;
-      if (tokens && tokens.address === address) {
+      if (tokens && tokens.address === address && tokens.is1155 === true) {
         const { tokenIds, tokenUris, amounts } = tokens;
         const index = tokenIds.indexOf(tokenId);
         if (index >= 0) {
