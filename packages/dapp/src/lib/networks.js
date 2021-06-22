@@ -55,7 +55,7 @@ const KOVAN_SOKOL_BRIDGE_CONFIG = {
   homeBridgeSubgraph: 'dan13ram/sokol-kovan-omnibridge-nft',
   home721Subgraph: 'sunguru98/erc721-sokol-subgraph',
   foreign721Subgraph: 'wighawag/eip721-subgraph-kovan',
-  home1155Subgraph: 'sunguru98/erc1155-xdai-subgraph',
+  home1155Subgraph: 'sunguru98/erc1155-sokol-subgraph',
   foreign1155Subgraph: 'sunguru98/erc1155-kovan-subgraph',
 };
 
