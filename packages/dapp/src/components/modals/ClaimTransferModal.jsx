@@ -45,11 +45,11 @@ export const ClaimTransferModal = ({ message, setMessage }) => {
   const [loadingText, setLoadingText] = useState('');
   const [executed, setExecuted] = useState(false);
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setTxHash();
     setMessage();
     setOpen(false);
-  };
+  }, [setTxHash, setMessage]);
 
   const toast = useToast();
   const showError = useCallback(
@@ -99,7 +99,7 @@ export const ClaimTransferModal = ({ message, setMessage }) => {
       setClaiming(false);
       setLoadingText('');
     }
-  }, [claim, txHash, showError, setTxHash, message]);
+  }, [claim, txHash, showError, onClose, message]);
 
   if (claiming)
     return (
