@@ -1,12 +1,12 @@
-name: Build and Deploy Staging
+name: Build and Deploy Production
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   deploy:
-    name: Build & Deploy Staging
+    name: Build & Deploy Production
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
@@ -32,7 +32,7 @@ jobs:
         run: yarn dapp:build
         env:
           CI: true
-          REACT_APP_DEFAULT_BRIDGE_DIRECTION: rinkeby-xdai
+          REACT_APP_DEFAULT_BRIDGE_DIRECTION: eth-xdai
           REACT_APP_ENABLED_BRIDGES: 'eth-xdai rinkeby-xdai'
           REACT_APP_INFURA_ID: ${{ secrets.STAGING_INFURA_ID }}
           REACT_APP_GAS_PRICE_FALLBACK_GWEI: 5
@@ -54,7 +54,7 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting --project staging
+          args: deploy --only hosting --project production
         env:
           CI: true
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

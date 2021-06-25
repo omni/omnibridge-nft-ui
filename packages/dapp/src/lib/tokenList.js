@@ -26,12 +26,40 @@ const eip721TokensQuery = gql`
   }
 `;
 
+const eip721TokensQueryAccount = gql`
+  query Get721Tokens($owner: ID) {
+    owner: account(id: $owner) {
+      tokens {
+        tokenUri: uri
+        tokenId: identifier
+        token: registry {
+          address: id
+          name
+          symbol
+          supportsMetadata
+        }
+      }
+    }
+  }
+`;
+
+const getEIP721TokensQuery = graphEndpoint => {
+  if (graphEndpoint.includes('sunguru98')) {
+    return eip721TokensQueryAccount;
+  }
+  return eip721TokensQuery;
+};
+
 export const fetch721TokenList = async (chainId, account, graphEndpoint) => {
   if (!account || !chainId || !graphEndpoint) return [];
   try {
-    const data = await request(graphEndpoint, eip721TokensQuery, {
-      owner: account.toLowerCase(),
-    });
+    const data = await request(
+      graphEndpoint,
+      getEIP721TokensQuery(graphEndpoint),
+      {
+        owner: account.toLowerCase(),
+      },
+    );
     if (
       data &&
       data.owner &&
