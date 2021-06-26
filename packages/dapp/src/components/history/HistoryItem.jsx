@@ -12,7 +12,7 @@ import RightArrowImage from 'assets/right-arrow.svg';
 import { DisplayTokens } from 'components/common/DisplayTokens';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { useClaim } from 'hooks/useClaim';
-import { TOKENS_CLAIMED } from 'lib/amb';
+import { isRevertedError, TOKENS_CLAIMED } from 'lib/amb';
 import { getExplorerUrl, logError } from 'lib/helpers';
 import React, { useCallback, useState } from 'react';
 
@@ -105,7 +105,10 @@ export const HistoryItem = ({
       setClaimed(true);
     } catch (claimError) {
       logError({ claimError });
-      if (claimError.message === TOKENS_CLAIMED) {
+      if (
+        claimError.message === TOKENS_CLAIMED ||
+        isRevertedError(claimError)
+      ) {
         handleClaimError();
       } else {
         showError(claimError.message);

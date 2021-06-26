@@ -149,7 +149,7 @@ export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
                 }
               : undefined,
         )
-        .filter(t => !!t);
+        .filter(t => !!t && t.amount > 0);
     }
   } catch (graphError) {
     logError({

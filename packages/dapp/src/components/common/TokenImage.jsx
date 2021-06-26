@@ -1,31 +1,38 @@
-import { Image as ChakraImage } from '@chakra-ui/react';
+import { Flex, Image as ChakraImage, Spinner } from '@chakra-ui/react';
 import NoImageAvailable from 'assets/no-image-available.svg';
-import { fetchImageUri, uriToHttp, uriToHttpAsArray } from 'lib/uriHelpers';
+import { fetchImageUri, uriToHttpAsArray } from 'lib/uriHelpers';
 import React, { useEffect, useState } from 'react';
 
-export const Image = React.memo(({ src: uri, ...props }) => {
-  const [src, setSrc] = useState(uri);
+const FallbackImage = props => (
+  <ChakraImage
+    src={NoImageAvailable}
+    p="1.5rem"
+    borderRadius="0.375rem"
+    {...props}
+  />
+);
 
-  useEffect(() => {
-    const oldSrc = uriToHttp(uri);
-    setSrc(oldSrc);
-    const load = async () => {
-      const newSrc = uriToHttp(await fetchImageUri(oldSrc));
-      setSrc(newSrc);
-    };
-    load();
-  }, [uri]);
-
-  if (src) {
-    return <ChakraImage src={src} {...props} />;
-  }
-
-  return <ChakraImage src={NoImageAvailable} p="1.5rem" {...props} />;
-});
+const LoadingImage = props => (
+  <Flex
+    p="1.5rem"
+    borderRadius="0.375rem"
+    justify="center"
+    align="center"
+    {...props}
+  >
+    <Spinner
+      color="blue.500"
+      size="xl"
+      speed="0.75s"
+      thickness="3px"
+      emptyColor="#EEf4FD"
+    />
+  </Flex>
+);
 
 const BAD_SRCS = {};
 
-export const ImageAsArray = React.memo(({ src: uri, ...props }) => {
+export const Image = React.memo(({ src: uri, ...props }) => {
   const [, refresh] = useState(0);
   const [srcs, setSrcs] = useState([]);
 
@@ -44,21 +51,31 @@ export const ImageAsArray = React.memo(({ src: uri, ...props }) => {
         setSrcs(newSrcs);
       }
     };
-    load();
+    const sessionSrc = sessionStorage.getItem(uri);
+    if (sessionSrc) {
+      setSrcs([sessionSrc]);
+    } else {
+      load();
+    }
   }, [uri]);
 
   if (src) {
     return (
       <ChakraImage
         src={src}
+        fallback={<LoadingImage {...props} />}
         onError={() => {
           if (src) BAD_SRCS[src] = true;
           refresh(i => i + 1);
         }}
+        onLoad={() => {
+          sessionStorage.setItem(uri, src);
+        }}
+        borderRadius="0.375rem"
         {...props}
       />
     );
   }
 
-  return <ChakraImage src={NoImageAvailable} p="1.5rem" {...props} />;
+  return <FallbackImage {...props} />;
 });
