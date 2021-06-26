@@ -1,10 +1,13 @@
+import { BigNumber, utils } from 'ethers';
 import { gql, request } from 'graphql-request';
-
-import { logError } from './helpers';
+import { logError } from 'lib/helpers';
 
 const getTokenUri = (tokenUri, tokenId) => {
   if (tokenUri && tokenId && /\{id\}/.test(tokenUri)) {
-    return tokenUri.replace(/\{id\}/, tokenId.toString());
+    const tokenIdHex = utils
+      .hexZeroPad(BigNumber.from(tokenId).toHexString(), 32)
+      .slice(2);
+    return tokenUri.replace(/\{id\}/, tokenIdHex);
   }
   return tokenUri;
 };

@@ -51,6 +51,7 @@ export const Image = React.memo(({ src: uri, ...props }) => {
         .filter(u => !!u)
         .map(uriToHttpAsArray)
         .reduce((t, a) => [...t, ...a], []);
+
       if (newSrcs.length > 0) {
         setSrcs(newSrcs);
       }
