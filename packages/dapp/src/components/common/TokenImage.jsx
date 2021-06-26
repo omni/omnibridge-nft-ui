@@ -1,7 +1,7 @@
 import { Flex, Image as ChakraImage, Spinner } from '@chakra-ui/react';
 import NoImageAvailable from 'assets/no-image-available.svg';
 import { fetchImageUri, uriToHttpAsArray } from 'lib/uriHelpers';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const FallbackImage = props => (
   <ChakraImage
@@ -31,16 +31,20 @@ const LoadingImage = props => (
 );
 
 const BAD_SRCS = {};
+const IMAGE_TIMEOUT = 'image-timeout';
 
 export const Image = React.memo(({ src: uri, ...props }) => {
   const [, refresh] = useState(0);
   const [srcs, setSrcs] = useState([]);
 
   const src = srcs.find(s => !BAD_SRCS[s]);
+  const timer = useRef(null);
 
   useEffect(() => {
     const oldSrcs = uriToHttpAsArray(uri);
     setSrcs(oldSrcs);
+
+    let isSubscribed = true;
     const load = async () => {
       const newUris = await Promise.all(oldSrcs.map(fetchImageUri));
       const newSrcs = newUris
@@ -50,13 +54,25 @@ export const Image = React.memo(({ src: uri, ...props }) => {
       if (newSrcs.length > 0) {
         setSrcs(newSrcs);
       }
+      timer.current = setTimeout(() => {
+        if (isSubscribed) {
+          sessionStorage.setItem(uri, IMAGE_TIMEOUT);
+          setSrcs([]);
+        }
+      }, 5000);
     };
     const sessionSrc = sessionStorage.getItem(uri);
     if (sessionSrc) {
-      setSrcs([sessionSrc]);
+      setSrcs(sessionSrc === IMAGE_TIMEOUT ? [] : [sessionSrc]);
     } else {
       load();
     }
+    return () => {
+      isSubscribed = false;
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+    };
   }, [uri]);
 
   if (src) {
@@ -69,6 +85,9 @@ export const Image = React.memo(({ src: uri, ...props }) => {
           refresh(i => i + 1);
         }}
         onLoad={() => {
+          if (timer.current) {
+            clearTimeout(timer.current);
+          }
           sessionStorage.setItem(uri, src);
         }}
         borderRadius="0.375rem"
