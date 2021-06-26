@@ -68,11 +68,13 @@ const failedStatus = {
 };
 
 export const getHealthStatus = async bridgeDirection => {
-  const { homeGraphName, foreignGraphName } = networks[bridgeDirection];
+  const { homeBridgeSubgraph, foreignBridgeSubgraph } = networks[
+    bridgeDirection
+  ];
   try {
     const data = await request(GRAPH_HEALTH_ENDPOINT, healthQuery, {
-      subgraphHome: homeGraphName,
-      subgraphForeign: foreignGraphName,
+      subgraphHome: homeBridgeSubgraph,
+      subgraphForeign: foreignBridgeSubgraph,
     });
     return {
       homeHealth: extractStatus(data.homeHealth),
