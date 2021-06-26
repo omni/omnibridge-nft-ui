@@ -6,11 +6,7 @@ import {
   networkLabels,
   networkNames,
 } from 'lib/constants';
-import {
-  ETH_XDAI_BRIDGE,
-  KOVAN_SOKOL_BRIDGE,
-  RINKEBY_XDAI_BRIDGE,
-} from 'lib/networks';
+import { ETH_XDAI_BRIDGE, RINKEBY_XDAI_BRIDGE } from 'lib/networks';
 
 export const getWalletProviderName = provider =>
   provider?.connection?.url || null;
@@ -55,31 +51,20 @@ export const logDebug = error => {
   }
 };
 
-const {
-  XDAI_RPC_URL,
-  MAINNET_RPC_URL,
-  RINKEBY_RPC_URL,
-  KOVAN_RPC_URL,
-  SOKOL_RPC_URL,
-} = LOCAL_STORAGE_KEYS;
+const { XDAI_RPC_URL, MAINNET_RPC_URL, RINKEBY_RPC_URL } = LOCAL_STORAGE_KEYS;
 
 export const getRPCKeys = bridgeDirection => {
   switch (bridgeDirection) {
-    case ETH_XDAI_BRIDGE:
-      return {
-        homeRPCKey: XDAI_RPC_URL,
-        foreignRPCKey: MAINNET_RPC_URL,
-      };
     case RINKEBY_XDAI_BRIDGE:
       return {
         homeRPCKey: XDAI_RPC_URL,
         foreignRPCKey: RINKEBY_RPC_URL,
       };
-    case KOVAN_SOKOL_BRIDGE:
+    case ETH_XDAI_BRIDGE:
     default:
       return {
-        homeRPCKey: SOKOL_RPC_URL,
-        foreignRPCKey: KOVAN_RPC_URL,
+        homeRPCKey: XDAI_RPC_URL,
+        foreignRPCKey: MAINNET_RPC_URL,
       };
   }
 };

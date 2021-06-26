@@ -56,13 +56,31 @@ export const uriToHttpAsArray = uri => {
   }
 };
 
+const timeoutPromise = (ms, promise) =>
+  new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      reject(new Error('promise timeout'));
+    }, ms);
+    promise.then(
+      res => {
+        clearTimeout(timeoutId);
+        resolve(res);
+      },
+      err => {
+        clearTimeout(timeoutId);
+        reject(err);
+      },
+    );
+  });
+
 export const fetchImageUri = async tokenUri => {
   try {
-    const response = await fetch(tokenUri); // Fetch the resource
+    const response = await timeoutPromise(5000, fetch(tokenUri)); // Fetch the resource
     const text = await response.text(); // Parse it as text
-    const { image } = JSON.parse(text); // Try to parse it as json
-    if (!image) throw new Error('Image not found in metadata');
-    return image;
+    // eslint-ignore-next-line camelcase
+    const { image, image_url: imageUrl } = JSON.parse(text); // Try to parse it as json
+    if (!image && !imageUrl) throw new Error('Image not found in metadata');
+    return image || imageUrl;
   } catch (err) {
     return '';
   }

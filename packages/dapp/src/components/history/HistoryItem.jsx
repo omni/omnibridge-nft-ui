@@ -10,11 +10,9 @@ import {
 import BlueTickImage from 'assets/blue-tick.svg';
 import RightArrowImage from 'assets/right-arrow.svg';
 import { DisplayTokens } from 'components/common/DisplayTokens';
-import { TxLink } from 'components/common/TxLink';
-import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { useClaim } from 'hooks/useClaim';
-import { TOKENS_CLAIMED } from 'lib/amb';
+import { isRevertedError, TOKENS_CLAIMED } from 'lib/amb';
 import { getExplorerUrl, logError } from 'lib/helpers';
 import React, { useCallback, useState } from 'react';
 
@@ -61,7 +59,6 @@ export const HistoryItem = ({
 }) => {
   const { chainId } = tokens;
   const { getBridgeChainId, getMonitorUrl } = useBridgeDirection();
-  const { providerChainId } = useWeb3Context();
   const bridgeChainId = getBridgeChainId(chainId);
 
   const timestampString = new Date(
@@ -106,10 +103,12 @@ export const HistoryItem = ({
       setTxHash(tx.hash);
       await tx.wait();
       setClaimed(true);
-      setTxHash();
     } catch (claimError) {
       logError({ claimError });
-      if (claimError.message === TOKENS_CLAIMED) {
+      if (
+        claimError.message === TOKENS_CLAIMED ||
+        isRevertedError(claimError)
+      ) {
         handleClaimError();
       } else {
         showError(claimError.message);
@@ -207,20 +206,15 @@ export const HistoryItem = ({
           </Flex>
         ) : (
           <Flex align="center" justify={{ base: 'center', md: 'flex-end' }}>
-            <TxLink
-              chainId={providerChainId}
-              hash={claiming ? txHash : undefined}
+            <Button
+              w="auto"
+              size="sm"
+              colorScheme="blue"
+              onClick={claimTokens}
+              isLoading={claiming}
             >
-              <Button
-                w="auto"
-                size="sm"
-                colorScheme="blue"
-                onClick={claimTokens}
-                isLoading={claiming}
-              >
-                Claim
-              </Button>
-            </TxLink>
+              Claim
+            </Button>
           </Flex>
         )}
       </Grid>

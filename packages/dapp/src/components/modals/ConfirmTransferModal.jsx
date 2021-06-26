@@ -154,6 +154,7 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
               borderRadius="1rem"
               p="4"
               direction="column"
+              align="center"
             >
               <DisplayTokens tokens={tokens} />
             </Flex>

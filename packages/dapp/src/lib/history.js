@@ -21,8 +21,8 @@ const requestsUserQuery = gql`
       tokenUris
       message {
         txHash
-        msgId
-        msgData
+        messageId: msgId
+        messageData: msgData
         signatures
       }
     }
@@ -48,8 +48,8 @@ const requestsRecipientQuery = gql`
       tokenUris
       message {
         txHash
-        msgId
-        msgData
+        messageId: msgId
+        messageData: msgData
         signatures
       }
     }
@@ -137,7 +137,7 @@ export const combineRequestsWithExecutions = (requests, executions, chainId) =>
       timestamp: req.timestamp,
       sendingTx: req.txHash,
       receivingTx: execution ? execution.txHash : null,
-      message: { ...req.message, messageId: req.messageId },
+      message: req.message,
       tokens: {
         chainId,
         amounts: req.values,

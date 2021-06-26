@@ -1,6 +1,5 @@
 export const ETH_XDAI_BRIDGE = 'eth-xdai';
 export const RINKEBY_XDAI_BRIDGE = 'rinkeby-xdai';
-export const KOVAN_SOKOL_BRIDGE = 'kovan-sokol';
 
 const ETH_XDAI_BRIDGE_CONFIG = {
   label: 'eth⥊xdai',
@@ -11,11 +10,11 @@ const ETH_XDAI_BRIDGE_CONFIG = {
   foreignAmbAddress: '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'.toLowerCase(),
   homeAmbAddress: '0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59'.toLowerCase(),
   ambLiveMonitorPrefix: 'https://alm-xdai.herokuapp.com',
-  foreignBridgeSubgraph: 'raid-guild/mainnet-xdai-omnibridge-nft',
-  homeBridgeSubgraph: 'raid-guild/xdai-mainnet-omnibridge-nft',
-  home721Subgraph: '',
+  foreignBridgeSubgraph: 'dan13ram/mainnet-xdai-omnibridge-nft',
+  homeBridgeSubgraph: 'dan13ram/xdai-mainnet-omnibridge-nft',
+  home721Subgraph: 'sunguru98/erc721-xdai-subgraph',
   foreign721Subgraph: 'wighawag/eip721-subgraph',
-  home1155Subgraph: '',
+  home1155Subgraph: 'sunguru98/erc1155-xdai-subgraph',
   foreign1155Subgraph: 'alexvorobiov/eip1155subgraph',
 };
 
@@ -30,27 +29,10 @@ const RINKEBY_XDAI_BRIDGE_CONFIG = {
   ambLiveMonitorPrefix: 'https://alm-rinkeby.herokuapp.com',
   foreignBridgeSubgraph: 'dan13ram/rinkeby-xdai-omnibridge-nft',
   homeBridgeSubgraph: 'dan13ram/xdai-rinkeby-omnibridge-nft',
-  home721Subgraph: '',
+  home721Subgraph: 'sunguru98/erc721-xdai-subgraph',
   foreign721Subgraph: 'daisai3/eip721_rinkeby',
-  home1155Subgraph: '',
-  foreign1155Subgraph: '0xorg/eip1155-subgraph-rinkeby',
-};
-
-const KOVAN_SOKOL_BRIDGE_CONFIG = {
-  label: 'kovan⥊sokol',
-  homeChainId: 77,
-  foreignChainId: 42,
-  foreignMediatorAddress: '0x63be59CF177cA9bb317DE8C4aa965Ddda93CB9d7'.toLowerCase(),
-  homeMediatorAddress: '0x3ecEe2667f80fc0858437119621b820efc6b0Ede'.toLowerCase(),
-  foreignAmbAddress: '0xFe446bEF1DbF7AFE24E81e05BC8B271C1BA9a560'.toLowerCase(),
-  homeAmbAddress: '0xFe446bEF1DbF7AFE24E81e05BC8B271C1BA9a560'.toLowerCase(),
-  ambLiveMonitorPrefix: 'https://alm-test-amb.herokuapp.com',
-  foreignBridgeSubgraph: 'dan13ram/kovan-sokol-omnibridge-nft',
-  homeBridgeSubgraph: 'dan13ram/sokol-kovan-omnibridge-nft',
-  home721Subgraph: '',
-  foreign721Subgraph: 'wighawag/eip721-subgraph-kovan',
-  home1155Subgraph: '',
-  foreign1155Subgraph: '',
+  home1155Subgraph: 'sunguru98/erc1155-xdai-subgraph',
+  foreign1155Subgraph: 'sunguru98/erc1155-rinkeby-subgraph',
 };
 
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(
@@ -60,7 +42,6 @@ const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(
 const bridgeInfo = {
   [ETH_XDAI_BRIDGE]: ETH_XDAI_BRIDGE_CONFIG,
   [RINKEBY_XDAI_BRIDGE]: RINKEBY_XDAI_BRIDGE_CONFIG,
-  [KOVAN_SOKOL_BRIDGE]: KOVAN_SOKOL_BRIDGE_CONFIG,
 };
 
 const getNetworkConfig = bridges => {

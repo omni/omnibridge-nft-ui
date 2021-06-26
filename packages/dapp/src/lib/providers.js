@@ -3,19 +3,11 @@ import memoize from 'fast-memoize';
 import { LOCAL_STORAGE_KEYS } from 'lib/constants';
 import { getRPCUrl, logError } from 'lib/helpers';
 
-const {
-  MAINNET_RPC_URL,
-  KOVAN_RPC_URL,
-  RINKEBY_RPC_URL,
-  SOKOL_RPC_URL,
-  XDAI_RPC_URL,
-} = LOCAL_STORAGE_KEYS;
+const { MAINNET_RPC_URL, RINKEBY_RPC_URL, XDAI_RPC_URL } = LOCAL_STORAGE_KEYS;
 
 const RPC_URL = {
   1: MAINNET_RPC_URL,
-  42: KOVAN_RPC_URL,
   4: RINKEBY_RPC_URL,
-  77: SOKOL_RPC_URL,
   100: XDAI_RPC_URL,
 };
 

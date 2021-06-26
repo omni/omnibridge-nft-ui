@@ -23,7 +23,7 @@ export const relayTokens = async (
         'function safeBatchTransferFrom(address _from, address _to, uint256[] calldata _ids, uint256[] calldata _values, bytes calldata _data) external',
       ];
       const tokenContract = new Contract(address, abi, signer);
-      if (amounts.length > 0) {
+      if (amounts.length > 1) {
         return tokenContract.safeBatchTransferFrom(
           account,
           mediator,

@@ -112,8 +112,6 @@ const {
   REACT_APP_MAINNET_RPC_URL,
   REACT_APP_RINKEBY_RPC_URL,
   REACT_APP_XDAI_RPC_URL,
-  REACT_APP_SOKOL_RPC_URL,
-  REACT_APP_KOVAN_RPC_URL,
 } = process.env;
 
 export const chainUrls = {
@@ -128,18 +126,6 @@ export const chainUrls = {
     explorer: 'https://rinkeby.etherscan.io',
     chainId: 4,
     name: networkNames[4],
-  },
-  42: {
-    rpc: REACT_APP_KOVAN_RPC_URL.split(' '),
-    explorer: 'https://kovan.etherscan.io',
-    chainId: 42,
-    name: networkNames[42],
-  },
-  77: {
-    rpc: REACT_APP_SOKOL_RPC_URL.split(' '),
-    explorer: 'https://blockscout.com/poa/sokol',
-    chainId: 77,
-    name: networkNames[77],
   },
   100: {
     rpc: REACT_APP_XDAI_RPC_URL.split(' '),
@@ -157,8 +143,6 @@ export const LOCAL_STORAGE_KEYS = {
   MAINNET_RPC_URL: 'mainnet-rpc-url',
   RINKEBY_RPC_URL: 'rinkeby-rpc-url',
   XDAI_RPC_URL: 'xdai-rpc-url',
-  KOVAN_RPC_URL: 'kovan-rpc-url',
-  SOKOL_RPC_URL: 'sokol-rpc-url',
   NEVER_SHOW_CLAIMS: 'never-show-claims',
   INFINITE_UNLOCK: 'infinite-unlock',
   BRIDGE_DIRECTION: 'bridge-direction',

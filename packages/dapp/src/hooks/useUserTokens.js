@@ -2,7 +2,7 @@ import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { fetch721TokenList, fetch1155TokenList } from 'lib/tokenList';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const tokenSearchFilter = searchText => ({
   name,
@@ -30,37 +30,53 @@ export const useUserTokens = () => {
   } = useBridgeDirection();
   const { searchText, txHash } = useBridgeContext();
   const { account, providerChainId } = useWeb3Context();
-  const [allEIP721Tokens, setAllEIP721Tokens] = useState([]);
-  const [allEIP1155Tokens, setAllEIP1155Tokens] = useState([]);
-  const [eip721Tokens, setEIP721Tokens] = useState([]);
-  const [eip1155Tokens, setEIP1155Tokens] = useState([]);
+  const [fetching, setFetching] = useState(false);
+  const [{ allEIP721Tokens, allEIP1155Tokens }, setAllTokens] = useState({
+    allEIP721Tokens: [],
+    allEIP1155Tokens: [],
+  });
+  const [{ eip721Tokens, eip1155Tokens }, setTokens] = useState({
+    eip721Tokens: [],
+    eip1155Tokens: [],
+  });
 
-  useEffect(() => {
-    if (!providerChainId || !account) return;
-    if (!txHash) {
+  const loadTokens = useCallback(async () => {
+    if (!providerChainId || !account) {
+      setAllTokens({ allEIP721Tokens: [], allEIP1155Tokens: [] });
+      return;
+    }
+    setFetching(true);
+    const [tokens721, tokens1155] = await Promise.all([
       fetch721TokenList(
         providerChainId,
         account,
         getEIP721GraphEndpoint(providerChainId),
-      ).then(setAllEIP721Tokens);
+      ),
       fetch1155TokenList(
         providerChainId,
         account,
         getEIP1155GraphEndpoint(providerChainId),
-      ).then(setAllEIP1155Tokens);
-    }
+      ),
+    ]);
+    setAllTokens({ allEIP721Tokens: tokens721, allEIP1155Tokens: tokens1155 });
+    setFetching(false);
   }, [
     account,
     providerChainId,
     getEIP721GraphEndpoint,
     getEIP1155GraphEndpoint,
-    txHash,
   ]);
 
   useEffect(() => {
-    setEIP721Tokens(allEIP721Tokens.filter(tokenSearchFilter(searchText)));
-    setEIP1155Tokens(allEIP1155Tokens.filter(tokenSearchFilter(searchText)));
+    loadTokens();
+  }, [loadTokens, txHash]);
+
+  useEffect(() => {
+    setTokens({
+      eip721Tokens: allEIP721Tokens.filter(tokenSearchFilter(searchText)),
+      eip1155Tokens: allEIP1155Tokens.filter(tokenSearchFilter(searchText)),
+    });
   }, [searchText, allEIP721Tokens, allEIP1155Tokens]);
 
-  return { eip721Tokens, eip1155Tokens };
+  return { fetching, eip721Tokens, eip1155Tokens };
 };
