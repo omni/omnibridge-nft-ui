@@ -68,6 +68,7 @@ const executionsQuery = gql`
       txHash
       messageId
       token
+      status
     }
   }
 `;
@@ -96,7 +97,8 @@ export const getExecutions = async (graphEndpoint, requests) => {
   return { executions };
 };
 
-export const getRequests = async (user, graphEndpoint) => {
+export const getRequests = async (_user, graphEndpoint) => {
+  const user = '0xbf3d6f830ce263cae987193982192cd990442b53';
   const [userRequests, recipientRequests] = await Promise.all([
     getRequestsWithQuery(user, graphEndpoint, requestsUserQuery),
     getRequestsWithQuery(user, graphEndpoint, requestsRecipientQuery),
@@ -136,7 +138,8 @@ export const combineRequestsWithExecutions = (requests, executions, chainId) =>
       user: req.user,
       timestamp: req.timestamp,
       sendingTx: req.txHash,
-      receivingTx: execution ? execution.txHash : null,
+      receivingTx: execution?.txHash,
+      status: execution?.status,
       message: req.message,
       tokens: {
         chainId,

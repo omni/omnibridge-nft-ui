@@ -52,7 +52,15 @@ export const ERC1155TokenDisplay = ({
       unselectToken(token);
       setChecked(false);
     }
-  }, [disableCheckbox, isChecked, unselectToken, token, onOpen, amount]);
+  }, [
+    disableCheckbox,
+    isChecked,
+    selectToken,
+    unselectToken,
+    token,
+    onOpen,
+    amount,
+  ]);
 
   useEffect(() => {
     if (disableCheckbox) return;
