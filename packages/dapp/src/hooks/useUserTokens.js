@@ -4,12 +4,8 @@ import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { fetch721TokenList, fetch1155TokenList } from 'lib/tokenList';
 import { useCallback, useEffect, useState } from 'react';
 
-const tokenSearchFilter = searchText => ({
-  name,
-  symbol,
-  address,
-  tokenId,
-}) => {
+const tokenSearchFilter = search => ({ name, symbol, address, tokenId }) => {
+  const searchText = search.toLowerCase();
   const nameSearch = name ? name.toLowerCase().indexOf(searchText) >= 0 : false;
   const symbolSearch = symbol
     ? symbol.toLowerCase().indexOf(searchText) >= 0
