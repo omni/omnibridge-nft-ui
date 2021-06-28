@@ -97,8 +97,7 @@ export const getExecutions = async (graphEndpoint, requests) => {
   return { executions };
 };
 
-export const getRequests = async (_user, graphEndpoint) => {
-  const user = '0xbf3d6f830ce263cae987193982192cd990442b53';
+export const getRequests = async (user, graphEndpoint) => {
   const [userRequests, recipientRequests] = await Promise.all([
     getRequestsWithQuery(user, graphEndpoint, requestsUserQuery),
     getRequestsWithQuery(user, graphEndpoint, requestsRecipientQuery),
