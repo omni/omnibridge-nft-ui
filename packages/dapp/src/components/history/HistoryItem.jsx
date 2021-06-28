@@ -13,7 +13,7 @@ import { DisplayTokens } from 'components/common/DisplayTokens';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { useClaim } from 'hooks/useClaim';
 import { isRevertedError, TOKENS_CLAIMED } from 'lib/amb';
-import { getExplorerUrl, logError } from 'lib/helpers';
+import { getExplorerUrl, handleWalletError, logError } from 'lib/helpers';
 import React, { useCallback, useState } from 'react';
 
 const shortenHash = hash =>
@@ -111,7 +111,7 @@ export const HistoryItem = ({
       ) {
         handleClaimError();
       } else {
-        showError(claimError.message);
+        handleWalletError(claimError, showError);
       }
     } finally {
       setClaiming(false);
