@@ -1,5 +1,6 @@
 import { Flex, Image as ChakraImage, Spinner } from '@chakra-ui/react';
 import NoImageAvailable from 'assets/no-image-available.svg';
+import { DEFAULT_IMAGE_TIMEOUT } from 'lib/constants';
 import { fetchImageUri, uriToHttpAsArray } from 'lib/uriHelpers';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -60,7 +61,7 @@ export const Image = React.memo(({ src: uri, ...props }) => {
           sessionStorage.setItem(uri, IMAGE_TIMEOUT);
           setSrcs([]);
         }
-      }, 5000);
+      }, DEFAULT_IMAGE_TIMEOUT);
     };
     const sessionSrc = sessionStorage.getItem(uri);
     if (sessionSrc) {

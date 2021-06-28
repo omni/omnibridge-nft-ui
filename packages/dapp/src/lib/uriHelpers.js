@@ -1,8 +1,29 @@
+import { DEFAULT_IMAGE_TIMEOUT } from 'lib/constants';
+
+const IPFS_URL_ADDON = `ipfs/`;
+const IPNS_URL_ADDON = `ipns/`;
+const URL_ADDON_LENGTH = 5;
+
+const parseUri = uri => {
+  let protocol = uri.split(':')[0].toLowerCase();
+  let hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
+  let name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];
+  if (uri.includes(IPFS_URL_ADDON)) {
+    protocol = 'ipfs';
+    hash = uri.substring(uri.indexOf(IPFS_URL_ADDON) + URL_ADDON_LENGTH);
+  } else if (uri.includes(IPNS_URL_ADDON)) {
+    protocol = 'ipns';
+    name = uri.substring(uri.indexOf(IPNS_URL_ADDON) + URL_ADDON_LENGTH);
+  } else if (uri.startsWith('Qm') && uri.length === 46) {
+    protocol = 'ipfs';
+    hash = uri;
+  }
+  return { protocol, hash, name };
+};
+
 export const uriToHttp = uri => {
   if (!uri) return '';
-  const protocol = uri.split(':')[0].toLowerCase();
-  const hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
-  const name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];
+  const { protocol, hash, name } = parseUri(uri);
   switch (protocol) {
     case 'https':
       return uri;
@@ -23,9 +44,7 @@ export const uriToHttp = uri => {
 
 export const uriToHttpAsArray = uri => {
   if (!uri) return [];
-  const protocol = uri.split(':')[0].toLowerCase();
-  const hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
-  const name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];
+  const { protocol, hash, name } = parseUri(uri);
   switch (protocol) {
     case 'https':
       return [uri];
@@ -75,7 +94,10 @@ const timeoutPromise = (ms, promise) =>
 
 export const fetchImageUri = async tokenUri => {
   try {
-    const response = await timeoutPromise(5000, fetch(tokenUri)); // Fetch the resource
+    const response = await timeoutPromise(
+      DEFAULT_IMAGE_TIMEOUT,
+      fetch(tokenUri),
+    ); // Fetch the resource
     const text = await response.text(); // Parse it as text
     // eslint-ignore-next-line camelcase
     const { image, image_url: imageUrl } = JSON.parse(text); // Try to parse it as json
