@@ -42,12 +42,25 @@ export const ERC1155TokenDisplay = ({
   const onCheck = useCallback(() => {
     if (disableCheckbox) return;
     if (!isChecked) {
-      onOpen();
+      if (amount.toString() === `1`) {
+        selectToken({ ...token, amount: amount.toString() });
+        setChecked(true);
+      } else {
+        onOpen();
+      }
     } else {
       unselectToken(token);
       setChecked(false);
     }
-  }, [disableCheckbox, isChecked, unselectToken, token, onOpen]);
+  }, [
+    disableCheckbox,
+    isChecked,
+    selectToken,
+    unselectToken,
+    token,
+    onOpen,
+    amount,
+  ]);
 
   useEffect(() => {
     if (disableCheckbox) return;
@@ -171,7 +184,7 @@ export const SelectEIP1155TokenModal = ({
   setChecked,
   token,
 }) => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const onClick = useCallback(() => {
     selectToken({ ...token, amount: amount.toString() });
     setChecked(true);

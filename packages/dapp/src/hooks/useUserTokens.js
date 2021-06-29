@@ -4,22 +4,25 @@ import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { fetch721TokenList, fetch1155TokenList } from 'lib/tokenList';
 import { useCallback, useEffect, useState } from 'react';
 
-const tokenSearchFilter = searchText => ({
-  name,
-  symbol,
-  address,
-  tokenId,
-}) => {
-  const nameSearch = name ? name.toLowerCase().indexOf(searchText) >= 0 : false;
-  const symbolSearch = symbol
-    ? symbol.toLowerCase().indexOf(searchText) >= 0
-    : false;
-  const addressSearch = address
-    ? address.toLowerCase().indexOf(searchText) >= 0
-    : false;
-  const tokenIdSearch = tokenId
-    ? tokenId.toLowerCase().indexOf(searchText) >= 0
-    : false;
+const tokenSearchFilter = search => ({ name, symbol, address, tokenId }) => {
+  const searchText = search.toLowerCase();
+  const isAddressSearch = searchText.startsWith('0x');
+  const nameSearch =
+    name && !isAddressSearch
+      ? name.toLowerCase().indexOf(searchText) >= 0
+      : false;
+  const symbolSearch =
+    symbol && !isAddressSearch
+      ? symbol.toLowerCase().indexOf(searchText) >= 0
+      : false;
+  const addressSearch =
+    address && isAddressSearch
+      ? address.toLowerCase().indexOf(searchText) >= 0
+      : false;
+  const tokenIdSearch =
+    tokenId && !isAddressSearch
+      ? tokenId.toLowerCase().indexOf(searchText) >= 0
+      : false;
   return nameSearch || symbolSearch || addressSearch || tokenIdSearch;
 };
 

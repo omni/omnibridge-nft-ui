@@ -22,7 +22,7 @@ import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { getGasPrice, getMedianHistoricalEthGasPrice } from 'lib/gasPrice';
-import { getNetworkName } from 'lib/helpers';
+import { getNetworkName, handleWalletError } from 'lib/helpers';
 import React, { useCallback, useState } from 'react';
 
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
@@ -64,15 +64,7 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   const medianGasPrice = getMedianHistoricalEthGasPrice();
 
   const onClick = () => {
-    transfer().catch(error => {
-      if (error && error.message) {
-        showError(error.message);
-      } else {
-        showError(
-          'Impossible to perform the operation. Reload the application and try again.',
-        );
-      }
-    });
+    transfer().catch(error => handleWalletError(error, showError));
     onClose();
   };
 
