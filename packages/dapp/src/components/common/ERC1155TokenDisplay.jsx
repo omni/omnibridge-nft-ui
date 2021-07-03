@@ -22,7 +22,7 @@ import { TokenTag } from 'components/common/TokenTag';
 import { useBridgeContext } from 'contexts/BridgeContext';
 import { getTokenUrl } from 'lib/helpers';
 import { getTruncatedAddress, truncateText } from 'lib/stringHelpers';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 export const ERC1155TokenDisplay = ({
   token,
@@ -190,8 +190,14 @@ export const SelectEIP1155TokenModal = ({
     setChecked(true);
     onClose();
   }, [token, amount, setChecked, onClose, selectToken]);
+  const doneRef = useRef(null);
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      initialFocusRef={doneRef}
+    >
       <ModalOverlay background="modalBG">
         <ModalContent
           boxShadow="0px 1rem 2rem #617492"
@@ -264,6 +270,7 @@ export const SelectEIP1155TokenModal = ({
           </ModalBody>
           <ModalFooter p={6}>
             <Button
+              ref={doneRef}
               px={12}
               colorScheme="blue"
               mt={{ base: 2, md: 0 }}
