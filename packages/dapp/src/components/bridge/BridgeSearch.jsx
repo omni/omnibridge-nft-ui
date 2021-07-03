@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Collapse,
+  Flex,
   Input,
   InputGroup,
   InputRightElement,
@@ -59,37 +60,34 @@ export const BridgeSearch = () => {
 
   return (
     <>
-      <Accordion allowToggle w="100%" defaultIndex={[0]}>
-        <AccordionItem border="0">
-          <AccordionButton
-            borderRadius="0.5rem"
-            justifyContent="space-between"
-            color="grey"
-            _hover={{ color: 'blue.500', bg: 'blackAlpha.50' }}
-          >
-            <Text fontWeight="bold" fontSize="xl" color="black">
-              Selected Tokens
-            </Text>
-            <AccordionIcon boxSize="1.5rem" />
-          </AccordionButton>
-          <AccordionPanel minH="3rem" p="1rem">
-            <Collapse in={showTokens} w="100%">
-              <Wrap spacing="6" minH="10.25rem">
-                {chosenTokens.map((token, index) => (
-                  <WrapItem key={index.toString()}>
-                    <TokenDisplay token={token} isChecked />
-                  </WrapItem>
-                ))}
-              </Wrap>
-            </Collapse>
-            <Collapse in={!showTokens} w="100%">
-              <Text color="greyText" fontSize="sm" w="100%">
-                Choose token from your wallet
-              </Text>
-            </Collapse>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+      <Flex w="100%" direction="column">
+        <Collapse in={showTokens} w="100%">
+          <Accordion allowToggle w="100%" defaultIndex={[0]}>
+            <AccordionItem border="0">
+              <AccordionButton
+                borderRadius="0.5rem"
+                justifyContent="space-between"
+                color="grey"
+                _hover={{ color: 'blue.500', bg: 'blackAlpha.50' }}
+              >
+                <Text fontWeight="bold" fontSize="xl" color="black">
+                  Selected Tokens
+                </Text>
+                <AccordionIcon boxSize="1.5rem" />
+              </AccordionButton>
+              <AccordionPanel minH="3rem" p="1rem">
+                <Wrap spacing="6" minH="10.25rem">
+                  {chosenTokens.map((token, index) => (
+                    <WrapItem key={index.toString()}>
+                      <TokenDisplay token={token} isChecked />
+                    </WrapItem>
+                  ))}
+                </Wrap>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </Collapse>
+      </Flex>
       <InputGroup
         size={inputSize}
         w="calc(100% - 2rem)"
