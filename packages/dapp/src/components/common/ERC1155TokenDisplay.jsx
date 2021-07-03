@@ -220,7 +220,10 @@ export const SelectEIP1155TokenModal = ({
               >
                 <ERC1155TokenDisplay token={token} disableCheckbox />
               </Flex>
-              <Text>Quantity</Text>
+              <Flex justify="space-between">
+                <Text>Quantity</Text>
+                <Text color="grey">Balance: {token.amount}</Text>
+              </Flex>
               <InputGroup>
                 <Input
                   borderColor="#DAE3F0"
@@ -244,7 +247,17 @@ export const SelectEIP1155TokenModal = ({
                   pr="7rem"
                 />
                 <InputRightElement w="auto" pr="0.5rem">
-                  Max: {token.amount}
+                  <Button
+                    onClick={() => setAmount(token.amount)}
+                    color="blue.500"
+                    bg="blue.50"
+                    size="sm"
+                    fontSize="sm"
+                    fontWeight="normal"
+                    _hover={{ bg: 'blue.100' }}
+                  >
+                    Max
+                  </Button>
                 </InputRightElement>
               </InputGroup>
             </VStack>
