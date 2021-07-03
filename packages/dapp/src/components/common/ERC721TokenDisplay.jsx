@@ -106,7 +106,10 @@ export const ERC721TokenDisplay = ({
           }
         >
           <TokenTag>EIP-721</TokenTag>
-          <TokenTag>{`ID: ${truncateText(tokenId.toString(), 10)}`}</TokenTag>
+          <TokenTag copy={tokenId}>{`ID: ${truncateText(
+            tokenId,
+            10,
+          )}`}</TokenTag>
           <Link
             href={`${getExplorerUrl(chainId)}/address/${address}`}
             isExternal

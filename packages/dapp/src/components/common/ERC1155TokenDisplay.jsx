@@ -161,7 +161,10 @@ export const ERC1155TokenDisplay = ({
             _groupHover={{ visibility: 'visible', opacity: 1 }}
           >
             <TokenTag>EIP-1155</TokenTag>
-            <TokenTag>{`ID: ${truncateText(tokenId.toString(), 10)}`}</TokenTag>
+            <TokenTag copy={tokenId}>{`ID: ${truncateText(
+              tokenId,
+              10,
+            )}`}</TokenTag>
             <Link
               href={`${getExplorerUrl(chainId)}/address/${address}`}
               isExternal
