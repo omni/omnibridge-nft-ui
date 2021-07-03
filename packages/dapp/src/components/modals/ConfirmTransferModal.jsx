@@ -80,7 +80,7 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
         <ModalContent
           boxShadow="0px 1rem 2rem #617492"
           borderRadius="1rem"
-          maxW="34.25rem"
+          maxW="36rem"
           mx={{ base: 12, lg: 0 }}
         >
           <ModalHeader p={6}>
@@ -140,15 +140,17 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
                 <Logo w="3rem" h="3rem" reverseFallback />
               </HStack>
             </Flex>
-            <Flex
-              mt="4"
-              bg="#EEf4FD"
-              borderRadius="1rem"
-              p="4"
-              direction="column"
-              align="center"
-            >
-              <DisplayTokens tokens={tokens} />
+            <Flex mt="4" bg="#EEf4FD" borderRadius="1rem" p="4">
+              <Flex
+                w="100%"
+                direction="column"
+                align="center"
+                maxH="12.75rem"
+                overflowY="auto"
+                overflowX="hidden"
+              >
+                <DisplayTokens tokens={tokens} />
+              </Flex>
             </Flex>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">

@@ -20,9 +20,9 @@ import { Checkbox } from 'components/common/Checkbox';
 import { Image } from 'components/common/TokenImage';
 import { TokenTag } from 'components/common/TokenTag';
 import { useBridgeContext } from 'contexts/BridgeContext';
-import { getExplorerUrl } from 'lib/helpers';
+import { getTokenUrl } from 'lib/helpers';
 import { getTruncatedAddress, truncateText } from 'lib/stringHelpers';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 export const ERC1155TokenDisplay = ({
   token,
@@ -161,11 +161,11 @@ export const ERC1155TokenDisplay = ({
             _groupHover={{ visibility: 'visible', opacity: 1 }}
           >
             <TokenTag>EIP-1155</TokenTag>
-            <TokenTag>{`ID: ${truncateText(tokenId.toString(), 10)}`}</TokenTag>
-            <Link
-              href={`${getExplorerUrl(chainId)}/address/${address}`}
-              isExternal
-            >
+            <TokenTag copy={tokenId}>{`ID: ${truncateText(
+              tokenId,
+              10,
+            )}`}</TokenTag>
+            <Link href={getTokenUrl(chainId, address, tokenId)} isExternal>
               <TokenTag cursor="pointer" showArrow>
                 {getTruncatedAddress(address)}
               </TokenTag>
@@ -190,8 +190,14 @@ export const SelectEIP1155TokenModal = ({
     setChecked(true);
     onClose();
   }, [token, amount, setChecked, onClose, selectToken]);
+  const doneRef = useRef(null);
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      initialFocusRef={doneRef}
+    >
       <ModalOverlay background="modalBG">
         <ModalContent
           boxShadow="0px 1rem 2rem #617492"
@@ -220,7 +226,10 @@ export const SelectEIP1155TokenModal = ({
               >
                 <ERC1155TokenDisplay token={token} disableCheckbox />
               </Flex>
-              <Text>Quantity</Text>
+              <Flex justify="space-between">
+                <Text>Quantity</Text>
+                <Text color="grey">Balance: {token.amount}</Text>
+              </Flex>
               <InputGroup>
                 <Input
                   borderColor="#DAE3F0"
@@ -244,13 +253,24 @@ export const SelectEIP1155TokenModal = ({
                   pr="7rem"
                 />
                 <InputRightElement w="auto" pr="0.5rem">
-                  Max: {token.amount}
+                  <Button
+                    onClick={() => setAmount(token.amount)}
+                    color="blue.500"
+                    bg="blue.50"
+                    size="sm"
+                    fontSize="sm"
+                    fontWeight="normal"
+                    _hover={{ bg: 'blue.100' }}
+                  >
+                    Max
+                  </Button>
                 </InputRightElement>
               </InputGroup>
             </VStack>
           </ModalBody>
           <ModalFooter p={6}>
             <Button
+              ref={doneRef}
               px={12}
               colorScheme="blue"
               mt={{ base: 2, md: 0 }}

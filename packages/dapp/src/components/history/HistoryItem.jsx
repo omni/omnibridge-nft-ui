@@ -228,7 +228,15 @@ export const HistoryItem = ({
       </Grid>
       <Flex mt="4" bg="#EEf4FD" borderRadius="1rem" p="4" direction="column">
         <Text> Items </Text>
-        <DisplayTokens tokens={tokens} />
+        <Flex
+          w="100%"
+          direction="column"
+          maxH="12.75rem"
+          overflowY="auto"
+          overflowX="hidden"
+        >
+          <DisplayTokens tokens={tokens} />
+        </Flex>
       </Flex>
     </Flex>
   );

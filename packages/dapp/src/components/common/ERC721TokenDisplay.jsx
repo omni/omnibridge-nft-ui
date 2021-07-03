@@ -3,7 +3,7 @@ import { Checkbox } from 'components/common/Checkbox';
 import { Image } from 'components/common/TokenImage';
 import { TokenTag } from 'components/common/TokenTag';
 import { useBridgeContext } from 'contexts/BridgeContext';
-import { getExplorerUrl } from 'lib/helpers';
+import { getTokenUrl } from 'lib/helpers';
 import { getTruncatedAddress, truncateText } from 'lib/stringHelpers';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -106,11 +106,11 @@ export const ERC721TokenDisplay = ({
           }
         >
           <TokenTag>EIP-721</TokenTag>
-          <TokenTag>{`ID: ${truncateText(tokenId.toString(), 10)}`}</TokenTag>
-          <Link
-            href={`${getExplorerUrl(chainId)}/address/${address}`}
-            isExternal
-          >
+          <TokenTag copy={tokenId}>{`ID: ${truncateText(
+            tokenId,
+            10,
+          )}`}</TokenTag>
+          <Link href={getTokenUrl(chainId, address, tokenId)} isExternal>
             <TokenTag cursor="pointer" showArrow>
               {getTruncatedAddress(address)}
             </TokenTag>
