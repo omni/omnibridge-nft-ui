@@ -5,6 +5,7 @@ import {
   networkCurrencies,
   networkLabels,
   networkNames,
+  XDAI_CHAIN_IDS,
 } from 'lib/constants';
 import { ETH_XDAI_BRIDGE, RINKEBY_XDAI_BRIDGE } from 'lib/networks';
 
@@ -87,3 +88,10 @@ export const handleWalletError = (error, showError) => {
     showError(IMPOSSIBLE_ERROR);
   }
 };
+
+export const getTokenUrl = (chainId, address, tokenId) =>
+  XDAI_CHAIN_IDS.includes(chainId)
+    ? `${getExplorerUrl(
+        chainId,
+      )}/tokens/${address}/instance/${tokenId}/token-transfers`
+    : `${getExplorerUrl(chainId)}/token/${address}?a=${tokenId}`;
