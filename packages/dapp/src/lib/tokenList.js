@@ -1,16 +1,6 @@
-import { BigNumber, utils } from 'ethers';
 import { gql, request } from 'graphql-request';
 import { logError } from 'lib/helpers';
-
-const getTokenUri = (tokenUri, tokenId) => {
-  if (tokenUri && tokenId && /\{id\}/.test(tokenUri)) {
-    const tokenIdHex = utils
-      .hexZeroPad(BigNumber.from(tokenId).toHexString(), 32)
-      .slice(2);
-    return tokenUri.replace(/\{id\}/, tokenIdHex);
-  }
-  return tokenUri;
-};
+import { getTokenUri } from 'lib/tokenUri';
 
 const eip721TokensQuery = gql`
   query Get721Tokens($owner: ID) {

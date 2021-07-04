@@ -16,6 +16,7 @@ const requestsUserQuery = gql`
       messageId
       timestamp
       token
+      nativeToken
       tokenIds
       values
       tokenUris
@@ -43,6 +44,7 @@ const requestsRecipientQuery = gql`
       messageId
       timestamp
       token
+      nativeToken
       tokenIds
       values
       tokenUris
@@ -144,6 +146,7 @@ export const combineRequestsWithExecutions = (requests, executions, chainId) =>
         chainId,
         amounts: req.values,
         address: req.token,
+        nativeToken: req.nativeToken,
         tokenIds: req.tokenIds,
         tokenUris: req.tokenUris,
         is1155: req.values.length > 0,

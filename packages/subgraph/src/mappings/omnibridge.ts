@@ -2,9 +2,10 @@ import { log } from '@graphprotocol/graph-ts';
 import {
   TokensBridgingInitiated,
   TokensBridged,
+  Omnibridge,
 } from '../types/Omnibridge/Omnibridge';
 import { Execution, UserRequest } from '../types/schema';
-import { fetchTokenUris } from './helpers';
+import { fetchTokenUris, ADDRESS_ZERO } from './helpers';
 
 export function handleBridgeTransfer(event: TokensBridged): void {
   log.debug('Parsing TokensBridged for txHash {}', [
@@ -38,6 +39,11 @@ export function handleInitiateTransfer(event: TokensBridgingInitiated): void {
   request.txHash = txHash;
   request.timestamp = event.block.timestamp;
   request.token = event.params.token;
+
+  let omnibridge = Omnibridge.bind(event.address);
+  let nativeToken = omnibridge.try_nativeTokenAddress(event.params.token);
+  request.nativeToken = nativeToken.reverted ? ADDRESS_ZERO : nativeToken.value;
+
   request.sender = event.params.sender;
   request.tokenIds = event.params.tokenIds;
   request.tokenUris = fetchTokenUris(

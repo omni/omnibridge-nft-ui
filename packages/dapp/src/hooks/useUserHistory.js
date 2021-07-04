@@ -5,6 +5,7 @@ import {
   getExecutions,
   getRequests,
 } from 'lib/history';
+import { getRequestsWithTokenUris } from 'lib/tokenUri';
 import { useEffect, useState } from 'react';
 
 export const useUserHistory = () => {
@@ -12,6 +13,8 @@ export const useUserHistory = () => {
     homeChainId,
     foreignChainId,
     getGraphEndpoint,
+    getEIP721GraphEndpoint,
+    getEIP1155GraphEndpoint,
   } = useBridgeDirection();
   const { account } = useWeb3Context();
   const [transfers, setTransfers] = useState();
@@ -24,8 +27,8 @@ export const useUserHistory = () => {
       setTransfers();
       setLoading(true);
       const [
-        { requests: homeRequests },
-        { requests: foreignRequests },
+        { requests: homeRequestsInit },
+        { requests: foreignRequestsInit },
       ] = await Promise.all([
         getRequests(account, getGraphEndpoint(homeChainId)),
         getRequests(account, getGraphEndpoint(foreignChainId)),
@@ -33,9 +36,23 @@ export const useUserHistory = () => {
       const [
         { executions: homeExecutions },
         { executions: foreignExecutions },
+        homeRequests,
+        foreignRequests,
       ] = await Promise.all([
-        getExecutions(getGraphEndpoint(homeChainId), foreignRequests),
-        getExecutions(getGraphEndpoint(foreignChainId), homeRequests),
+        getExecutions(getGraphEndpoint(homeChainId), foreignRequestsInit),
+        getExecutions(getGraphEndpoint(foreignChainId), homeRequestsInit),
+        getRequestsWithTokenUris(
+          foreignChainId, // opp chainId for burnt tokens
+          homeRequestsInit,
+          getEIP721GraphEndpoint,
+          getEIP1155GraphEndpoint,
+        ),
+        getRequestsWithTokenUris(
+          homeChainId,
+          foreignRequestsInit,
+          getEIP721GraphEndpoint,
+          getEIP1155GraphEndpoint,
+        ),
       ]);
       const homeTransfers = combineRequestsWithExecutions(
         homeRequests,
@@ -59,7 +76,14 @@ export const useUserHistory = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [homeChainId, foreignChainId, account, getGraphEndpoint]);
+  }, [
+    homeChainId,
+    foreignChainId,
+    account,
+    getGraphEndpoint,
+    getEIP721GraphEndpoint,
+    getEIP1155GraphEndpoint,
+  ]);
 
   return { transfers, loading };
 };

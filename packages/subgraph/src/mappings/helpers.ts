@@ -8,6 +8,10 @@ import {
 
 import { Token } from '../types/Omnibridge/Token';
 
+export var ADDRESS_ZERO: Address = Address.fromHexString(
+  '0x0000000000000000000000000000000000000000',
+) as Address;
+
 export function getDirection(): String {
   let network = dataSource.network();
   let address = dataSource.address();
