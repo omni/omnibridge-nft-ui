@@ -22,5 +22,14 @@
     ],
     "name": "TokensBridgingInitiated",
     "type": "event"
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "address", "name": "", "internalType": "address" }],
+    "name": "nativeTokenAddress",
+    "inputs": [
+      { "type": "address", "name": "_bridgedToken", "internalType": "address" }
+    ]
   }
 ]

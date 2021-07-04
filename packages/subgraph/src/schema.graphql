@@ -1,12 +1,13 @@
 type UserRequest @entity {
   id: ID!
-  sender: Bytes
+  txHash: Bytes
+  timestamp: BigInt
   token: Bytes
+  nativeToken: Bytes
+  sender: Bytes
   tokenIds: [BigInt!]
   tokenUris: [String!]
   values: [BigInt!]
-  timestamp: BigInt!
-  txHash: Bytes!
   messageId: Bytes
   encodedData: Bytes
   message: Message
@@ -23,14 +24,14 @@ type Execution @entity {
   recipient: Bytes
   messageId: Bytes
   status: Boolean
-  timestamp: BigInt!
-  txHash: Bytes!
+  timestamp: BigInt
+  txHash: Bytes
 }
 
 type Message @entity {
   id: ID!
   msgId: Bytes
-  txHash: Bytes!
+  txHash: Bytes
   msgHash: Bytes
   msgData: Bytes
   signatures: [Bytes!]
