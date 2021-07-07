@@ -12,7 +12,6 @@ const eip721TokensQuery = gql`
           address: id
           name
           symbol
-          supportsMetadata: supportsEIP721Metadata
         }
       }
     }
@@ -29,7 +28,6 @@ const eip721TokensQueryAccount = gql`
           address: id
           name
           symbol
-          supportsMetadata
         }
       }
     }
@@ -60,25 +58,16 @@ export const fetch721TokenList = async (chainId, account, graphEndpoint) => {
       data.owner.tokens.length > 0
     ) {
       return data.owner.tokens
-        .map(
-          ({
-            tokenUri,
-            tokenId,
-            token: { address, name, symbol, supportsMetadata },
-          }) =>
-            supportsMetadata && tokenUri
-              ? {
-                  chainId,
-                  address,
-                  name,
-                  symbol,
-                  tokenId,
-                  tokenUri: getTokenUri(tokenUri, tokenId),
-                  amount: 1,
-                  is1155: false,
-                }
-              : undefined,
-        )
+        .map(({ tokenUri, tokenId, token: { address, name, symbol } }) => ({
+          chainId,
+          address,
+          name,
+          symbol,
+          tokenId,
+          tokenUri: getTokenUri(tokenUri, tokenId),
+          amount: 1,
+          is1155: false,
+        }))
         .filter(t => !!t);
     }
   } catch (graphError) {
@@ -130,17 +119,14 @@ export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
               registry: { address },
             },
             amount,
-          }) =>
-            tokenId // tokenUri
-              ? {
-                  chainId,
-                  address,
-                  tokenId,
-                  tokenUri: getTokenUri(tokenUri, tokenId),
-                  amount,
-                  is1155: true,
-                }
-              : undefined,
+          }) => ({
+            chainId,
+            address,
+            tokenId,
+            tokenUri: getTokenUri(tokenUri, tokenId),
+            amount,
+            is1155: true,
+          }),
         )
         .filter(t => !!t && t.amount > 0);
     }
