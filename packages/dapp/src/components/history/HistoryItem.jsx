@@ -90,7 +90,6 @@ export const HistoryItem = ({
   const { claim, executing, executionTx } = useClaim();
   const [claiming, setClaiming] = useState(false);
   const receivingTx = executionTx || inputReceivingTx;
-  const claimed = !!receivingTx;
   const failed = !!inputReceivingTx && status === false;
 
   const claimTokens = useCallback(async () => {

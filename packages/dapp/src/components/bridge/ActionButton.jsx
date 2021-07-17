@@ -13,18 +13,12 @@ import { ConfirmTransferModal } from 'components/modals/ConfirmTransferModal';
 import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { utils } from 'ethers';
-import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import React, { useCallback, useMemo } from 'react';
 
 export const ActionButton = () => {
   const { providerChainId, ethersProvider, isGnosisSafe } = useWeb3Context();
-  const { homeChainId } = useBridgeDirection();
-  const isHome = providerChainId === homeChainId;
-  const {
-    tokens,
-    receiver,
-    // , unlock, unlockLoading, unlockTxHash, unlocked
-  } = useBridgeContext();
+  const { needsClaiming } = useBridgeContext();
+  const { tokens, receiver } = useBridgeContext();
   const unlock = useCallback(() => undefined, []);
   const unlockLoading = false;
   const unlockTxHash = '';
@@ -36,9 +30,9 @@ export const ActionButton = () => {
     let buttonText = 'Unlock';
     let buttonIcon = UnlockIcon;
     if (unlocked) {
-      buttonColor = isHome ? 'purple.300' : 'blue.500';
-      buttonHoverColor = isHome ? 'purple.500' : 'blue.700';
-      buttonText = isHome ? 'Request' : 'Transfer';
+      buttonColor = needsClaiming ? 'purple.300' : 'blue.500';
+      buttonHoverColor = needsClaiming ? 'purple.500' : 'blue.700';
+      buttonText = needsClaiming ? 'Request' : 'Transfer';
       buttonIcon = TransferIcon;
     }
     return {
@@ -47,7 +41,7 @@ export const ActionButton = () => {
       text: buttonText,
       icon: buttonIcon,
     };
-  }, [unlocked, isHome]);
+  }, [unlocked, needsClaiming]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();

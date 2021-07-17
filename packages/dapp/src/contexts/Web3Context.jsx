@@ -98,6 +98,12 @@ export const Web3Provider = ({ children }) => {
     }
   }, [providerChainId]);
 
+  const disconnect = useCallback(async () => {
+    web3Modal.clearCachedProvider();
+    setGnosisSafe(false);
+    setWeb3State({});
+  }, []);
+
   const connectWeb3 = useCallback(async () => {
     try {
       setLoading(true);
@@ -122,15 +128,10 @@ export const Web3Provider = ({ children }) => {
       }
     } catch (error) {
       logError({ web3ModalError: error });
+      disconnect();
     }
     setLoading(false);
-  }, [setWeb3Provider]);
-
-  const disconnect = useCallback(async () => {
-    web3Modal.clearCachedProvider();
-    setGnosisSafe(false);
-    setWeb3State({});
-  }, []);
+  }, [setWeb3Provider, disconnect]);
 
   useEffect(() => {
     if (window.ethereum) {

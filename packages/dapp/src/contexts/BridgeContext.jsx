@@ -24,11 +24,17 @@ export const BridgeProvider = ({ children }) => {
     ethersProvider,
   } = useWeb3Context();
 
-  const { getMediatorAddress } = useBridgeDirection();
+  const {
+    homeChainId,
+    getMediatorAddress,
+    claimDisabled,
+    tokensClaimDisabled,
+  } = useBridgeDirection();
   const mediatorAddress = useMemo(() => getMediatorAddress(providerChainId), [
     getMediatorAddress,
     providerChainId,
   ]);
+  const isHome = providerChainId === homeChainId;
 
   const [receiver, setReceiver] = useState('');
   const [loading, setLoading] = useState(false);
@@ -139,6 +145,14 @@ export const BridgeProvider = ({ children }) => {
 
   useEffect(() => setTokens(), [providerChainId, account, ethersProvider]);
 
+  const needsClaiming = useMemo(
+    () =>
+      isHome &&
+      !claimDisabled &&
+      !(tokensClaimDisabled || []).includes(tokens?.address.toLowerCase()),
+    [isHome, claimDisabled, tokensClaimDisabled, tokens],
+  );
+
   return (
     <BridgeContext.Provider
       value={{
@@ -159,6 +173,7 @@ export const BridgeProvider = ({ children }) => {
         unlockLoading,
         unlockTxHash,
         unlock,
+        needsClaiming,
       }}
     >
       {children}

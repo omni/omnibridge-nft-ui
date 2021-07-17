@@ -16,6 +16,8 @@ const ETH_XDAI_BRIDGE_CONFIG = {
   foreign721Subgraph: 'wighawag/eip721-subgraph',
   home1155Subgraph: 'sunguru98/erc1155-xdai-subgraph',
   foreign1155Subgraph: 'alexvorobiov/eip1155subgraph',
+  claimDisabled: false,
+  tokensClaimDisabled: [],
 };
 
 const RINKEBY_XDAI_BRIDGE_CONFIG = {
@@ -33,6 +35,8 @@ const RINKEBY_XDAI_BRIDGE_CONFIG = {
   foreign721Subgraph: 'daisai3/eip721_rinkeby',
   home1155Subgraph: 'sunguru98/erc1155-xdai-subgraph',
   foreign1155Subgraph: 'sunguru98/erc1155-rinkeby-subgraph',
+  claimDisabled: true,
+  tokensClaimDisabled: [],
 };
 
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(
