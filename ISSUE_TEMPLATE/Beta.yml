@@ -1,0 +1,35 @@
+name: NFT Bridge Beta Testing Feedback
+description: 
+title: "[Beta testing feedback]: "
+labels: [beta testing]
+assignees:
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for participating in NFT Bridge Beta Testing Program!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What can be improved? 
+      description: Please share your feedback or report a bug
+      placeholder: 
+      value: 
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge

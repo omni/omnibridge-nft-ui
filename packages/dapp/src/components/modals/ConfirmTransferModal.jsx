@@ -28,14 +28,9 @@ import React, { useCallback, useState } from 'react';
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   const { isGnosisSafe, account } = useWeb3Context();
 
-  const {
-    homeChainId,
-    foreignChainId,
-    getBridgeChainId,
-  } = useBridgeDirection();
-  const { receiver, tokens, transfer } = useBridgeContext();
+  const { foreignChainId, getBridgeChainId } = useBridgeDirection();
+  const { receiver, tokens, transfer, needsClaiming } = useBridgeContext();
 
-  // const smallScreen = useBreakpointValue({ base: true, md: false });
   const toast = useToast();
   const showError = useCallback(
     msg => {
@@ -58,7 +53,6 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   if (!tokens) return null;
 
   const { chainId } = tokens;
-  const isHome = chainId !== homeChainId;
 
   const currentGasPrice = getGasPrice();
   const medianGasPrice = getMedianHistoricalEthGasPrice();
@@ -154,7 +148,7 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
             </Flex>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">
-            {!isHome && <NeedsTransactionsWarning noShadow />}
+            {needsClaiming && <NeedsTransactionsWarning noShadow />}
             {foreignChainId === 1 && medianGasPrice.lt(currentGasPrice) && (
               <MedianGasWarning
                 medianPrice={medianGasPrice}
