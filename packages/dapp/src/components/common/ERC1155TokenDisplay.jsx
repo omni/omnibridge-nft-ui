@@ -141,7 +141,7 @@ export const ERC1155TokenDisplay = ({
             pointerEvents="none"
           />
           <Flex justify="space-between" transform="translate(0%, 0%)">
-            <TokenTag>{`x${amount}`}</TokenTag>
+            <TokenTag>{`x${truncateText(amount, 10)}`}</TokenTag>
             {isDisabled || disableCheckbox ? null : (
               <Checkbox
                 isChecked={isChecked}
@@ -228,7 +228,9 @@ export const SelectEIP1155TokenModal = ({
               </Flex>
               <Flex justify="space-between">
                 <Text>Quantity</Text>
-                <Text color="grey">Balance: {token.amount}</Text>
+                <Text color="grey">
+                  Balance: {truncateText(token.amount, 10)}
+                </Text>
               </Flex>
               <InputGroup>
                 <Input
