@@ -35,7 +35,10 @@ const eip721TokensQueryAccount = gql`
 `;
 
 const getEIP721TokensQuery = graphEndpoint => {
-  if (graphEndpoint.includes('sunguru98')) {
+  if (
+    graphEndpoint.includes('sunguru98') ||
+    graphEndpoint.includes('dan13ram')
+  ) {
     return eip721TokensQueryAccount;
   }
   return eip721TokensQuery;

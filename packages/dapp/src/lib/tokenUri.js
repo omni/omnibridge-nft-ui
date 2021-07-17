@@ -41,7 +41,10 @@ const eip1155TokenUrisQuery = gql`
 `;
 
 const getEIP721TokenUrisQuery = graphEndpoint => {
-  if (graphEndpoint.includes('sunguru98')) {
+  if (
+    graphEndpoint.includes('sunguru98') ||
+    graphEndpoint.includes('dan13ram')
+  ) {
     return eip721TokenUrisQueryAccount;
   }
   return eip721TokenUrisQuery;

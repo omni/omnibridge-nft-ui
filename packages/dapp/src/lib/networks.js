@@ -1,5 +1,6 @@
 export const ETH_XDAI_BRIDGE = 'eth-xdai';
 export const RINKEBY_XDAI_BRIDGE = 'rinkeby-xdai';
+export const KOVAN_SOKOL_BRIDGE = 'kovan-sokol';
 
 const ETH_XDAI_BRIDGE_CONFIG = {
   label: 'eth⥊xdai',
@@ -39,6 +40,25 @@ const RINKEBY_XDAI_BRIDGE_CONFIG = {
   tokensClaimDisabled: [],
 };
 
+const KOVAN_SOKOL_BRIDGE_CONFIG = {
+  label: 'kovan⥊sokol',
+  homeChainId: 77,
+  foreignChainId: 42,
+  foreignMediatorAddress: '0x63be59CF177cA9bb317DE8C4aa965Ddda93CB9d7'.toLowerCase(),
+  homeMediatorAddress: '0x3ecEe2667f80fc0858437119621b820efc6b0Ede'.toLowerCase(),
+  foreignAmbAddress: '0xFe446bEF1DbF7AFE24E81e05BC8B271C1BA9a560'.toLowerCase(),
+  homeAmbAddress: '0xFe446bEF1DbF7AFE24E81e05BC8B271C1BA9a560'.toLowerCase(),
+  ambLiveMonitorPrefix: 'https://alm-test-amb.herokuapp.com',
+  foreignBridgeSubgraph: 'dan13ram/kovan-sokol-omnibridge-nft',
+  homeBridgeSubgraph: 'dan13ram/sokol-kovan-omnibridge-nft',
+  home721Subgraph: 'dan13ram/erc721-sokol-subgraph',
+  foreign721Subgraph: 'sunguru98/erc721-kovan-subgraph',
+  home1155Subgraph: 'sunguru98/erc1155-sokol-subgraph',
+  foreign1155Subgraph: 'sunguru98/erc1155-kovan-subgraph',
+  claimDisabled: false,
+  tokensClaimDisabled: [],
+};
+
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(
   ' ',
 ).map(b => b.toLowerCase());
@@ -46,6 +66,7 @@ const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(
 const bridgeInfo = {
   [ETH_XDAI_BRIDGE]: ETH_XDAI_BRIDGE_CONFIG,
   [RINKEBY_XDAI_BRIDGE]: RINKEBY_XDAI_BRIDGE_CONFIG,
+  [KOVAN_SOKOL_BRIDGE]: KOVAN_SOKOL_BRIDGE_CONFIG,
 };
 
 const getNetworkConfig = bridges => {
