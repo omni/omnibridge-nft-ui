@@ -173,6 +173,7 @@ export const BridgeProvider = ({ children }) => {
       const tokenWithUri = await fetchTokenUri(provider, token);
       localTokenInfo[tokenKey] = { ...tokenInfo, ...tokenWithUri };
       setLocalTokenInfo(localTokenInfo);
+      sessionStorage.removeItem(tokenWithUri.tokenUri);
       setRefreshing(false);
       logDebug('refreshed TokenURI', tokenWithUri);
       return tokenWithUri;

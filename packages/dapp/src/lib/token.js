@@ -59,8 +59,6 @@ export const fetchTokenInfo = async (ethersProvider, localTokenInfo, token) => {
   return tokenInfo;
 };
 
-export const TOKEN_URI_NOT_AVAILABLE = 'token-uri-not-available';
-
 export const fetchTokenUri = async (ethersProvider, token) => {
   const { address, tokenId, is1155 } = token;
   try {
@@ -76,5 +74,5 @@ export const fetchTokenUri = async (ethersProvider, token) => {
   } catch (tokenInfoError) {
     logError({ tokenInfoError, token });
   }
-  return { ...token, tokenUri: TOKEN_URI_NOT_AVAILABLE };
+  return { ...token, tokenUri: '' };
 };
