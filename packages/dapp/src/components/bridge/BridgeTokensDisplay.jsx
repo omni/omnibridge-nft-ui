@@ -4,6 +4,7 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Spinner,
   Text,
   Wrap,
   WrapItem,
@@ -13,7 +14,7 @@ import { useUserTokens } from 'hooks/useUserTokens';
 import React from 'react';
 
 export const BridgeTokensDisplay = () => {
-  const { eip721Tokens, eip1155Tokens } = useUserTokens();
+  const { eip721Tokens, eip1155Tokens, fetching } = useUserTokens();
 
   return (
     <Accordion allowToggle allowMultiple w="100%" defaultIndex={[0, 1]}>
@@ -30,13 +31,23 @@ export const BridgeTokensDisplay = () => {
           <AccordionIcon boxSize="1.5rem" />
         </AccordionButton>
         <AccordionPanel p="4">
-          <Wrap spacing="6">
-            {eip721Tokens.map((token, index) => (
-              <WrapItem key={index.toString()}>
-                <TokenDisplay token={token} />
-              </WrapItem>
-            ))}
-          </Wrap>
+          {fetching ? (
+            <Spinner
+              color="blue.500"
+              size="xl"
+              speed="0.75s"
+              thickness="3px"
+              emptyColor="#EEf4FD"
+            />
+          ) : (
+            <Wrap spacing="6">
+              {eip721Tokens.map((token, index) => (
+                <WrapItem key={index.toString()}>
+                  <TokenDisplay token={token} />
+                </WrapItem>
+              ))}
+            </Wrap>
+          )}
         </AccordionPanel>
       </AccordionItem>
       <AccordionItem border="0">
@@ -52,13 +63,23 @@ export const BridgeTokensDisplay = () => {
           <AccordionIcon boxSize="1.5rem" />
         </AccordionButton>
         <AccordionPanel p="4">
-          <Wrap spacing="6">
-            {eip1155Tokens.map((token, index) => (
-              <WrapItem key={index.toString()}>
-                <TokenDisplay token={token} />
-              </WrapItem>
-            ))}
-          </Wrap>
+          {fetching ? (
+            <Spinner
+              color="blue.500"
+              size="xl"
+              speed="0.75s"
+              thickness="3px"
+              emptyColor="#EEf4FD"
+            />
+          ) : (
+            <Wrap spacing="6">
+              {eip1155Tokens.map((token, index) => (
+                <WrapItem key={index.toString()}>
+                  <TokenDisplay token={token} />
+                </WrapItem>
+              ))}
+            </Wrap>
+          )}
         </AccordionPanel>
       </AccordionItem>
     </Accordion>

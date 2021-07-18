@@ -1,5 +1,6 @@
 import { gql, request } from 'graphql-request';
 import { logError } from 'lib/helpers';
+import { fetchTokenInfo } from 'lib/token';
 import { getTokenUri } from 'lib/tokenUri';
 
 const eip721TokensQuery = gql`
@@ -142,4 +143,45 @@ export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
     });
   }
   return [];
+};
+
+const NFT_TOKEN_INFO_LOCAL_KEY = 'nft-token-info';
+
+export const getLocalTokenInfo = () => {
+  const localTokenInfoString = window.localStorage.getItem(
+    NFT_TOKEN_INFO_LOCAL_KEY,
+  );
+  return localTokenInfoString ? JSON.parse(localTokenInfoString) : {};
+};
+
+export const setLocalTokenInfo = localTokenInfo => {
+  window.localStorage.setItem(
+    NFT_TOKEN_INFO_LOCAL_KEY,
+    JSON.stringify(localTokenInfo),
+  );
+};
+
+export const fetchTokenInfoForAll = async (ethersProvider, tokens) => {
+  const localTokenInfo = getLocalTokenInfo();
+  const tokensWithInfo = await Promise.all(
+    tokens.map(async token => {
+      const { chainId, address, tokenId } = token;
+      const tokenKey = `${chainId}-${address.toLowerCase()}-${tokenId}`;
+      const tokenInfo = localTokenInfo[tokenKey];
+      const newTokenInfo = await fetchTokenInfo(
+        ethersProvider,
+        tokenInfo,
+        token,
+      );
+      return newTokenInfo;
+    }),
+  );
+  tokensWithInfo.map(token => {
+    const { chainId, address, tokenId } = token;
+    const tokenKey = `${chainId}-${address.toLowerCase()}-${tokenId}`;
+    localTokenInfo[tokenKey] = token;
+    return token;
+  });
+  setLocalTokenInfo(localTokenInfo);
+  return tokensWithInfo;
 };

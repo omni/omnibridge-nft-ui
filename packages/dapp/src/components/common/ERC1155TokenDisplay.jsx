@@ -17,6 +17,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Checkbox } from 'components/common/Checkbox';
+import { RefreshButton } from 'components/common/RefreshButton';
 import { Image } from 'components/common/TokenImage';
 import { TokenTag } from 'components/common/TokenTag';
 import { useBridgeContext } from 'contexts/BridgeContext';
@@ -28,6 +29,7 @@ export const ERC1155TokenDisplay = ({
   token,
   disableCheckbox = false,
   isChecked: inputIsChecked = false,
+  onRefresh = undefined,
 }) => {
   const [isDisabled, setDisabled] = useState(false);
   const { chainId, tokenUri, tokenId, amount, address } = token;
@@ -160,7 +162,10 @@ export const ERC1155TokenDisplay = ({
             transition="all 0.25s"
             _groupHover={{ visibility: 'visible', opacity: 1 }}
           >
-            <TokenTag>EIP-1155</TokenTag>
+            <Flex w="100%" justify="space-between">
+              <TokenTag>EIP-1155</TokenTag>
+              {onRefresh ? <RefreshButton onClick={onRefresh} /> : null}
+            </Flex>
             <TokenTag copy={tokenId}>{`ID: ${truncateText(
               tokenId,
               10,
@@ -224,7 +229,11 @@ export const SelectEIP1155TokenModal = ({
                 bg="#EEf4FD"
                 borderRadius="1rem"
               >
-                <ERC1155TokenDisplay token={token} disableCheckbox />
+                <ERC1155TokenDisplay
+                  token={token}
+                  disableCheckbox
+                  onRefresh={undefined}
+                />
               </Flex>
               <Flex justify="space-between">
                 <Text>Quantity</Text>

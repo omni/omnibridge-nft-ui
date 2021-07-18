@@ -44,15 +44,15 @@ export const fetchQueryParams = search => {
     }, {});
 };
 
-export const logError = error => {
+export const logError = (...args) => {
   // eslint-disable-next-line no-console
-  console.error(error);
+  console.error(...args);
 };
 
-export const logDebug = error => {
+export const logDebug = (...args) => {
   if (process.env.REACT_APP_DEBUG_LOGS === 'true') {
     // eslint-disable-next-line no-console
-    console.debug(error);
+    console.log(...args);
   }
 };
 
