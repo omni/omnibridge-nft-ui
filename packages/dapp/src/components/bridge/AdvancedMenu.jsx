@@ -81,7 +81,6 @@ export const AdvancedMenu = () => {
             h="2.5rem"
             fontWeight="normal"
             px="2"
-            title="Click to change recipient"
           >
             <AdvancedImage width="1.25rem" />
             <Text ml={2}>{isMenuOpen ? 'Clear Recipient' : 'Advanced'}</Text>
