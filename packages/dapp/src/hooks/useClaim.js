@@ -146,6 +146,7 @@ export const useClaim = () => {
       return executeCallback(message, providerChainId === homeChainId);
     },
     [
+      isMetamask,
       executeCallback,
       homeChainId,
       homeAmbAddress,

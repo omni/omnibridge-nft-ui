@@ -87,21 +87,16 @@ export const getRequestsWithTokenUris = async (
   const eip1155endpoint = getEIP1155GraphEndpoint(chainId);
   const requestsWithTokenUris = await Promise.all(
     requests.map(async req => {
-      if (req.nativeToken === ADDRESS_ZERO) {
-        return req;
-      }
-      const { values, nativeToken, tokenIds } = req;
+      const { values, nativeToken, tokenIds, tokenUris } = req;
       const is1155 = values.length > 0;
       const endpoint = is1155 ? eip1155endpoint : eip721endpoint;
-      const tokenUris = await fetchTokenUris(
-        endpoint,
-        nativeToken,
-        tokenIds,
-        is1155,
-      );
+      const newTokenUris =
+        nativeToken === ADDRESS_ZERO
+          ? tokenUris.map((uri, id) => getTokenUri(uri, tokenIds[id]))
+          : await fetchTokenUris(endpoint, nativeToken, tokenIds, is1155);
       return {
         ...req,
-        tokenUris,
+        tokenUris: newTokenUris,
       };
     }),
   );
