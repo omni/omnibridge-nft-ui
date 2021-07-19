@@ -1,6 +1,6 @@
 import { ERC721TokenDisplay } from 'components/common/ERC721TokenDisplay';
 import { ERC1155TokenDisplay } from 'components/common/ERC1155TokenDisplay';
-import { useBridgeContext } from 'contexts/BridgeContext';
+import { useWeb3Context } from 'contexts/Web3Context';
 import React, { useCallback, useEffect, useState } from 'react';
 
 export const TokenDisplay = ({
@@ -11,7 +11,7 @@ export const TokenDisplay = ({
   isDisabled = false,
 }) => {
   const [token, setToken] = useState(inputToken);
-  const { refreshToken, fetchToken } = useBridgeContext();
+  const { refreshToken, fetchToken } = useWeb3Context();
   const { is1155 } = token;
 
   const onRefresh = useCallback(() => {

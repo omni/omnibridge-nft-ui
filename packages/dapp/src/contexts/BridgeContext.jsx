@@ -3,10 +3,7 @@ import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { useTotalConfirms } from 'hooks/useTotalConfirms';
 import { useUnlock } from 'hooks/useUnlock';
 import { relayTokens } from 'lib/bridge';
-import { logDebug, logError } from 'lib/helpers';
-import { getEthersProvider } from 'lib/providers';
-import { fetchTokenInfo, fetchTokenUri } from 'lib/token';
-import { getLocalTokenInfo, setLocalTokenInfo } from 'lib/tokenList';
+import { logError } from 'lib/helpers';
 import React, {
   useCallback,
   useContext,
@@ -156,47 +153,6 @@ export const BridgeProvider = ({ children }) => {
     [isHome, claimDisabled, tokensClaimDisabled, tokens],
   );
 
-  const [refreshing, setRefreshing] = useState(false);
-
-  const refreshToken = useCallback(
-    async token => {
-      if (refreshing) return token;
-      setRefreshing(true);
-      const localTokenInfo = getLocalTokenInfo();
-      const { chainId, address, tokenId } = token;
-      const provider =
-        providerChainId === chainId
-          ? ethersProvider
-          : getEthersProvider(chainId);
-      const tokenKey = `${chainId}-${address.toLowerCase()}-${tokenId}`;
-      const tokenInfo = localTokenInfo[tokenKey];
-      const tokenWithUri = await fetchTokenUri(provider, token);
-      localTokenInfo[tokenKey] = { ...tokenInfo, ...tokenWithUri };
-      setLocalTokenInfo(localTokenInfo);
-      sessionStorage.removeItem(tokenWithUri.tokenUri);
-      setRefreshing(false);
-      logDebug('refreshed TokenURI', tokenWithUri);
-      return tokenWithUri;
-    },
-    [refreshing, providerChainId, ethersProvider],
-  );
-
-  const fetchToken = useCallback(
-    async token => {
-      const localTokenInfo = getLocalTokenInfo();
-      const { chainId, address, tokenId } = token;
-      const provider =
-        providerChainId === chainId
-          ? ethersProvider
-          : getEthersProvider(chainId);
-      const tokenKey = `${chainId}-${address.toLowerCase()}-${tokenId}`;
-      const tokenInfo = localTokenInfo[tokenKey];
-      const newTokenInfo = await fetchTokenInfo(provider, tokenInfo, token);
-      return newTokenInfo;
-    },
-    [providerChainId, ethersProvider],
-  );
-
   return (
     <BridgeContext.Provider
       value={{
@@ -218,9 +174,6 @@ export const BridgeProvider = ({ children }) => {
         unlockTxHash,
         unlock,
         needsClaiming,
-        refreshToken,
-        refreshing,
-        fetchToken,
       }}
     >
       {children}

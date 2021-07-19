@@ -2,12 +2,17 @@ import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import imTokenLogo from 'assets/imtoken.svg';
 import { ethers } from 'ethers';
+import { ADDRESS_ZERO } from 'lib/constants';
 import {
   getNetworkName,
   getRPCUrl,
   getWalletProviderName,
+  logDebug,
   logError,
 } from 'lib/helpers';
+import { getEthersProvider } from 'lib/providers';
+import { fetchTokenInfo, fetchTokenUri } from 'lib/token';
+import { getLocalTokenInfo, setLocalTokenInfo } from 'lib/tokenList';
 import React, {
   useCallback,
   useContext,
@@ -162,6 +167,61 @@ export const Web3Provider = ({ children }) => {
     [ethersProvider],
   );
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const refreshToken = useCallback(
+    async token => {
+      if (refreshing) return token;
+      setRefreshing(true);
+      const localTokenInfo = getLocalTokenInfo();
+      const { chainId, address, tokenId, nativeToken, bridgeChainId } = token;
+      const isBridgedToken =
+        nativeToken && nativeToken !== ADDRESS_ZERO && bridgeChainId;
+      const tokenKey = `${chainId}-${address.toLowerCase()}-${tokenId}`;
+      const tokenInfo = localTokenInfo[tokenKey];
+      let tokenWithUri;
+      if (isBridgedToken) {
+        const provider =
+          providerChainId === bridgeChainId
+            ? ethersProvider
+            : await getEthersProvider(bridgeChainId);
+        tokenWithUri = await fetchTokenUri(provider, {
+          ...token,
+          address: nativeToken,
+        });
+      } else {
+        const provider =
+          providerChainId === chainId
+            ? ethersProvider
+            : await getEthersProvider(chainId);
+        tokenWithUri = await fetchTokenUri(provider, token);
+      }
+      localTokenInfo[tokenKey] = { ...tokenInfo, ...tokenWithUri, address };
+      setLocalTokenInfo(localTokenInfo);
+      sessionStorage.removeItem(tokenWithUri.tokenUri);
+      setRefreshing(false);
+      logDebug('refreshed TokenURI', tokenWithUri);
+      return tokenWithUri;
+    },
+    [refreshing, providerChainId, ethersProvider],
+  );
+
+  const fetchToken = useCallback(
+    async token => {
+      const localTokenInfo = getLocalTokenInfo();
+      const { chainId, address, tokenId } = token;
+      const provider =
+        providerChainId === chainId
+          ? ethersProvider
+          : await getEthersProvider(chainId);
+      const tokenKey = `${chainId}-${address.toLowerCase()}-${tokenId}`;
+      const tokenInfo = localTokenInfo[tokenKey];
+      const newTokenInfo = await fetchTokenInfo(provider, tokenInfo, token);
+      return newTokenInfo;
+    },
+    [providerChainId, ethersProvider],
+  );
+
   return (
     <Web3Context.Provider
       value={{
@@ -173,6 +233,9 @@ export const Web3Provider = ({ children }) => {
         providerChainId,
         account,
         isMetamask,
+        refreshToken,
+        refreshing,
+        fetchToken,
       }}
     >
       {children}

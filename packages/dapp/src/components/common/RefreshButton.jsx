@@ -1,10 +1,10 @@
 import { Flex, Spinner } from '@chakra-ui/react';
-import { useBridgeContext } from 'contexts/BridgeContext';
+import { useWeb3Context } from 'contexts/Web3Context';
 import { RefreshIcon } from 'icons/RefreshIcon';
 import React from 'react';
 
 export const RefreshButton = ({ isChecked = false, ...props }) => {
-  const { refreshing } = useBridgeContext();
+  const { refreshing } = useWeb3Context();
   return (
     <Flex
       w="1.25rem"

@@ -70,6 +70,7 @@ export const fetchTokenUri = async (ethersProvider, token) => {
     const tokenUri = is1155
       ? await tokenContract.uri(tokenId)
       : await tokenContract.tokenURI(tokenId);
+
     return { ...token, tokenUri: getTokenUri(tokenUri, tokenId) };
   } catch (tokenInfoError) {
     logError({ tokenInfoError, token });

@@ -59,6 +59,7 @@ export const HistoryItem = ({
   handleClaimError,
 }) => {
   const { chainId } = tokens;
+
   const { getBridgeChainId, getMonitorUrl } = useBridgeDirection();
   const bridgeChainId = getBridgeChainId(chainId);
 
@@ -226,7 +227,7 @@ export const HistoryItem = ({
           overflowY="auto"
           overflowX="hidden"
         >
-          <DisplayTokens tokens={tokens} />
+          <DisplayTokens tokens={{ ...tokens, bridgeChainId }} />
         </Flex>
       </Flex>
     </Flex>
