@@ -10,7 +10,7 @@ import { getNetworkName } from 'lib/helpers';
 import React from 'react';
 
 export const BridgeHeader = () => {
-  const { providerChainId: chainId } = useWeb3Context();
+  const { providerChainId: chainId, isMetamask } = useWeb3Context();
   const { getBridgeChainId } = useBridgeDirection();
   const bridgeChainId = getBridgeChainId(chainId);
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
@@ -50,7 +50,7 @@ export const BridgeHeader = () => {
           left="0"
           right="0"
         >
-          <SwitchButton />
+          {isMetamask && <SwitchButton />}
           <HStack
             spacing={{ base: '0', lg: '0.5rem' }}
             height="3rem"
