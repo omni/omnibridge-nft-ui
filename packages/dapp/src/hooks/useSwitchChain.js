@@ -21,8 +21,8 @@ export const useSwitchChain = () => {
   );
 
   return useCallback(
-    async chainId => {
-      const result = await addChainToMetaMask({ chainId }).catch(
+    async (chainId, add = false) => {
+      const result = await addChainToMetaMask({ chainId }, add).catch(
         metamaskError => {
           logError({ metamaskError });
           handleWalletError(metamaskError, showError);

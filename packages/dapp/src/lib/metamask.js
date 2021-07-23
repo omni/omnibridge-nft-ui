@@ -7,40 +7,52 @@ import {
   logError,
 } from 'lib/helpers';
 
-export const addChainToMetaMask = async ethereumChain => {
-  const { chainId } = ethereumChain;
+const trySwitchChain = async chainId =>
+  window.ethereum.request({
+    method: 'wallet_switchEthereumChain',
+    params: [
+      {
+        chainId: utils.hexValue(chainId),
+      },
+    ],
+  });
+
+const tryAddChain = async (chainId, currency) =>
+  window.ethereum.request({
+    method: 'wallet_addEthereumChain',
+    params: [
+      {
+        chainId: utils.hexValue(chainId),
+        chainName: getNetworkName(chainId),
+        nativeCurrency: currency,
+        rpcUrls: [getRPCUrl(chainId)],
+        blockExplorerUrls: [getExplorerUrl(chainId)],
+      },
+    ],
+  });
+
+export const addChainToMetaMask = async ({ chainId }, add = false) => {
   const { name, symbol } = getNetworkCurrency(chainId);
+  const currency = { name, symbol, decimals: 18 };
+
+  if (add) {
+    try {
+      await tryAddChain(chainId, currency);
+      return true;
+    } catch (addError) {
+      logError({ addError });
+    }
+    return false;
+  }
 
   try {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [
-        {
-          chainId: utils.hexValue(chainId),
-        },
-      ],
-    });
+    await trySwitchChain(chainId);
     return true;
   } catch (switchError) {
     // This error code indicates that the chain has not been added to MetaMask.
     if (switchError.code === 4902) {
       try {
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: utils.hexValue(chainId),
-              chainName: getNetworkName(chainId),
-              nativeCurrency: {
-                name,
-                symbol,
-                decimals: 18,
-              },
-              rpcUrls: [getRPCUrl(chainId)],
-              blockExplorerUrls: [getExplorerUrl(chainId)],
-            },
-          ],
-        });
+        await tryAddChain(chainId, currency);
         return true;
       } catch (addError) {
         logError({ addError });

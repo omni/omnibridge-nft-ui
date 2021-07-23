@@ -13,12 +13,21 @@ export const SwitchButton = () => {
     getBridgeChainId,
   ]);
   const switchChain = useSwitchChain();
-  const switchOnClick = useCallback(() => switchChain(bridgeChainId), [
-    switchChain,
-    bridgeChainId,
-  ]);
 
-  return isMetamask ? (
+  const isDefaultChain = [1, 4].includes(bridgeChainId);
+  const isMobileBrowser =
+    navigator?.userAgent?.includes('iPhone OS') ||
+    navigator?.userAgent?.includes('Android SDK') ||
+    false;
+  const switchOnClick = useCallback(
+    () => switchChain(bridgeChainId, !isDefaultChain),
+    [switchChain, bridgeChainId, isDefaultChain],
+  );
+
+  const displayButton =
+    isMetamask && (isMobileBrowser ? !isDefaultChain : true);
+
+  return displayButton ? (
     <Tooltip label="Switch direction of bridge" closeOnClick={false}>
       <IconButton
         icon={<SwitchIcon boxSize="2rem" />}
