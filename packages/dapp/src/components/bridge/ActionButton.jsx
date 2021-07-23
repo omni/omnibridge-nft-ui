@@ -91,6 +91,7 @@ export const ActionButton = () => {
       position="relative"
       onClick={onClick}
       borderRadius="0.25rem"
+      minW="11.125rem"
     >
       <ConfirmTransferModal isOpen={isOpen} onClose={onClose} />
       <svg height="100%" viewBox="0 0 156 42" fill="none">
