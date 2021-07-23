@@ -21,13 +21,11 @@ export const useSwitchChain = () => {
   );
 
   return useCallback(
-    async (chainId, add = false) => {
-      const result = await addChainToMetaMask({ chainId }, add).catch(
-        metamaskError => {
-          logError({ metamaskError });
-          handleWalletError(metamaskError, showError);
-        },
-      );
+    async chainId => {
+      const result = await addChainToMetaMask(chainId).catch(metamaskError => {
+        logError({ metamaskError });
+        handleWalletError(metamaskError, showError);
+      });
       return result || false;
     },
     [showError],

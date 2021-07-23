@@ -14,15 +14,15 @@ export const SwitchButton = () => {
   ]);
   const switchChain = useSwitchChain();
 
-  const isDefaultChain = [1, 4].includes(bridgeChainId);
+  const isDefaultChain = [1, 3, 4, 5, 42].includes(bridgeChainId);
   const isMobileBrowser =
     navigator?.userAgent?.includes('iPhone OS') ||
     navigator?.userAgent?.includes('Android SDK') ||
     false;
-  const switchOnClick = useCallback(
-    () => switchChain(bridgeChainId, !isDefaultChain),
-    [switchChain, bridgeChainId, isDefaultChain],
-  );
+  const switchOnClick = useCallback(() => switchChain(bridgeChainId), [
+    switchChain,
+    bridgeChainId,
+  ]);
 
   const displayButton =
     isMetamask && (isMobileBrowser ? !isDefaultChain : true);

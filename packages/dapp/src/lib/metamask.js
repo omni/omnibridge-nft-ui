@@ -31,10 +31,11 @@ const tryAddChain = async (chainId, currency) =>
     ],
   });
 
-export const addChainToMetaMask = async ({ chainId }, add = false) => {
+export const addChainToMetaMask = async chainId => {
   const { name, symbol } = getNetworkCurrency(chainId);
   const currency = { name, symbol, decimals: 18 };
 
+  const add = ![1, 3, 4, 5, 42].includes(chainId);
   if (add) {
     try {
       await tryAddChain(chainId, currency);
