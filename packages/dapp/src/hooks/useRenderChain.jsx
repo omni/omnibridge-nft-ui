@@ -14,10 +14,7 @@ export const useRenderChain = () => {
     chainId => {
       const networkName = getNetworkName(chainId);
       const isDefaultChain = [1, 3, 4, 5, 42].includes(chainId);
-      const isMobileBrowser =
-        navigator?.userAgent?.includes('iPhone OS') ||
-        navigator?.userAgent?.includes('Android SDK') ||
-        false;
+      const isMobileBrowser = navigator?.userAgent?.includes('Mobile') || false;
       const buttonWillWork =
         isMetamask && (isMobileBrowser ? !isDefaultChain : true);
 
