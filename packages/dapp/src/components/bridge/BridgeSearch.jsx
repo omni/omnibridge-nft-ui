@@ -79,7 +79,7 @@ export const BridgeSearch = () => {
                 <Wrap spacing="6" minH="10.25rem">
                   {chosenTokens.map((token, index) => (
                     <WrapItem key={index.toString()}>
-                      <TokenDisplay token={token} isChecked />
+                      <TokenDisplay token={token} isChecked disableRefresh />
                     </WrapItem>
                   ))}
                 </Wrap>

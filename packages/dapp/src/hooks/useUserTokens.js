@@ -1,7 +1,11 @@
 import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
-import { fetch721TokenList, fetch1155TokenList } from 'lib/tokenList';
+import {
+  fetch721TokenList,
+  fetch1155TokenList,
+  fetchTokenInfoForAll,
+} from 'lib/tokenList';
 import { useCallback, useEffect, useState } from 'react';
 
 const tokenSearchFilter = search => ({ name, symbol, address, tokenId }) => {
@@ -32,7 +36,7 @@ export const useUserTokens = () => {
     getEIP1155GraphEndpoint,
   } = useBridgeDirection();
   const { searchText, txHash } = useBridgeContext();
-  const { account, providerChainId } = useWeb3Context();
+  const { account, providerChainId, ethersProvider } = useWeb3Context();
   const [fetching, setFetching] = useState(false);
   const [{ allEIP721Tokens, allEIP1155Tokens }, setAllTokens] = useState({
     allEIP721Tokens: [],
@@ -61,11 +65,20 @@ export const useUserTokens = () => {
         getEIP1155GraphEndpoint(providerChainId),
       ),
     ]);
-    setAllTokens({ allEIP721Tokens: tokens721, allEIP1155Tokens: tokens1155 });
+    const tokens1155WithInfo = await fetchTokenInfoForAll(
+      ethersProvider,
+      tokens1155,
+    );
+
+    setAllTokens({
+      allEIP721Tokens: tokens721,
+      allEIP1155Tokens: tokens1155WithInfo,
+    });
     setFetching(false);
   }, [
     account,
     providerChainId,
+    ethersProvider,
     getEIP721GraphEndpoint,
     getEIP1155GraphEndpoint,
   ]);

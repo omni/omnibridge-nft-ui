@@ -1,6 +1,7 @@
 import { Flex, HStack, Text, useBreakpointValue } from '@chakra-ui/react';
 import { ActionButton } from 'components/bridge/ActionButton';
 import { AdvancedMenu } from 'components/bridge/AdvancedMenu';
+import { SwitchButton } from 'components/bridge/SwitchButton';
 import { LeftVector, RightVector } from 'components/bridge/VectorLines';
 import { Logo } from 'components/common/Logo';
 import { useWeb3Context } from 'contexts/Web3Context';
@@ -12,7 +13,7 @@ export const BridgeHeader = () => {
   const { providerChainId: chainId } = useWeb3Context();
   const { getBridgeChainId } = useBridgeDirection();
   const bridgeChainId = getBridgeChainId(chainId);
-  const isSmallScreen = useBreakpointValue({ base: true, sm: false });
+  const isSmallScreen = useBreakpointValue({ base: true, md: false });
   return (
     <Flex direction="column" align="center" w="100%">
       <Flex
@@ -49,6 +50,7 @@ export const BridgeHeader = () => {
           left="0"
           right="0"
         >
+          <SwitchButton />
           <HStack
             spacing={{ base: '0', lg: '0.5rem' }}
             height="3rem"

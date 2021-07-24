@@ -14,10 +14,10 @@
     ]
   },
   "dependencies": {
-    "@chakra-ui/icon": "^1.1.9",
     "@chakra-ui/icons": "^1.0.13",
     "@chakra-ui/react": "^1.6.4",
     "@chakra-ui/theme": "^1.9.1",
+    "@chakra-ui/theme-tools": "^1.1.8",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@gnosis.pm/safe-apps-web3modal": "^0.6.0",

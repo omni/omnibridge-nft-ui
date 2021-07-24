@@ -10,19 +10,26 @@ const parseUri = uri => {
   let name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];
   if (uri.includes(IPFS_URL_ADDON)) {
     protocol = 'ipfs';
-    hash = uri.substring(uri.indexOf(IPFS_URL_ADDON) + URL_ADDON_LENGTH);
+    const hashIndex = uri.indexOf(IPFS_URL_ADDON) + URL_ADDON_LENGTH;
+    hash = uri.substring(hashIndex);
   } else if (uri.includes(IPNS_URL_ADDON)) {
     protocol = 'ipns';
-    name = uri.substring(uri.indexOf(IPNS_URL_ADDON) + URL_ADDON_LENGTH);
+    const hashIndex = uri.indexOf(IPNS_URL_ADDON) + URL_ADDON_LENGTH;
+    name = uri.substring(hashIndex);
   } else if (uri.startsWith('Qm') && uri.length === 46) {
     protocol = 'ipfs';
     hash = uri;
+  } else if (uri.includes('ipfs') && uri.includes('Qm')) {
+    protocol = 'ipfs';
+    const hashIndex = uri.indexOf('Qm');
+    hash = uri.substring(hashIndex);
   }
   return { protocol, hash, name };
 };
 
 export const uriToHttp = uri => {
   if (!uri) return '';
+  if (uri.startsWith('data')) return uri;
   const { protocol, hash, name } = parseUri(uri);
   switch (protocol) {
     case 'https':
@@ -44,6 +51,7 @@ export const uriToHttp = uri => {
 
 export const uriToHttpAsArray = uri => {
   if (!uri) return [];
+  if (uri.startsWith('data')) return [uri];
   const { protocol, hash, name } = parseUri(uri);
   switch (protocol) {
     case 'https':
@@ -92,8 +100,16 @@ const timeoutPromise = (ms, promise) =>
     );
   });
 
+const JSON_STRING_PREFIX = 'data:application/json';
+
 export const fetchImageUri = async tokenUri => {
   try {
+    if (tokenUri.startsWith(JSON_STRING_PREFIX)) {
+      const jsonString = tokenUri.substring(JSON_STRING_PREFIX.length + 1);
+      const { image, image_url: imageUrl } = JSON.parse(jsonString);
+      if (!image && !imageUrl) throw new Error('Image not found in metadata');
+      return image || imageUrl;
+    }
     const response = await timeoutPromise(
       DEFAULT_IMAGE_TIMEOUT,
       fetch(tokenUri),

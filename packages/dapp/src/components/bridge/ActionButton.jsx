@@ -6,6 +6,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import { getColor } from '@chakra-ui/theme-tools';
 import TransferIcon from 'assets/transfer.svg';
 import UnlockIcon from 'assets/unlock.svg';
 import { TxLink } from 'components/common/TxLink';
@@ -14,6 +15,7 @@ import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { utils } from 'ethers';
 import React, { useCallback, useMemo } from 'react';
+import { theme } from 'theme';
 
 export const ActionButton = () => {
   const { providerChainId, ethersProvider, isGnosisSafe } = useWeb3Context();
@@ -91,12 +93,14 @@ export const ActionButton = () => {
       position="relative"
       onClick={onClick}
       borderRadius="0.25rem"
+      minW="11.125rem"
+      maxW="11.25rem"
     >
       <ConfirmTransferModal isOpen={isOpen} onClose={onClose} />
-      <svg height="100%" viewBox="0 0 156 42" fill="none">
+      <svg height="100%" viewBox="0 0 156 42" fill="none" width="100%">
         <path
           d="M139.086 39.72a4 4 0 01-3.612 2.28H20.526a4 4 0 01-3.612-2.28l-16.19-34C-.54 3.065 1.395 0 4.335 0h147.33c2.94 0 4.875 3.065 3.611 5.72l-16.19 34z"
-          fill="currentColor"
+          fill={getColor(theme, color)}
         />
       </svg>
       <Flex

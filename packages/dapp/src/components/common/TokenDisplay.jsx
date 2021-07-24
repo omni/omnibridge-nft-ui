@@ -1,14 +1,26 @@
 import { ERC721TokenDisplay } from 'components/common/ERC721TokenDisplay';
 import { ERC1155TokenDisplay } from 'components/common/ERC1155TokenDisplay';
-import React from 'react';
+import { useWeb3Context } from 'contexts/Web3Context';
+import React, { useCallback, useEffect, useState } from 'react';
 
 export const TokenDisplay = ({
-  token,
+  token: inputToken,
   disableCheckbox = false,
+  disableRefresh = false,
   isChecked = false,
   isDisabled = false,
 }) => {
+  const [token, setToken] = useState(inputToken);
+  const { refreshToken, fetchToken } = useWeb3Context();
   const { is1155 } = token;
+
+  const onRefresh = useCallback(() => {
+    refreshToken(token).then(setToken);
+  }, [token, refreshToken]);
+
+  useEffect(() => {
+    fetchToken(inputToken).then(setToken);
+  }, [inputToken, fetchToken]);
 
   return is1155 ? (
     <ERC1155TokenDisplay
@@ -16,6 +28,7 @@ export const TokenDisplay = ({
       disableCheckbox={disableCheckbox}
       isChecked={isChecked}
       isDisabled={isDisabled}
+      onRefresh={disableRefresh ? undefined : onRefresh}
     />
   ) : (
     <ERC721TokenDisplay
@@ -23,6 +36,7 @@ export const TokenDisplay = ({
       isChecked={isChecked}
       disableCheckbox={disableCheckbox}
       isDisabled={isDisabled}
+      onRefresh={disableRefresh ? undefined : onRefresh}
     />
   );
 };

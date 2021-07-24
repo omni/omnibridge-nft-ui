@@ -43,6 +43,7 @@ export const Image = React.memo(({ src: uri, ...props }) => {
 
   useEffect(() => {
     const oldSrcs = uriToHttpAsArray(uri);
+
     setSrcs(oldSrcs);
 
     let isSubscribed = true;

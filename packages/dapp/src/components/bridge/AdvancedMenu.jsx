@@ -1,5 +1,6 @@
 import { CloseIcon } from '@chakra-ui/icons';
 import {
+  Button,
   Flex,
   Input,
   InputGroup,
@@ -8,15 +9,15 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { ReactComponent as AdvancedImage } from 'assets/advanced.svg';
-import { BridgeContext } from 'contexts/BridgeContext';
+import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { utils } from 'ethers';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 
 export const AdvancedMenu = () => {
   const { isGnosisSafe } = useWeb3Context();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { receiver, setReceiver } = useContext(BridgeContext);
+  const { receiver, setReceiver } = useBridgeContext();
 
   const isMenuOpen = isOpen || isGnosisSafe;
 
@@ -69,24 +70,21 @@ export const AdvancedMenu = () => {
                 onClick={onClick}
                 color="grey"
                 transition="color 0.25s"
-                _hover={{ color: 'blue.400', cursor: 'pointer' }}
+                _hover={{ color: 'blue.500', cursor: 'pointer' }}
               />
             </InputRightElement>
           </InputGroup>
         ) : (
-          <Flex
-            as="button"
-            w="100%"
+          <Button
             onClick={onClick}
-            cursor="pointer"
-            align="center"
-            justify="center"
-            color="blue.400"
+            color="blue.500"
             h="2.5rem"
+            fontWeight="normal"
+            px="2"
           >
             <AdvancedImage width="1.25rem" />
             <Text ml={2}>{isMenuOpen ? 'Clear Recipient' : 'Advanced'}</Text>
-          </Flex>
+          </Button>
         )}
       </Flex>
     </Flex>

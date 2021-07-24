@@ -1,5 +1,6 @@
 import { Flex, Link, VStack } from '@chakra-ui/react';
 import { Checkbox } from 'components/common/Checkbox';
+import { RefreshButton } from 'components/common/RefreshButton';
 import { Image } from 'components/common/TokenImage';
 import { TokenTag } from 'components/common/TokenTag';
 import { useBridgeContext } from 'contexts/BridgeContext';
@@ -11,6 +12,7 @@ export const ERC721TokenDisplay = ({
   token,
   disableCheckbox = false,
   isChecked: inputIsChecked = false,
+  onRefresh = undefined,
 }) => {
   const [isDisabled, setDisabled] = useState(false);
   const { chainId, tokenUri, tokenId, address } = token;
@@ -105,7 +107,10 @@ export const ERC721TokenDisplay = ({
             isDisabled ? undefined : { visibility: 'visible', opacity: 1 }
           }
         >
-          <TokenTag>EIP-721</TokenTag>
+          <Flex w="100%" justify="space-between">
+            <TokenTag>EIP-721</TokenTag>
+            {onRefresh ? <RefreshButton onClick={onRefresh} /> : null}
+          </Flex>
           <TokenTag copy={tokenId}>{`ID: ${truncateText(
             tokenId,
             10,
