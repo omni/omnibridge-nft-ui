@@ -1,7 +1,9 @@
-import chakraTheme from '@chakra-ui/theme';
+import { extendTheme, theme as chakraTheme } from '@chakra-ui/react';
 
-export const theme = {
+const baseTheme = {
   ...chakraTheme,
+  initialColorMode: 'light',
+  useSystemColorMode: false,
   styles: {
     ...chakraTheme.styles,
     global: {
@@ -70,3 +72,5 @@ export const theme = {
     body: `'Roboto', sans-serif`,
   },
 };
+
+export const theme = extendTheme({}, baseTheme);
