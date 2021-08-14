@@ -34,7 +34,7 @@ const LoadingImage = props => (
 const BAD_SRCS = {};
 const IMAGE_TIMEOUT = 'image-timeout';
 
-export const Image = React.memo(({ src: uri, ...props }) => {
+export const Video = ({ uri, ...props }) => {
   const [, refresh] = useState(0);
   const [srcs, setSrcs] = useState([]);
 
@@ -80,24 +80,35 @@ export const Image = React.memo(({ src: uri, ...props }) => {
 
   if (src) {
     return (
-      <ChakraImage
-        src={src}
-        fallback={<LoadingImage {...props} />}
-        onError={() => {
-          if (src) BAD_SRCS[src] = true;
-          refresh(i => i + 1);
-        }}
-        onLoad={() => {
-          if (timer.current) {
-            clearTimeout(timer.current);
-          }
-          sessionStorage.setItem(uri, src);
-        }}
+      <Flex
         borderRadius="0.375rem"
+        justify="center"
+        align="center"
+        overflow="hidden"
         {...props}
-      />
+      >
+        <video
+          src={src}
+          controls={false}
+          autoPlay
+          loop
+          muted
+          fallback={<LoadingImage {...props} />}
+          onError={() => {
+            if (src) BAD_SRCS[src] = true;
+            refresh(i => i + 1);
+          }}
+          onCanPlay={() => {
+            if (timer.current) {
+              clearTimeout(timer.current);
+            }
+            sessionStorage.setItem(uri, src);
+          }}
+          {...props}
+        />
+      </Flex>
     );
   }
 
   return <FallbackImage {...props} />;
-});
+};

@@ -1,7 +1,7 @@
 import { Flex, Link, VStack } from '@chakra-ui/react';
 import { Checkbox } from 'components/common/Checkbox';
 import { RefreshButton } from 'components/common/RefreshButton';
-import { Image } from 'components/common/TokenImage';
+import { TokenImage } from 'components/common/tokenImage/TokenImage';
 import { TokenTag } from 'components/common/TokenTag';
 import { useBridgeContext } from 'contexts/BridgeContext';
 import { getTokenUrl } from 'lib/helpers';
@@ -15,7 +15,7 @@ export const ERC721TokenDisplay = ({
   onRefresh = undefined,
 }) => {
   const [isDisabled, setDisabled] = useState(false);
-  const { chainId, tokenUri, tokenId, address } = token;
+  const { chainId, tokenId, address } = token;
   const [isChecked, setChecked] = useState(inputIsChecked);
   const {
     tokens: selectedTokens,
@@ -75,12 +75,10 @@ export const ERC721TokenDisplay = ({
         justify="space-between"
         role="group"
       >
-        <Image
-          src={tokenUri}
-          w="calc(100% - 1.25rem)"
-          h="calc(100% - 1.25rem)"
-          objectFit="contain"
-          objectPosition="center"
+        <TokenImage
+          token={token}
+          width="calc(100% - 1.25rem)"
+          height="calc(100% - 1.25rem)"
           position="absolute"
           top="0.625rem"
           left="0.625rem"
