@@ -2,6 +2,7 @@ import { Flex, VStack } from '@chakra-ui/react';
 import { BridgeHeader } from 'components/bridge/BridgeHeader';
 import { BridgeSearch } from 'components/bridge/BridgeSearch';
 import { BridgeLoadingModal } from 'components/modals/BridgeLoadingModal';
+import { CryptoStampWarning } from 'components/warnings/CryptoStampWarning';
 import { GnosisSafeWarning } from 'components/warnings/GnosisSafeWarning';
 import { RPCHealthWarning } from 'components/warnings/RPCHealthWarning';
 import React from 'react';
@@ -28,6 +29,7 @@ export const BridgeUI = () => (
       <Flex w="100%" direction="column" px={4}>
         <GnosisSafeWarning noCheckbox />
         <RPCHealthWarning />
+        <CryptoStampWarning />
       </Flex>
       <BridgeHeader />
       <BridgeSearch />
