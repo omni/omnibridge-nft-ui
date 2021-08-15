@@ -19,7 +19,7 @@ const eip721TokensQuery = gql`
 
 const eip721TokensQueryAccount = gql`
   query Get721Tokens($owner: ID) {
-    tokens(first: 1000, where: { account: $owner }) {
+    tokens(first: 1000, where: { owner: $owner }) {
       tokenUri: uri
       tokenId: identifier
       token: registry {
