@@ -17,3 +17,5 @@ REACT_APP_GRAPH_HEALTH_THRESHOLD_BLOCKS=10
 REACT_APP_XDAI_RPC_URL=https://rpc.xdaichain.com https://dai.poa.network
 REACT_APP_MAINNET_RPC_URL=https://mainnet.infura.io/v3/<INFURA_ID> https://mainnet-nethermind.blockscout.com/
 REACT_APP_RINKEBY_RPC_URL=https://rinkeby.infura.io/v3/<INFURA_ID>
+
+REACT_APP_OPENSEA_API_KEY=

@@ -15,7 +15,7 @@ export const getTokenUri = (tokenUri, tokenId) => {
 
 const eip721TokenUrisQuery = gql`
   query Get721Tokens($token: ID, $tokenIds: [BigInt!]) {
-    tokens(where: { contract: $token, tokenID_in: $tokenIds }) {
+    tokens(first: 1000, where: { contract: $token, tokenID_in: $tokenIds }) {
       tokenUri: tokenURI
       tokenId: tokenID
     }
@@ -24,7 +24,7 @@ const eip721TokenUrisQuery = gql`
 
 const eip721TokenUrisQueryAccount = gql`
   query Get721Tokens($token: ID, $tokenIds: [BigInt!]) {
-    tokens(where: { registry: $token, identifier_in: $tokenIds }) {
+    tokens(first: 1000, where: { registry: $token, identifier_in: $tokenIds }) {
       tokenUri: uri
       tokenId: identifier
     }
@@ -33,7 +33,7 @@ const eip721TokenUrisQueryAccount = gql`
 
 const eip1155TokenUrisQuery = gql`
   query Get1155Tokens($token: ID, $tokenIds: [BigInt!]) {
-    tokens(where: { registry: $token, identifier_in: $tokenIds }) {
+    tokens(first: 1000, where: { registry: $token, identifier_in: $tokenIds }) {
       tokenUri: URI
       tokenId: identifier
     }

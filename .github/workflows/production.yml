@@ -52,6 +52,7 @@ jobs:
           REACT_APP_RINKEBY_RPC_URL: https://rinkeby.infura.io/v3/${{ secrets.STAGING_INFURA_ID }}
           REACT_APP_KOVAN_RPC_URL: https://kovan.infura.io/v3/${{ secrets.STAGING_INFURA_ID }} https://kovan.poa.network/
           REACT_APP_SOKOL_RPC_URL: https://sokol.poa.network
+          REACT_APP_OPENSEA_API_KEY: ${{ secrets.OPENSEA_API_KEY }}
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master

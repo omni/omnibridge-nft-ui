@@ -8,33 +8,33 @@ import {
 } from 'lib/tokenList';
 import { useCallback, useEffect, useState } from 'react';
 
-const tokenSearchFilter = search => ({ name, symbol, address, tokenId }) => {
-  const searchText = search.toLowerCase();
-  const isAddressSearch = searchText.startsWith('0x');
-  const nameSearch =
-    name && !isAddressSearch
-      ? name.toLowerCase().indexOf(searchText) >= 0
-      : false;
-  const symbolSearch =
-    symbol && !isAddressSearch
-      ? symbol.toLowerCase().indexOf(searchText) >= 0
-      : false;
-  const addressSearch =
-    address && isAddressSearch
-      ? address.toLowerCase().indexOf(searchText) >= 0
-      : false;
-  const tokenIdSearch =
-    tokenId && !isAddressSearch
-      ? tokenId.toLowerCase().indexOf(searchText) >= 0
-      : false;
-  return nameSearch || symbolSearch || addressSearch || tokenIdSearch;
-};
+const tokenSearchFilter =
+  search =>
+  ({ name, symbol, address, tokenId }) => {
+    const searchText = search.toLowerCase();
+    const isAddressSearch = searchText.startsWith('0x');
+    const nameSearch =
+      name && !isAddressSearch
+        ? name.toLowerCase().indexOf(searchText) >= 0
+        : false;
+    const symbolSearch =
+      symbol && !isAddressSearch
+        ? symbol.toLowerCase().indexOf(searchText) >= 0
+        : false;
+    const addressSearch =
+      address && isAddressSearch
+        ? address.toLowerCase().indexOf(searchText) >= 0
+        : false;
+    const tokenIdSearch =
+      tokenId && !isAddressSearch
+        ? tokenId.toLowerCase().indexOf(searchText) >= 0
+        : false;
+    return nameSearch || symbolSearch || addressSearch || tokenIdSearch;
+  };
 
 export const useUserTokens = () => {
-  const {
-    getEIP721GraphEndpoint,
-    getEIP1155GraphEndpoint,
-  } = useBridgeDirection();
+  const { getEIP721GraphEndpoint, getEIP1155GraphEndpoint } =
+    useBridgeDirection();
   const { searchText, txHash } = useBridgeContext();
   const { account, providerChainId, ethersProvider } = useWeb3Context();
   const [fetching, setFetching] = useState(false);

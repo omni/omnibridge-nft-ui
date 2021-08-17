@@ -46,9 +46,8 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
     [toast],
   );
 
-  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] = useState(
-    false,
-  );
+  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] =
+    useState(false);
 
   if (!tokens) return null;
 

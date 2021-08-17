@@ -5,15 +5,13 @@ import { getTokenUri } from 'lib/tokenUri';
 
 const eip721TokensQuery = gql`
   query Get721Tokens($owner: ID) {
-    owner(id: $owner) {
-      tokens {
-        tokenUri: tokenURI
-        tokenId: tokenID
-        token: contract {
-          address: id
-          name
-          symbol
-        }
+    tokens(first: 1000, where: { owner: $owner }) {
+      tokenUri: tokenURI
+      tokenId: tokenID
+      token: contract {
+        address: id
+        name
+        symbol
       }
     }
   }
@@ -21,15 +19,13 @@ const eip721TokensQuery = gql`
 
 const eip721TokensQueryAccount = gql`
   query Get721Tokens($owner: ID) {
-    owner: account(id: $owner) {
-      tokens {
-        tokenUri: uri
-        tokenId: identifier
-        token: registry {
-          address: id
-          name
-          symbol
-        }
+    tokens(first: 1000, where: { owner: $owner }) {
+      tokenUri: uri
+      tokenId: identifier
+      token: registry {
+        address: id
+        name
+        symbol
       }
     }
   }
@@ -55,13 +51,8 @@ export const fetch721TokenList = async (chainId, account, graphEndpoint) => {
         owner: account.toLowerCase(),
       },
     );
-    if (
-      data &&
-      data.owner &&
-      data.owner.tokens &&
-      data.owner.tokens.length > 0
-    ) {
-      return data.owner.tokens
+    if (data && data.tokens && data.tokens.length > 0) {
+      return data.tokens
         .map(({ tokenUri, tokenId, token: { address, name, symbol } }) => ({
           chainId,
           address,
@@ -87,16 +78,14 @@ export const fetch721TokenList = async (chainId, account, graphEndpoint) => {
 
 const eip1155TokensQuery = gql`
   query Get1155Tokens($owner: ID) {
-    account(id: $owner) {
-      balances {
-        amount: value
-        token {
-          registry {
-            address: id
-          }
-          tokenUri: URI
-          tokenId: identifier
+    balances(first: 1000, where: { account: $owner }) {
+      amount: value
+      token {
+        registry {
+          address: id
         }
+        tokenUri: URI
+        tokenId: identifier
       }
     }
   }
@@ -108,13 +97,8 @@ export const fetch1155TokenList = async (chainId, account, graphEndpoint) => {
     const data = await request(graphEndpoint, eip1155TokensQuery, {
       owner: account.toLowerCase(),
     });
-    if (
-      data &&
-      data.account &&
-      data.account.balances &&
-      data.account.balances.length > 0
-    ) {
-      return data.account.balances
+    if (data && data.balances && data.balances.length > 0) {
+      return data.balances
         .map(
           ({
             token: {

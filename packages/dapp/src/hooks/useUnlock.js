@@ -6,11 +6,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useBridgeDirection } from './useBridgeDirection';
 
 export const useUnlock = tokens => {
-  const {
-    homeMediatorAddress,
-    foreignMediatorAddress,
-    homeChainId,
-  } = useBridgeDirection();
+  const { homeMediatorAddress, foreignMediatorAddress, homeChainId } =
+    useBridgeDirection();
   const { account, ethersProvider, providerChainId } = useWeb3Context();
 
   const [unlocked, setUnlocked] = useState(false);
