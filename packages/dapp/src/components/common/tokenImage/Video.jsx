@@ -78,6 +78,8 @@ export const Video = ({ uri, ...props }) => {
     };
   }, [uri]);
 
+  const [loading, setLoading] = useState(true);
+
   if (src) {
     return (
       <Flex
@@ -87,13 +89,13 @@ export const Video = ({ uri, ...props }) => {
         overflow="hidden"
         {...props}
       >
+        <LoadingImage {...props} display={loading ? undefined : 'none'} />
         <video
           src={src}
           controls={false}
           autoPlay
           loop
           muted
-          fallback={<LoadingImage {...props} />}
           onError={() => {
             if (src) BAD_SRCS[src] = true;
             refresh(i => i + 1);
@@ -103,8 +105,10 @@ export const Video = ({ uri, ...props }) => {
               clearTimeout(timer.current);
             }
             sessionStorage.setItem(uri, src);
+            setLoading(false);
           }}
           {...props}
+          opacity={loading ? 0 : 1}
         />
       </Flex>
     );

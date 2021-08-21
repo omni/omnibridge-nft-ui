@@ -1,6 +1,6 @@
 import { Image } from 'components/common/tokenImage/Image';
 import { Video } from 'components/common/tokenImage/Video';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 const isVideoToken = ({ address, chainId }) =>
   chainId === 1 &&
@@ -12,7 +12,7 @@ const isENS = ({ address, chainId }) =>
   address.toLowerCase() ===
     '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85'.toLowerCase();
 
-const useOpensea = isENS;
+const isOpensea = isENS;
 
 const getOpenSeaUri = ({ address, chainId, tokenUri, tokenId }) => {
   switch (chainId) {
@@ -26,13 +26,15 @@ const getOpenSeaUri = ({ address, chainId, tokenUri, tokenId }) => {
 };
 
 export const TokenImage = React.memo(({ token, ...props }) => {
-  const { tokenUri } = token;
+  const tokenUri = useMemo(
+    () => (isOpensea(token) ? getOpenSeaUri(token) : token.tokenUri),
+    [token],
+  );
+
   const renderVideo = isVideoToken(token);
-  const isOpensea = useOpensea(token);
-  const uri = isOpensea ? getOpenSeaUri(token) : tokenUri;
   return renderVideo ? (
-    <Video uri={uri} {...props} />
+    <Video uri={tokenUri} {...props} />
   ) : (
-    <Image uri={uri} {...props} />
+    <Image uri={tokenUri} {...props} />
   );
 });
