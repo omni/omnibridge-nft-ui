@@ -1,44 +1,58 @@
-import { Flex, Image as ChakraImage, Spinner } from '@chakra-ui/react';
+import { Image as ChakraImage } from '@chakra-ui/react';
 import NoImageAvailable from 'assets/no-image-available.svg';
 import { DEFAULT_IMAGE_TIMEOUT } from 'lib/constants';
 import { fetchImageUri, uriToHttpAsArray } from 'lib/uriHelpers';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
+import { ImageOrVideo } from './ImageOrVideo';
 
 const FallbackImage = props => (
   <ChakraImage
     src={NoImageAvailable}
     p="1.5rem"
     borderRadius="0.375rem"
+    objectFit="contain"
+    objectPosition="center"
     {...props}
   />
-);
-
-const LoadingImage = props => (
-  <Flex
-    p="1.5rem"
-    borderRadius="0.375rem"
-    justify="center"
-    align="center"
-    {...props}
-  >
-    <Spinner
-      color="blue.500"
-      size="xl"
-      speed="0.75s"
-      thickness="3px"
-      emptyColor="#EEf4FD"
-    />
-  </Flex>
 );
 
 const BAD_SRCS = {};
 const IMAGE_TIMEOUT = 'image-timeout';
 
-export const Video = ({ uri, ...props }) => {
+const isENS = ({ address, chainId }) =>
+  chainId === 1 &&
+  address.toLowerCase() ===
+    '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85'.toLowerCase();
+
+const isOpensea = isENS;
+
+const getOpenSeaUri = ({ address, chainId, tokenUri, tokenId }) => {
+  switch (chainId) {
+    case 1:
+      return `https://api.opensea.io/api/v1/asset/${address}/${tokenId}`;
+    case 4:
+      return `https://rinkeby-api.opensea.io/api/v1/asset/${address}/${tokenId}`;
+    default:
+      return tokenUri;
+  }
+};
+
+export const TokenImageOrVideo = ({ token, ...props }) => {
+  const uri = useMemo(
+    () => (isOpensea(token) ? getOpenSeaUri(token) : token.tokenUri),
+    [token],
+  );
   const [, refresh] = useState(0);
   const [srcs, setSrcs] = useState([]);
 
-  const src = srcs.find(s => !BAD_SRCS[s]);
+  const src = useMemo(() => srcs.find(s => !BAD_SRCS[s]), [srcs]);
   const timer = useRef(null);
 
   useEffect(() => {
@@ -78,35 +92,29 @@ export const Video = ({ uri, ...props }) => {
     };
   }, [uri]);
 
+  const onError = useCallback(badSrc => {
+    if (badSrc) BAD_SRCS[badSrc] = true;
+    refresh(i => i + 1);
+  }, []);
+
+  const onLoad = useCallback(
+    loadedSrc => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+      sessionStorage.setItem(uri, loadedSrc);
+    },
+    [uri],
+  );
+
   if (src) {
     return (
-      <Flex
-        borderRadius="0.375rem"
-        justify="center"
-        align="center"
-        overflow="hidden"
+      <ImageOrVideo
+        src={src}
+        onError={() => onError(src)}
+        onLoad={() => onLoad(src)}
         {...props}
-      >
-        <video
-          src={src}
-          controls={false}
-          autoPlay
-          loop
-          muted
-          fallback={<LoadingImage {...props} />}
-          onError={() => {
-            if (src) BAD_SRCS[src] = true;
-            refresh(i => i + 1);
-          }}
-          onCanPlay={() => {
-            if (timer.current) {
-              clearTimeout(timer.current);
-            }
-            sessionStorage.setItem(uri, src);
-          }}
-          {...props}
-        />
-      </Flex>
+      />
     );
   }
 

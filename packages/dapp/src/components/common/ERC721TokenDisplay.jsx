@@ -1,7 +1,7 @@
 import { Flex, Link, VStack } from '@chakra-ui/react';
 import { Checkbox } from 'components/common/Checkbox';
 import { RefreshButton } from 'components/common/RefreshButton';
-import { TokenImage } from 'components/common/tokenImage/TokenImage';
+import { TokenImageOrVideo } from 'components/common/TokenImageOrVideo';
 import { TokenTag } from 'components/common/TokenTag';
 import { useBridgeContext } from 'contexts/BridgeContext';
 import { getTokenUrl } from 'lib/helpers';
@@ -75,7 +75,7 @@ export const ERC721TokenDisplay = ({
         justify="space-between"
         role="group"
       >
-        <TokenImage
+        <TokenImageOrVideo
           token={token}
           width="calc(100% - 1.25rem)"
           height="calc(100% - 1.25rem)"
