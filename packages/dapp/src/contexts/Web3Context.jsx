@@ -200,7 +200,7 @@ export const Web3Provider = ({ children }) => {
       }
       localTokenInfo[tokenKey] = { ...tokenInfo, ...tokenWithUri, address };
       setLocalTokenInfo(localTokenInfo);
-      sessionStorage.removeItem(tokenWithUri.tokenUri);
+      sessionStorage.removeItem(tokenKey);
       setRefreshing(false);
       logDebug('refreshed TokenURI', tokenWithUri);
       return tokenWithUri;

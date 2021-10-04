@@ -1,4 +1,16 @@
+import axios from 'axios';
 import { DEFAULT_IMAGE_TIMEOUT } from 'lib/constants';
+
+const openseaAxios = axios.create({
+  timeout: DEFAULT_IMAGE_TIMEOUT,
+  headers: {
+    'X-API-KEY': process.env.REACT_APP_OPENSEA_API_KEY,
+  },
+});
+
+const defaultAxios = axios.create({
+  timeout: DEFAULT_IMAGE_TIMEOUT,
+});
 
 const IPFS_URL_ADDON = `ipfs/`;
 const IPNS_URL_ADDON = `ipns/`;
@@ -61,33 +73,16 @@ export const uriToHttpAsArray = uri => {
   }
 };
 
-const timeoutPromise = (ms, promise) =>
-  new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      reject(new Error('promise timeout'));
-    }, ms);
-    promise.then(
-      res => {
-        clearTimeout(timeoutId);
-        resolve(res);
-      },
-      err => {
-        clearTimeout(timeoutId);
-        reject(err);
-      },
-    );
-  });
-
 const JSON_STRING_PREFIX = 'data:application/json';
 
-const uriFromJson = jsonString => {
+export const uriFromJson = jsonData => {
   const {
     image,
     // eslint-ignore-next-line camelcase
     image_url: imageUrl,
     // eslint-ignore-next-line camelcase
     image_thumbnail_url: imageThumbnailUrl,
-  } = JSON.parse(jsonString);
+  } = jsonData;
   return imageThumbnailUrl || imageUrl || image || '';
 };
 
@@ -99,17 +94,14 @@ export const fetchImageUri = async tokenUri => {
     }
     const isOpensea = tokenUri.includes('api.opensea.io/api');
 
-    const response = await timeoutPromise(
-      DEFAULT_IMAGE_TIMEOUT,
-      fetch(tokenUri, {
-        headers: isOpensea
-          ? { 'X-API-KEY': process.env.REACT_APP_OPENSEA_API_KEY }
-          : undefined,
-      }),
-    );
-    const text = await response.text();
-    return uriFromJson(text);
+    const { data } = isOpensea
+      ? await openseaAxios.get(tokenUri)
+      : await defaultAxios.get(tokenUri);
+
+    return uriFromJson(data);
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching tokenUri', tokenUri, err);
     return '';
   }
 };
