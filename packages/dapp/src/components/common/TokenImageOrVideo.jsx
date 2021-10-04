@@ -1,14 +1,9 @@
 import { Image as ChakraImage } from '@chakra-ui/react';
 import NoImageAvailable from 'assets/no-image-available.svg';
-import { DEFAULT_IMAGE_TIMEOUT } from 'lib/constants';
+import { useWeb3Context } from 'contexts/Web3Context';
+import { fetchTokenUri } from 'lib/token';
 import { fetchImageUri, uriToHttpAsArray } from 'lib/uriHelpers';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ImageOrVideo } from './ImageOrVideo';
 
@@ -24,7 +19,6 @@ const FallbackImage = props => (
 );
 
 const BAD_SRCS = {};
-const IMAGE_TIMEOUT = 'image-timeout';
 
 const isENS = ({ address, chainId }) =>
   chainId === 1 &&
@@ -44,23 +38,29 @@ const getOpenSeaUri = ({ address, chainId, tokenUri, tokenId }) => {
   }
 };
 
-export const TokenImageOrVideo = ({ token, ...props }) => {
-  const uri = useMemo(
-    () => (isOpensea(token) ? getOpenSeaUri(token) : token.tokenUri),
+export const TokenImageOrVideo = React.memo(({ token, ...props }) => {
+  const { ethersProvider } = useWeb3Context();
+  const tokenKey = useMemo(() => {
+    const { address, chainId, tokenId } = token;
+    return `${chainId}-${address.toLowerCase()}-${tokenId}`;
+  }, [token]);
+
+  const [uri, setUri] = useState('');
+  useEffect(
+    () => setUri(isOpensea(token) ? getOpenSeaUri(token) : token.tokenUri),
     [token],
   );
   const [, refresh] = useState(0);
   const [srcs, setSrcs] = useState([]);
 
-  const src = useMemo(() => srcs.find(s => !BAD_SRCS[s]), [srcs]);
-  const timer = useRef(null);
+  const src = srcs.find(s => !BAD_SRCS[s]);
 
   useEffect(() => {
+    if (!uri) return;
     const oldSrcs = uriToHttpAsArray(uri);
 
     setSrcs(oldSrcs);
 
-    let isSubscribed = true;
     const load = async () => {
       const newUris = await Promise.all(oldSrcs.map(fetchImageUri));
       const newSrcs = newUris
@@ -71,41 +71,38 @@ export const TokenImageOrVideo = ({ token, ...props }) => {
       if (newSrcs.length > 0) {
         setSrcs(newSrcs);
       }
-      timer.current = setTimeout(() => {
-        if (isSubscribed) {
-          sessionStorage.setItem(uri, IMAGE_TIMEOUT);
-          setSrcs([]);
-        }
-      }, DEFAULT_IMAGE_TIMEOUT);
     };
-    const sessionSrc = sessionStorage.getItem(uri);
+    const sessionSrc = sessionStorage.getItem(tokenKey);
     if (sessionSrc) {
-      setSrcs(sessionSrc === IMAGE_TIMEOUT ? [] : [sessionSrc]);
+      setSrcs([sessionSrc]);
     } else {
       load();
     }
-    return () => {
-      isSubscribed = false;
-      if (timer.current) {
-        clearTimeout(timer.current);
-      }
-    };
-  }, [uri]);
+  }, [uri, tokenKey]);
 
   const onError = useCallback(badSrc => {
-    if (badSrc) BAD_SRCS[badSrc] = true;
-    refresh(i => i + 1);
+    if (badSrc && !BAD_SRCS[badSrc]) {
+      BAD_SRCS[badSrc] = true;
+      refresh(i => i + 1);
+    }
   }, []);
 
   const onLoad = useCallback(
     loadedSrc => {
-      if (timer.current) {
-        clearTimeout(timer.current);
-      }
-      sessionStorage.setItem(uri, loadedSrc);
+      sessionStorage.setItem(tokenKey, loadedSrc);
     },
-    [uri],
+    [tokenKey],
   );
+
+  useEffect(() => {
+    const load = async () => {
+      const { tokenUri } = await fetchTokenUri(ethersProvider, token);
+      setUri(tokenUri);
+    };
+    if (srcs.length > 0 && !src) {
+      load();
+    }
+  }, [src, srcs, token, ethersProvider]);
 
   if (src) {
     return (
@@ -119,4 +116,4 @@ export const TokenImageOrVideo = ({ token, ...props }) => {
   }
 
   return <FallbackImage {...props} />;
-};
+});
