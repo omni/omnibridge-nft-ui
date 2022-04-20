@@ -48,6 +48,9 @@ export const useBridgeDirection = () => {
     chainId => {
       const subgraphName =
         homeChainId === chainId ? homeBridgeSubgraph : foreignBridgeSubgraph;
+      if (chainId === 99999) {
+        return "https://graphnode.guswap.tk/subgraphs/name/cuonghx-gutech/gusandbox-ropsten-nft"
+      }  
       return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },
     [foreignBridgeSubgraph, homeChainId, homeBridgeSubgraph],
@@ -57,6 +60,9 @@ export const useBridgeDirection = () => {
     chainId => {
       const subgraphName =
         homeChainId === chainId ? home721Subgraph : foreign721Subgraph;
+      if (chainId === 99999) {
+        return "https://graphnode.guswap.tk/subgraphs/name/cuonghx-gutech/erc721-gusandbox"
+      }  
       return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },
     [foreign721Subgraph, homeChainId, home721Subgraph],
@@ -66,6 +72,9 @@ export const useBridgeDirection = () => {
     chainId => {
       const subgraphName =
         homeChainId === chainId ? home1155Subgraph : foreign1155Subgraph;
+      if (chainId === 99999) {
+        return "https://graphnode.guswap.tk/subgraphs/name/cuonghx-gutech/erc1155-gusandbox"
+      }
       return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },
     [foreign1155Subgraph, homeChainId, home1155Subgraph],
