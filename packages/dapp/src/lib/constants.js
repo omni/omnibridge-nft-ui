@@ -70,6 +70,8 @@ export const networkNames = {
   56: 'Binance Smart Chain',
   77: 'Sokol Testnet',
   100: 'xDai Chain',
+  99999: 'G.U.Sandbox',
+  3: 'Ropsten',
 };
 
 export const networkLabels = {
@@ -81,6 +83,7 @@ export const networkLabels = {
   56: 'BSC',
   77: 'Sokol',
   100: 'xDai',
+  99999: 'G.U.Sandbox',
 };
 
 export const networkCurrencies = {
@@ -114,8 +117,8 @@ const {
   REACT_APP_MAINNET_RPC_URL,
   REACT_APP_RINKEBY_RPC_URL,
   REACT_APP_XDAI_RPC_URL,
-  REACT_APP_KOVAN_RPC_URL,
-  REACT_APP_SOKOL_RPC_URL,
+  REACT_APP_ROPSTEN_RPC_URL,
+  REACT_APP_GUSANBOX_RPC_URL
 } = process.env;
 
 export const chainUrls = {
@@ -137,17 +140,17 @@ export const chainUrls = {
     chainId: 100,
     name: networkNames[100],
   },
-  42: {
-    rpc: REACT_APP_KOVAN_RPC_URL.split(' '),
-    explorer: 'https://kovan.etherscan.io',
-    chainId: 42,
-    name: networkNames[42],
+  99999: {
+    rpc: REACT_APP_GUSANBOX_RPC_URL.split(' '),
+    explorer: 'https://b32b3f3b-c059-47f5-b171-1a3c952f61b7.4z9mdn90pg6rby7s7iqv9kjgg.ep.bccloud.net/',
+    chainId: 99999,
+    name: networkNames[99999],
   },
-  77: {
-    rpc: REACT_APP_SOKOL_RPC_URL.split(' '),
-    explorer: 'https://blockscout.com/poa/sokol',
-    chainId: 77,
-    name: networkNames[77],
+  3: {
+    rpc: REACT_APP_ROPSTEN_RPC_URL.split(' '),
+    explorer: 'https://ropsten.etherscan.io',
+    chainId: 3,
+    name: networkNames[3],
   },
 };
 

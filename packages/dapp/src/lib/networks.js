@@ -1,6 +1,7 @@
 export const ETH_XDAI_BRIDGE = 'eth-xdai';
 export const RINKEBY_XDAI_BRIDGE = 'rinkeby-xdai';
 export const KOVAN_SOKOL_BRIDGE = 'kovan-sokol';
+export const GUSANDBOX_ROPSTEN_BRIDGE = 'gusandbox-ropsten';
 
 const ETH_XDAI_BRIDGE_CONFIG = {
   label: 'eth⥊xdai',
@@ -65,6 +66,27 @@ const KOVAN_SOKOL_BRIDGE_CONFIG = {
   tokensClaimDisabled: [],
 };
 
+const GUSANDBOX_ROPSTEN_BRIDGE_CONFIG = {
+  label: 'gusandbox⥊ropsten',
+  homeChainId: 99999,
+  foreignChainId: 3,
+  foreignMediatorAddress:
+    '0xeCfB0BBA39dB555E566119919795f80aCD3f735f'.toLowerCase(),
+  homeMediatorAddress:
+    '0x29AEF4bb7fA5d1DC680BF88bB44f5b7821380FB6'.toLowerCase(),
+  foreignAmbAddress: '0xF1b5cc67c911F67cCC4021C22241AC7c21CB43C8'.toLowerCase(),
+  homeAmbAddress: '0x55af7F974F6B294034000Bb46c6359C5c605B62A'.toLowerCase(),
+  ambLiveMonitorPrefix: 'https://tokenbridge-alm.vercel.app',
+  foreignBridgeSubgraph: 'cuonghx-gutech/ropsten-token-bridge-nft',
+  homeBridgeSubgraph: 'dan13ram/sokol-kovan-omnibridge-nft',
+  home721Subgraph: 'dan13ram/erc721-sokol-subgraph',
+  foreign721Subgraph: 'cuonghx-gutech/erc721-ropsten',
+  home1155Subgraph: 'sunguru98/erc1155-sokol-subgraph',
+  foreign1155Subgraph: 'cuonghx-gutech/erc1155-ropsten',
+  claimDisabled: false,
+  tokensClaimDisabled: [],
+};
+
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
   b => b.toLowerCase(),
 );
@@ -73,6 +95,7 @@ const bridgeInfo = {
   [ETH_XDAI_BRIDGE]: ETH_XDAI_BRIDGE_CONFIG,
   [RINKEBY_XDAI_BRIDGE]: RINKEBY_XDAI_BRIDGE_CONFIG,
   [KOVAN_SOKOL_BRIDGE]: KOVAN_SOKOL_BRIDGE_CONFIG,
+  [GUSANDBOX_ROPSTEN_BRIDGE]: GUSANDBOX_ROPSTEN_BRIDGE_CONFIG,
 };
 
 const getNetworkConfig = bridges => {
