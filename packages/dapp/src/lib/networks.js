@@ -2,6 +2,7 @@ export const ETH_XDAI_BRIDGE = 'eth-xdai';
 export const RINKEBY_XDAI_BRIDGE = 'rinkeby-xdai';
 export const KOVAN_SOKOL_BRIDGE = 'kovan-sokol';
 export const GUSANDBOX_ROPSTEN_BRIDGE = 'gusandbox-ropsten';
+export const GUSANDBOX_RINKEBY_BRIDGE = 'gusandbox-rinkeby';
 
 const ETH_XDAI_BRIDGE_CONFIG = {
   label: 'eth⥊xdai',
@@ -78,11 +79,32 @@ const GUSANDBOX_ROPSTEN_BRIDGE_CONFIG = {
   homeAmbAddress: '0x55af7F974F6B294034000Bb46c6359C5c605B62A'.toLowerCase(),
   ambLiveMonitorPrefix: 'https://tokenbridge-alm.vercel.app',
   foreignBridgeSubgraph: 'cuonghx-gutech/ropsten-token-bridge-nft',
-  homeBridgeSubgraph: 'dan13ram/sokol-kovan-omnibridge-nft',
-  home721Subgraph: 'dan13ram/erc721-sokol-subgraph',
+  homeBridgeSubgraph: 'cuonghx-gutech/gusandbox-ropsten-nft',
+  home721Subgraph: 'cuonghx-gutech/erc721-gusandbox',
   foreign721Subgraph: 'cuonghx-gutech/erc721-ropsten',
-  home1155Subgraph: 'sunguru98/erc1155-sokol-subgraph',
+  home1155Subgraph: 'cuonghx-gutech/erc1155-gusandbox',
   foreign1155Subgraph: 'cuonghx-gutech/erc1155-ropsten',
+  claimDisabled: false,
+  tokensClaimDisabled: [],
+};
+
+const GUSANDBOX_RINKEBY_BRIDGE_CONFIG = {
+  label: 'gusandbox⥊rinkeby',
+  homeChainId: 99999,
+  foreignChainId: 4,
+  foreignMediatorAddress:
+    '0xe6de6395d55dE9129Ae4b20f11Fc25A37B73efAD'.toLowerCase(),
+  homeMediatorAddress:
+    '0xFB25A90c3749fB4f30b36c4AE37b9EEe412fc35f'.toLowerCase(),
+  foreignAmbAddress: '0x0F806D8dd8bb02Ad9dd9bA0e8e351B4319cc45e4'.toLowerCase(),
+  homeAmbAddress: '0xDf1949Fd97c3d484D39269cCd11082d0Ac1f9440'.toLowerCase(),
+  ambLiveMonitorPrefix: 'https://tokenbridge-alm.vercel.app',
+  foreignBridgeSubgraph: 'cuonghx-gutech/rinkeby-token-bridge-nft',
+  homeBridgeSubgraph: 'cuonghx-gutech/gusandbox-rinkeby-nft',
+  home721Subgraph: 'cuonghx-gutech/erc721-gusandbox',
+  foreign721Subgraph: 'daisai3/eip721_rinkeby',
+  home1155Subgraph: 'cuonghx-gutech/erc1155-gusandbox',
+  foreign1155Subgraph: 'sunguru98/erc1155-rinkeby-subgraph',
   claimDisabled: false,
   tokensClaimDisabled: [],
 };
@@ -96,6 +118,7 @@ const bridgeInfo = {
   [RINKEBY_XDAI_BRIDGE]: RINKEBY_XDAI_BRIDGE_CONFIG,
   [KOVAN_SOKOL_BRIDGE]: KOVAN_SOKOL_BRIDGE_CONFIG,
   [GUSANDBOX_ROPSTEN_BRIDGE]: GUSANDBOX_ROPSTEN_BRIDGE_CONFIG,
+  [GUSANDBOX_RINKEBY_BRIDGE]: GUSANDBOX_RINKEBY_BRIDGE_CONFIG,
 };
 
 const getNetworkConfig = bridges => {
