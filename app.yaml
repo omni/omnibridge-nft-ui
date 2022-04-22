@@ -1,0 +1,15 @@
+runtime: nodejs14
+env: standard
+service: gu-bridge-nft-ui
+
+handlers:
+  - url: /static
+    static_dir: packages/dapp/build/static
+
+  - url: /(.*\.(json|ico|js))$
+    static_files: packages/dapp/build/\1
+    upload: packages/dapp/build/.*\.(json|ico|js)$
+
+  - url: .*
+    static_files: packages/dapp/build/index.html
+    upload: packages/dapp/build/index.html

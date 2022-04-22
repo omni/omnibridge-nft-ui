@@ -1,0 +1,80 @@
+name: Deploy Test Server
+on:
+  push:
+    branches: [ 'main' ]
+
+env:
+  PROJECT_ID: gu-bridge
+  SERVICE_ID: default
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - uses: actions/cache@v1
+      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install
+      run: yarn install --frozen-lockfile
+
+    - name: Build
+      run: yarn dapp:build --if-present
+      env:
+        REACT_APP_DEFAULT_BRIDGE_DIRECTION: gusandbox-ropsten
+        REACT_APP_ENABLED_BRIDGES: gusandbox-ropsten gusandbox-rinkeby
+        REACT_APP_INFURA_ID: <INFURA_ID>
+        REACT_APP_GAS_PRICE_SUPPLIER_URL: https://gasprice.poa.network/
+        REACT_APP_GAS_PRICE_SPEED_TYPE: standard
+        REACT_APP_GAS_PRICE_FALLBACK_GWEI: 50
+        REACT_APP_GAS_PRICE_UPDATE_INTERVAL: 60000
+        REACT_APP_ETH_PRICE_API_URL: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=USD
+        REACT_APP_ETH_PRICE_UPDATE_INTERVAL: 60000
+        REACT_APP_TITLE: OmniBridge NFT - %c
+        REACT_APP_DESCRIPTION: The OmniBridge NFT extension for the Arbitrary Message Bridge to the xDai chain is the simplest way to transfer ANY ERC721/ERC1155 token to the xDai chain.
+        REACT_APP_UI_STATUS_UPDATE_INTERVAL: 5000
+        REACT_APP_DEBUG_LOGS: true
+        REACT_APP_GRAPH_HEALTH_UPDATE_INTERVAL: 60000
+        REACT_APP_GRAPH_HEALTH_THRESHOLD_BLOCKS: 10
+
+        REACT_APP_XDAI_RPC_URL: https://rpc.xdaichain.com https://dai.poa.network
+        REACT_APP_MAINNET_RPC_URL: https://mainnet.infura.io/v3/<INFURA_ID> https://mainnet-nethermind.blockscout.com/
+        REACT_APP_RINKEBY_RPC_URL: https://rinkeby.infura.io/v3/a1660f116d05434081d0b7104c26de1b
+        REACT_APP_ROPSTEN_RPC_URL: https://ropsten.infura.io/v3/972b939390fe4a298f2afa9907fdb06a
+        REACT_APP_GUSANBOX_RPC_URL: https://b32b3f3b-c059-47f5-b171-1a3c952f61b7.4z9mdn90pg6rby7s7iqv9kjgg.ep.bccloud.net:8545/
+
+        # REACT_APP_OPENSEA_API_KEY:
+
+    # - name: Test
+    #   run: yarn dapp:test
+
+    - name: Setup Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{ env.PROJECT_ID }}
+        service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+
+    - name: Deploy to App Engine
+      run: gcloud app deploy --appyaml=app.yaml
+
+    - name: Delete old versions
+      run: gcloud app versions list --filter="service=${{env.SERVICE_ID}}" --format="value(version.id)" --sort-by="~version.createTime" | tail -n +11 | xargs -r gcloud app versions delete # Only keep 10 latest versions
