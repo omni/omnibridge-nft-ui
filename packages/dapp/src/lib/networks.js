@@ -77,7 +77,8 @@ const GUSANDBOX_ROPSTEN_BRIDGE_CONFIG = {
     '0x29AEF4bb7fA5d1DC680BF88bB44f5b7821380FB6'.toLowerCase(),
   foreignAmbAddress: '0xF1b5cc67c911F67cCC4021C22241AC7c21CB43C8'.toLowerCase(),
   homeAmbAddress: '0x55af7F974F6B294034000Bb46c6359C5c605B62A'.toLowerCase(),
-  ambLiveMonitorPrefix: 'https://tokenbridge-alm.vercel.app',
+  ambLiveMonitorPrefix:
+    'https://alm-gusandbox-ropsten-dot-gu-bridge.an.r.appspot.com',
   foreignBridgeSubgraph: 'cuonghx-gutech/ropsten-token-bridge-nft',
   homeBridgeSubgraph: 'gulaps/gusandbox-to-ropsten-omnibridge-nft',
   home721Subgraph: 'gulaps/erc721-subgraph',
@@ -98,7 +99,8 @@ const GUSANDBOX_RINKEBY_BRIDGE_CONFIG = {
     '0xFB25A90c3749fB4f30b36c4AE37b9EEe412fc35f'.toLowerCase(),
   foreignAmbAddress: '0x0F806D8dd8bb02Ad9dd9bA0e8e351B4319cc45e4'.toLowerCase(),
   homeAmbAddress: '0xDf1949Fd97c3d484D39269cCd11082d0Ac1f9440'.toLowerCase(),
-  ambLiveMonitorPrefix: 'https://tokenbridge-alm.vercel.app',
+  ambLiveMonitorPrefix:
+    ' https://alm-gusandbox-rinkeby-dot-gu-bridge.an.r.appspot.com',
   foreignBridgeSubgraph: 'cuonghx-gutech/rinkeby-token-bridge-nft',
   homeBridgeSubgraph: 'gulaps/gusandbox-to-rinkeby-omnibridge-nft',
   home721Subgraph: 'gulaps/erc721-subgraph',
