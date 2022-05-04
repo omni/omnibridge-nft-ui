@@ -94,9 +94,9 @@ const GUSANDBOX_RINKEBY_BRIDGE_CONFIG = {
   homeChainId: 99999,
   foreignChainId: 4,
   foreignMediatorAddress:
-    '0xe6de6395d55dE9129Ae4b20f11Fc25A37B73efAD'.toLowerCase(),
+    '0x1b00fE8CcEfEBad636E01Fd142F7c923F8C36e42'.toLowerCase(),
   homeMediatorAddress:
-    '0xFB25A90c3749fB4f30b36c4AE37b9EEe412fc35f'.toLowerCase(),
+    '0x26159b2372E9cCFc454365f1BB3444d949e04a1a'.toLowerCase(),
   foreignAmbAddress: '0x0F806D8dd8bb02Ad9dd9bA0e8e351B4319cc45e4'.toLowerCase(),
   homeAmbAddress: '0xDf1949Fd97c3d484D39269cCd11082d0Ac1f9440'.toLowerCase(),
   ambLiveMonitorPrefix:
