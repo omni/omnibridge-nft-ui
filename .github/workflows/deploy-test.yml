@@ -40,8 +40,8 @@ jobs:
     - name: Build
       run: yarn dapp:build --if-present
       env:
-        REACT_APP_DEFAULT_BRIDGE_DIRECTION: gusandbox-ropsten
-        REACT_APP_ENABLED_BRIDGES: gusandbox-ropsten gusandbox-rinkeby
+        REACT_APP_DEFAULT_BRIDGE_DIRECTION: gusandbox-goerli
+        REACT_APP_ENABLED_BRIDGES: gusandbox-goerli
         REACT_APP_INFURA_ID: <INFURA_ID>
         REACT_APP_GAS_PRICE_SUPPLIER_URL: https://gasprice.poa.network/
         REACT_APP_GAS_PRICE_SPEED_TYPE: standard
