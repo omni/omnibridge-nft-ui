@@ -123,7 +123,7 @@ const GUSANDBOX_GOERLI_BRIDGE_CONFIG = {
   foreignAmbAddress: '0x0F806D8dd8bb02Ad9dd9bA0e8e351B4319cc45e4'.toLowerCase(),
   homeAmbAddress: '0xc39eAbae09273F00Ec7e56B6a8C189437a61C9C8'.toLowerCase(),
   ambLiveMonitorPrefix:
-    'https://alm-gusandbox-goerli-dot-gu-bridge.an.r.appspot.com/',
+    'https://alm-gusandbox-goerli-dot-gu-bridge.an.r.appspot.com',
   foreignBridgeSubgraph: 'cuonghx1108/goerli-gusandbox-nft',
   homeBridgeSubgraph: 'cuonghx-gutech/gusandbox-goerli-nft',
   home721Subgraph: 'gulaps/erc721-subgraph',
