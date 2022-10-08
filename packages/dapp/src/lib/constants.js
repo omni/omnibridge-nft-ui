@@ -72,6 +72,7 @@ export const networkNames = {
   100: 'xDai Chain',
   99999: 'G.U.Sandbox',
   3: 'Ropsten',
+  5: 'Görli',
 };
 
 export const networkLabels = {
@@ -118,7 +119,8 @@ const {
   REACT_APP_RINKEBY_RPC_URL,
   REACT_APP_XDAI_RPC_URL,
   REACT_APP_ROPSTEN_RPC_URL,
-  REACT_APP_GUSANBOX_RPC_URL
+  REACT_APP_GUSANBOX_RPC_URL,
+  REACT_APP_GOERLI_RPC_URL,
 } = process.env;
 
 export const chainUrls = {
@@ -142,7 +144,7 @@ export const chainUrls = {
   },
   99999: {
     rpc: REACT_APP_GUSANBOX_RPC_URL.split(' '),
-    explorer: 'https://b32b3f3b-c059-47f5-b171-1a3c952f61b7.4z9mdn90pg6rby7s7iqv9kjgg.ep.bccloud.net/',
+    explorer: 'https://sandbox1.japanopenchain.org/',
     chainId: 99999,
     name: networkNames[99999],
   },
@@ -151,6 +153,12 @@ export const chainUrls = {
     explorer: 'https://ropsten.etherscan.io',
     chainId: 3,
     name: networkNames[3],
+  },
+  5: {
+    rpc: REACT_APP_GOERLI_RPC_URL.split(' '),
+    explorer: 'https://goerli.etherscan.io',
+    chainId: 5,
+    name: networkNames[5],
   },
 };
 

@@ -31,6 +31,13 @@ export function getDirection(): String {
     return 'rinkeby-xdai';
   } else if (network == 'poa-sokol' || network == 'kovan') {
     return 'kovan-sokol';
+  } else if (
+    // home, foreign mediator address
+    address ==
+      Address.fromString('0x81e8A55212cB5838884dADc4a2704d34F137BB82') ||
+    address == Address.fromString('0xb454e28C7C7D9683a6bC849965D3b3e96845e33E')
+  ) {
+    return 'gusandbox-goerli';
   }
   return '';
 }

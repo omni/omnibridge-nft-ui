@@ -45,6 +45,7 @@ const networkTags = {
   56: <Tag bg="#5A74DA" txt="BSC" />,
   99999: <Tag bg="#4DA9A6" txt="GU Sandbox" />,
   3: <Tag bg="#5A74DA" txt="Ropsten" />,
+  5: <Tag bg="#5A74DA" txt="Görli" />,
 };
 
 const getNetworkTag = chainId => networkTags[chainId];
