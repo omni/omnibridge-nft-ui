@@ -52,15 +52,15 @@ export const uriToHttpAsArray = uri => {
       if (hash.startsWith('ipfs')) {
         const newHash = hash.split('/')[1];
         return [
+          `https://ipfs.io/ipfs/${newHash}/`,
           `https://ipfs.infura.io/ipfs/${newHash}/`,
           `https://gateway.pinata.cloud/ipfs/${newHash}/`,
-          `https://ipfs.io/ipfs/${newHash}/`,
         ];
       }
       return [
+        `https://ipfs.io/ipfs/${hash}/`,
         `https://ipfs.infura.io/ipfs/${hash}/`,
         `https://gateway.pinata.cloud/ipfs/${hash}/`,
-        `https://ipfs.io/ipfs/${hash}/`,
       ];
     case 'ipns':
       return [
