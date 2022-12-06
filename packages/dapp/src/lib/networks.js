@@ -117,15 +117,15 @@ const GUSANDBOX_GOERLI_BRIDGE_CONFIG = {
   homeChainId: 99999,
   foreignChainId: 5,
   foreignMediatorAddress:
-    '0x3d147E693B780e222b84d19F4CbF7050a53Bd420'.toLowerCase(),
+    '0x877accD1CBB5A1719abe03172aC31781E046dC81'.toLowerCase(),
   homeMediatorAddress:
-    '0x7758B0c484236aD54769B238444b636db5B612fE'.toLowerCase(),
+    '0x052122758AB5DBB8003B3F8Ceba3dd61cf8ca919'.toLowerCase(),
   foreignAmbAddress: '0x0F806D8dd8bb02Ad9dd9bA0e8e351B4319cc45e4'.toLowerCase(),
   homeAmbAddress: '0xc39eAbae09273F00Ec7e56B6a8C189437a61C9C8'.toLowerCase(),
   ambLiveMonitorPrefix:
     'https://alm-gusandbox-goerli-dot-gu-bridge.an.r.appspot.com',
-  foreignBridgeSubgraph: 'cuonghx1108/goerli-gusandbox-nft-3',
-  homeBridgeSubgraph: 'cuonghx-gutech/gusandbox-goerli-nft-2',
+  foreignBridgeSubgraph: 'cuonghx1108/goerli-gusandbox-nft-4',
+  homeBridgeSubgraph: 'cuonghx-gutech/gusandbox-goerli-nft-4',
   home721Subgraph: 'gulaps/erc721-subgraph',
   foreign721Subgraph: 'cuonghx1108/eip721-goerli',
   home1155Subgraph: 'gulabs/erc1155-subgraph',
