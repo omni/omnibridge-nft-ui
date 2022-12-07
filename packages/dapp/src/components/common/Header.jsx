@@ -13,6 +13,7 @@ import { WalletSelector } from 'components/common/WalletSelector';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { HistoryIcon } from 'icons/HistoryIcon';
+import { PlusIcon } from 'icons/PlusIcon';
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -32,6 +33,26 @@ const HistoryLink = ({ close }) => {
       fontSize="sm"
     >
       <Text color="black"> History</Text>
+    </Button>
+  );
+};
+
+const CreateNFT = ({ close }) => {
+  const history = useHistory();
+  return (
+    <Button
+      variant="ghost"
+      color="grey"
+      _hover={{ color: 'blue.500', bgColor: 'blackAlpha.100' }}
+      onClick={() => {
+        history.push('/create');
+        close();
+      }}
+      leftIcon={<PlusIcon />}
+      px={2}
+      fontSize="sm"
+    >
+      <Text color="black"> Create NFT</Text>
     </Button>
   );
 };
@@ -117,6 +138,7 @@ export const Header = () => {
       >
         {valid && (
           <>
+            <CreateNFT close={() => setOpen(false)} />
             <HistoryLink close={() => setOpen(false)} />
             <UpdateSettings close={() => setOpen(false)} />
           </>

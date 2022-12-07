@@ -29,6 +29,7 @@
     "ethers": "^5.4.4",
     "fast-memoize": "^2.5.2",
     "focus-visible": "^5.2.0",
+    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "gas-price-oracle": "^0.3.3",
     "graphql-request": "^3.5.0",

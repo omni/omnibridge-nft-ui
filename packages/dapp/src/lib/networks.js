@@ -132,6 +132,7 @@ const GUSANDBOX_GOERLI_BRIDGE_CONFIG = {
   foreign1155Subgraph: 'cuonghx1108/eip1155-goerli',
   claimDisabled: false,
   tokensClaimDisabled: [],
+  tokenFactoryAddress: '0x23e25531f8D4181d054aA6934Ce67DaFeFAcc7fb',
 };
 
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
