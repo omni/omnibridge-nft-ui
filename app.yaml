@@ -1,6 +1,6 @@
 runtime: nodejs14
 env: standard
-service: gu-bridge-nft-ui
+service: default
 
 handlers:
   - url: /static
