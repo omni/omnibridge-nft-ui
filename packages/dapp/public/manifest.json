@@ -1,7 +1,7 @@
 {
-  "short_name": "OmniBridge NFT",
-  "name": "OmniBridge NFT",
-  "description": "The OmniBridge NFT is the simplest way to transfer ANY ERC721/ERC1155 token to and from the xDai chain.",
+  "short_name": "GUBridge NFT",
+  "name": "GUBridge NFT",
+  "description": "The GUBridge NFT is the simplest way to transfer ANY ERC721/ERC1155 token to and from the xDai chain.",
   "iconPath": "android-chrome-512x512.png",
   "providedBy": { "name": "xDai Chain", "url": "https://xdaichain.com" },
   "icons": [

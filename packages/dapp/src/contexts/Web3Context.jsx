@@ -26,7 +26,7 @@ export const useWeb3Context = () => useContext(Web3Context);
 
 const updateTitle = chainId => {
   const networkName = getNetworkName(chainId);
-  const defaultTitle = 'OmniBridge';
+  const defaultTitle = 'GUBridge';
   if (!process.env.REACT_APP_TITLE) {
     document.title = defaultTitle;
   } else {

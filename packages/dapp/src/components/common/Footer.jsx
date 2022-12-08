@@ -1,6 +1,6 @@
 import { Box, Flex, HStack, Text, useBreakpointValue } from '@chakra-ui/react';
 import { GithubIcon } from 'icons/GithubIcon';
-import { OmniBridgeIcon } from 'icons/OmniBridgeIcon';
+import { GUBridgeIcon } from 'icons/GUBridgeIcon';
 import { RaidGuildIcon } from 'icons/RaidGuildIcon';
 import { TelegramIcon } from 'icons/TelegramIcon';
 import { TwitterIcon } from 'icons/TwitterIcon';
@@ -29,7 +29,7 @@ export const Footer = () => {
             _hover={{ color: 'blue.500' }}
             transition="0.25s"
           >
-            <OmniBridgeIcon w={6} />
+            <GUBridgeIcon w={6} />
           </Flex>
         </Link>
       )}
