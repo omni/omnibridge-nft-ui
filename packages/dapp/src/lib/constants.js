@@ -144,7 +144,7 @@ export const chainUrls = {
   },
   99999: {
     rpc: REACT_APP_GUSANBOX_RPC_URL.split(' '),
-    explorer: 'https://sandbox1.japanopenchain.org/',
+    explorer: 'https://sandbox1.japanopenchain.org',
     chainId: 99999,
     name: networkNames[99999],
   },

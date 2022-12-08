@@ -32,7 +32,7 @@ export const ConnectWeb3 = () => {
   const renderHelperBox = useCallback(
     () => (
       <Text color="greyText" mb={4} textAlign="center">
-        To access the {renderBridgeLabel()} OmniBridge, please switch to
+        To access the {renderBridgeLabel()} GUBridge, please switch to
         {renderChain(homeChainId)}or{renderChain(foreignChainId)}
       </Text>
     ),

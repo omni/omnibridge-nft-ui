@@ -9,7 +9,7 @@ import React from 'react';
 
 const LearnMoreLink = () => (
   <Link
-    href="https://www.xdaichain.com/about-xdai/faqs/bridges-xdai-bridge-and-omnibridge#metamask-is-showing-very-high-fees-to-claim-a-transaction-on-ethereum-tokens-bridged-from-xdai-to-ethereum-is-this-estimate-accurate"
+    href="https://www.xdaichain.com/about-xdai/faqs/bridges-xdai-bridge-and-GUBridge#metamask-is-showing-very-high-fees-to-claim-a-transaction-on-ethereum-tokens-bridged-from-xdai-to-ethereum-is-this-estimate-accurate"
     isExternal
     color="blue.400"
   >
