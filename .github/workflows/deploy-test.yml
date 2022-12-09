@@ -1,7 +1,7 @@
 name: Deploy to Test environment
 on:
   push:
-    tags: ['v*']
+    branches: ['20221209-workflow-update-2']
 
 env:
   PROJECT_ID: gu-bridge
