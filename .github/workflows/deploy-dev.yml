@@ -1,11 +1,11 @@
-name: Deploy to Test environment
+name: Deploy to Dev environment
 on:
   push:
-    tags: ['v*']
+    branches: ['main']
 
 env:
   PROJECT_ID: gu-bridge
-  SERVICE_ID: nft-bridge-test
+  SERVICE_ID: default
 
 jobs:
   build:
@@ -75,7 +75,7 @@ jobs:
           service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
       - name: Deploy to App Engine
-        run: gcloud app deploy --appyaml=app-test.yaml
+        run: gcloud app deploy --appyaml=app.yaml
 
       - name: Delete old versions
         run: gcloud app versions list --filter="service=${{env.SERVICE_ID}}" --format="value(version.id)" --sort-by="~version.createTime" | tail -n +11 | xargs -r gcloud app versions delete # Only keep 10 latest versions
