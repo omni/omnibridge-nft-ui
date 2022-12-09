@@ -1,11 +1,11 @@
-name: Deploy to Test environment
+name: Deploy to Dev environment
 on:
   push:
-    tags: ['v*']
+    branches: ['main']
 
 env:
   PROJECT_ID: gu-bridge
-  SERVICE_ID: nft-bridge-test
+  SERVICE_ID: default
 
 jobs:
   build:
