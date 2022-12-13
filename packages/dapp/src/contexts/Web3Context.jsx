@@ -1,4 +1,5 @@
 import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
+import Torus from '@toruslabs/torus-embed';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import imTokenLogo from 'assets/imtoken.svg';
 import { ethers } from 'ethers';
@@ -67,6 +68,14 @@ const providerOptions = {
     package: WalletConnectProvider,
     options: { rpc },
     connector,
+  },
+  torus: {
+    package: Torus,
+    options: {
+      config: {
+        showTorusButton: true,
+      },
+    },
   },
 };
 
