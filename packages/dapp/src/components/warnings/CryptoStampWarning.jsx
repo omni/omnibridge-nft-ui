@@ -46,7 +46,7 @@ export const CryptoStampWarning = () => {
       >
         <AlertIcon minWidth="20px" />
         <Text fontSize="small">
-          Bridging Crypto stamp token via NFT GUBridge is not recommended.
+          Bridging Crypto stamp token via NFT G.U.Bridge is not recommended.
           Please use a dedicated Crypto Stamp the bridge on{' '}
           <Link href="https://crypto.post.at" color="blue.500" isExternal>
             https://crypto.post.at

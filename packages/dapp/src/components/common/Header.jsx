@@ -95,7 +95,7 @@ export const Header = () => {
               src={Logo}
               mr={{ base: 4, md: 2, lg: 4 }}
             />
-            <Text fontWeight="bold">GUBridge</Text>
+            <Text fontWeight="bold">G.U.Bridge</Text>
           </Flex>
         </Link>
         <Button

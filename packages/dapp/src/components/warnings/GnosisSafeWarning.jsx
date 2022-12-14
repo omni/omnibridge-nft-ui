@@ -30,8 +30,8 @@ export const GnosisSafeWarning = ({
           {noCheckbox && (
             <Text fontSize="small">
               It is mandatory to set an alternative recipient address when
-              GUBridge is loaded as a Gnosis Safe App. Usually this would be the
-              address of a Gnosis Safe on the other side of the bridge.
+              G.U.Bridge is loaded as a Gnosis Safe App. Usually this would be
+              the address of a Gnosis Safe on the other side of the bridge.
             </Text>
           )}
           {isSameAddress && !noCheckbox && (
