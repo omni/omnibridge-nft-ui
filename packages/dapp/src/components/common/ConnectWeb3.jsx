@@ -32,7 +32,7 @@ export const ConnectWeb3 = () => {
   const renderHelperBox = useCallback(
     () => (
       <Text color="greyText" mb={4} textAlign="center">
-        To access the {renderBridgeLabel()} G.U.Bridge, please switch to
+        To access the {renderBridgeLabel()} G.U.Bridge NFT, please switch to
         {renderChain(homeChainId)}or{renderChain(foreignChainId)}
       </Text>
     ),

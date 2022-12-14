@@ -48,7 +48,7 @@ export const TermsOfServiceModal = () => {
             alignItems="center"
           >
             <Image src={InfoImage} mb={4} w="4rem" />
-            <Text>Welcome to the G.U.Bridge UI</Text>
+            <Text>Welcome to the G.U.Bridge NFT UI</Text>
           </ModalHeader>
           <ModalBody px={8} py={0}>
             <Flex align="center" direction="column" fontSize="sm">
@@ -71,7 +71,7 @@ export const TermsOfServiceModal = () => {
               </Text>
               <Text as="p" textAlign="center" mb="4">
                 {
-                  'Use of this app and the G.U.Bridge is at your own risk. Users may experience unexpected delays, unexpected visual artifacts, unexpected loss of tokens or funds from improper app configuration, or other negative outcomes. '
+                  'Use of this app and the G.U.Bridge NFT is at your own risk. Users may experience unexpected delays, unexpected visual artifacts, unexpected loss of tokens or funds from improper app configuration, or other negative outcomes. '
                 }
               </Text>
               <Text as="p" textAlign="center" mb="4">
