@@ -62,6 +62,7 @@ jobs:
           REACT_APP_ROPSTEN_RPC_URL: https://ropsten.infura.io/v3/972b939390fe4a298f2afa9907fdb06a
           REACT_APP_GUSANBOX_RPC_URL: https://sandbox1.japanopenchain.org:8545/
           REACT_APP_GOERLI_RPC_URL: https://goerli.infura.io/v3/e4997cec6b9b46ee9b2084576b150df1
+          REACT_APP_VERSION: 1.0.0
 
           # REACT_APP_OPENSEA_API_KEY:
 
