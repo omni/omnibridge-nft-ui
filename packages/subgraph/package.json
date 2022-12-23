@@ -23,7 +23,7 @@
     "prepare-sokol-kovan": "mustache config/sokol-kovan.json subgraph.template.yaml > subgraph.yaml",
     "deploy-sokol-kovan": "graph deploy dan13ram/sokol-kovan-omnibridge-nft --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "prepare-gusandbox-goerli": "mustache config/gusandbox-goerli.json subgraph.template.yaml > subgraph.yaml",
-    "deploy-gusandbox-goerli": "graph deploy cuonghx-gutech/gusandbox-goerli-nft --debug --ipfs https://api.thegraph.com/ipfs/ --node http://34.84.183.81:8020",
+    "deploy-gusandbox-goerli": "graph deploy cuonghx-gutech/gusandbox-goerli-omnibridge-nft-dev --debug --ipfs https://api.thegraph.com/ipfs/ --node http://34.84.183.81:8020",
     "prepare-goerli-gusandbox": "mustache config/goerli-gusandbox.json subgraph.template.yaml > subgraph.yaml",
     "deploy-goerli-gusandbox": "graph deploy cuonghx-gutech/goerli-gusandbox-nft --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/"
   },
