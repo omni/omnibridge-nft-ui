@@ -117,22 +117,22 @@ const GUSANDBOX_GOERLI_BRIDGE_CONFIG = {
   homeChainId: 99999,
   foreignChainId: 5,
   foreignMediatorAddress:
-    '0xd0485da292Da1b38E9511A893dB2bC147C72C0f0'.toLowerCase(),
+    '0x8309DEC1fb0a71D5c388dcc1B926DbE648F0e4E8'.toLowerCase(),
   homeMediatorAddress:
-    '0x9C0e4AE8B9ca0229A11033d61De226A36Ec09c90'.toLowerCase(),
+    '0xBaaD008D6ec64e9741189c098a8094d096355d54'.toLowerCase(),
   foreignAmbAddress: '0x0F806D8dd8bb02Ad9dd9bA0e8e351B4319cc45e4'.toLowerCase(),
   homeAmbAddress: '0xc39eAbae09273F00Ec7e56B6a8C189437a61C9C8'.toLowerCase(),
   ambLiveMonitorPrefix:
     'https://alm-gusandbox-goerli-dot-gu-bridge.an.r.appspot.com',
-  foreignBridgeSubgraph: 'cuonghx1108/goerli-gusandbox-manual-lane-2',
-  homeBridgeSubgraph: 'cuonghx1108/gusandbox-goerli-manual-lane-2',
-  home721Subgraph: 'cuonghx/gu-bridge-eip721-2',
-  foreign721Subgraph: 'cuonghx1108/gu-bridge-eip721-2',
+  foreignBridgeSubgraph: 'cuonghx1108/goerli-gu-omnibridge-nft-dev',
+  homeBridgeSubgraph: 'cuonghx-gutech/gusandbox-goerli-omnibridge-nft-dev',
+  home721Subgraph: 'cuonghx1108/gu-bridge-eip721-dev',
+  foreign721Subgraph: 'cuonghx1108/gu-bridge-eip721-dev',
   home1155Subgraph: 'gulabs/erc1155-subgraph',
   foreign1155Subgraph: 'cuonghx1108/eip1155-goerli',
   claimDisabled: false,
   tokensClaimDisabled: [],
-  tokenFactoryAddress: '0x7b72D6672892c0063e31f70dBb98363B5Fd456cb',
+  tokenFactoryAddress: '0xF00046710b8480F42126726c2c4b2ACd9AdB3a03',
 };
 
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
