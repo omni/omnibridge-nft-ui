@@ -1,7 +1,5 @@
 import { BigNumber } from 'ethers';
 
-import { ETH_XDAI_BRIDGE } from './networks';
-
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 export const ETHER_CURRENCY_LOGO =
   'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880';
@@ -16,7 +14,7 @@ export const POLLING_INTERVAL =
   process.env.REACT_APP_UI_STATUS_UPDATE_INTERVAL || 5000;
 
 export const DEFAULT_BRIDGE_DIRECTION =
-  process.env.REACT_APP_DEFAULT_BRIDGE_DIRECTION || ETH_XDAI_BRIDGE;
+  process.env.REACT_APP_DEFAULT_BRIDGE_DIRECTION;
 
 export const DEFAULT_IMAGE_TIMEOUT = process.env.REACT_IMAGE_TIMEOUT || 20000;
 
@@ -114,45 +112,14 @@ export const networkCurrencies = {
   },
 };
 
-const {
-  REACT_APP_MAINNET_RPC_URL,
-  REACT_APP_RINKEBY_RPC_URL,
-  REACT_APP_XDAI_RPC_URL,
-  REACT_APP_ROPSTEN_RPC_URL,
-  REACT_APP_GUSANBOX_RPC_URL,
-  REACT_APP_GOERLI_RPC_URL,
-} = process.env;
+const { REACT_APP_GUSANBOX_RPC_URL, REACT_APP_GOERLI_RPC_URL } = process.env;
 
 export const chainUrls = {
-  1: {
-    rpc: REACT_APP_MAINNET_RPC_URL.split(' '),
-    explorer: 'https://etherscan.io',
-    chainId: 1,
-    name: networkNames[1],
-  },
-  4: {
-    rpc: REACT_APP_RINKEBY_RPC_URL.split(' '),
-    explorer: 'https://rinkeby.etherscan.io',
-    chainId: 4,
-    name: networkNames[4],
-  },
-  100: {
-    rpc: REACT_APP_XDAI_RPC_URL.split(' '),
-    explorer: 'https://blockscout.com/xdai/mainnet',
-    chainId: 100,
-    name: networkNames[100],
-  },
   99999: {
     rpc: REACT_APP_GUSANBOX_RPC_URL.split(' '),
     explorer: 'https://sandbox1.japanopenchain.org',
     chainId: 99999,
     name: networkNames[99999],
-  },
-  3: {
-    rpc: REACT_APP_ROPSTEN_RPC_URL.split(' '),
-    explorer: 'https://ropsten.etherscan.io',
-    chainId: 3,
-    name: networkNames[3],
   },
   5: {
     rpc: REACT_APP_GOERLI_RPC_URL.split(' '),
