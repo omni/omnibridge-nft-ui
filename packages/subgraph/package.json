@@ -25,7 +25,12 @@
     "prepare-gusandbox-goerli": "mustache config/gusandbox-goerli.json subgraph.template.yaml > subgraph.yaml",
     "deploy-gusandbox-goerli": "graph deploy cuonghx-gutech/gusandbox-goerli-omnibridge-nft-dev --debug --ipfs https://api.thegraph.com/ipfs/ --node http://34.84.183.81:8020",
     "prepare-goerli-gusandbox": "mustache config/goerli-gusandbox.json subgraph.template.yaml > subgraph.yaml",
-    "deploy-goerli-gusandbox": "graph deploy cuonghx-gutech/goerli-gusandbox-nft --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/"
+    "deploy-goerli-gusandbox": "graph deploy cuonghx-gutech/goerli-gusandbox-nft --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "prepare-gusandbox-goerli-test": "mustache config/gusandbox-goerli-test.json subgraph.template.yaml > subgraph.yaml",
+    "create-gusandbox-goerli-test": "graph create cuonghx/gusandbox-goerli-omnibridge-nft-test-1 --node http://34.84.183.81:8020",
+    "deploy-gusandbox-goerli-test": "graph deploy cuonghx/gusandbox-goerli-omnibridge-nft-test-1 --ipfs https://api.thegraph.com/ipfs/ --node http://34.84.183.81:8020",
+    "prepare-goerli-gusandbox-test": "mustache config/goerli-gusandbox-test.json subgraph.template.yaml > subgraph.yaml",
+    "deploy-goerli-gusandbox-test": "graph deploy --product hosted-service cuonghx1108/goerli-gu-nft-test-1"
   },
   "devDependencies": {
     "mustache": "^4.2.0"
