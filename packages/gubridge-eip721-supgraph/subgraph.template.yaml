@@ -1,0 +1,83 @@
+specVersion: 0.0.2
+description: GU Bridge EIP-721 supports fetching ERC-721 token based on GU Bridge ERC721 template.
+repository: https://github.com/cuonghx1108/gu-bridge-eip721
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ERC721TokenFactory
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: ERC721TokenFactory
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/erc721TokenFactory.ts
+      entities:
+        - Token
+        - TokenContract
+        - Owner
+        - OwnerPerTokenContract
+        - All
+      abis:
+        - name: ERC721TokenFactory
+          file: ./abis/ERC721TokenFactory.json
+        - name: EIP721
+          file: ./abis/All.json
+      eventHandlers:
+        - event: ERC721NativeContractCreated(indexed address)
+          handler: handleERC721NativeContractCreated
+        - event: ERC721BridgeContractCreated(indexed address)
+          handler: handleERC721BridgeContractCreated
+templates:
+  - kind: ethereum/contract
+    name: ERC721NativeToken
+    network: {{network}}
+    source:
+      abi: ERC721NativeToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/erc721.ts
+      entities:
+        - Token
+        - TokenContract
+        - Owner
+        - OwnerPerTokenContract
+        - All
+      abis:
+        - name: ERC721NativeToken
+          file: ./abis/ERC721NativeToken.json
+        - name: EIP721
+          file: ./abis/All.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+  - kind: ethereum/contract
+    name: ERC721BridgeToken
+    network: {{network}}
+    source:
+      abi: ERC721BridgeToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/erc721.ts
+      entities:
+        - Token
+        - TokenContract
+        - Owner
+        - OwnerPerTokenContract
+        - All
+      abis:
+        - name: ERC721BridgeToken
+          file: ./abis/ERC721BridgeToken.json
+        - name: EIP721
+          file: ./abis/All.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
