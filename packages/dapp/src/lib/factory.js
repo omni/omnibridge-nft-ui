@@ -81,11 +81,6 @@ export const mintNFT = (
           type: 'address',
         },
         {
-          internalType: 'uint256',
-          name: '_tokenId',
-          type: 'uint256',
-        },
-        {
           internalType: 'string',
           name: '_uri',
           type: 'string',
@@ -99,5 +94,5 @@ export const mintNFT = (
   ];
 
   const nativeTokenContract = new Contract(collectionAddress, abi, signer);
-  return nativeTokenContract.mint(account, new Date().getTime(), tokenURI);
+  return nativeTokenContract.mint(account, tokenURI);
 };

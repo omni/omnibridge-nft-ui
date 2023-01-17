@@ -51,7 +51,7 @@ export const MintNFTForm = () => {
                 isInvalid={form.errors.address && form.touched.address}
               >
                 <FormLabel>Collection Address</FormLabel>
-                <Input {...field} placeholder="Your cotnract address" />
+                <Input {...field} placeholder="Your contract address" />
                 <FormErrorMessage>{form.errors.address}</FormErrorMessage>
               </FormControl>
             )}
