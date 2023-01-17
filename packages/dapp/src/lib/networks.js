@@ -6,21 +6,21 @@ const GUSANDBOX_GOERLI_BRIDGE_DEV_CONFIG = {
   homeChainId: 99999,
   foreignChainId: 5,
   foreignMediatorAddress:
-    '0x8309DEC1fb0a71D5c388dcc1B926DbE648F0e4E8'.toLowerCase(),
+    '0xB9f181f0154808c62A600d35217Be79F677FC5b8'.toLowerCase(),
   homeMediatorAddress:
-    '0xBaaD008D6ec64e9741189c098a8094d096355d54'.toLowerCase(),
+    '0x84B67EBa0362cD118A2Fe1c8ad5173ACc781B371'.toLowerCase(),
   foreignAmbAddress: '0x0F806D8dd8bb02Ad9dd9bA0e8e351B4319cc45e4'.toLowerCase(),
   homeAmbAddress: '0xc39eAbae09273F00Ec7e56B6a8C189437a61C9C8'.toLowerCase(),
   ambLiveMonitorPrefix: 'http://alm.dev.nft-bridge.gu.net',
-  foreignBridgeSubgraph: 'cuonghx1108/goerli-gu-omnibridge-nft-dev',
-  homeBridgeSubgraph: 'cuonghx-gutech/gusandbox-goerli-omnibridge-nft-dev',
-  home721Subgraph: 'cuonghx1108/gu-bridge-eip721-dev',
-  foreign721Subgraph: 'cuonghx1108/gu-bridge-eip721-dev',
+  foreignBridgeSubgraph: 'cuonghx1108/goerli-gusandbox-nft-dev',
+  homeBridgeSubgraph: 'cuonghx1108/gusandbox-goerli-nft-dev',
+  home721Subgraph: 'cuonghx1108/gu-bridge-eip721-dev-1',
+  foreign721Subgraph: 'cuonghx1108/gu-bridge-eip721-dev-1',
   home1155Subgraph: 'gulabs/erc1155-subgraph',
   foreign1155Subgraph: 'cuonghx1108/eip1155-goerli',
   claimDisabled: false,
   tokensClaimDisabled: [],
-  tokenFactoryAddress: '0xF00046710b8480F42126726c2c4b2ACd9AdB3a03',
+  tokenFactoryAddress: '0x3fD323734104Bf4FdE0E60E620B94051787F14A3',
 };
 
 const GUSANDBOX_GOERLI_BRIDGE_TEST_CONFIG = {

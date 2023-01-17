@@ -49,7 +49,7 @@ export const useBridgeDirection = () => {
       const subgraphName =
         homeChainId === chainId ? homeBridgeSubgraph : foreignBridgeSubgraph;
       if (chainId === 99999) {
-        return `https://graphnode.guswap.tk/subgraphs/name/${subgraphName}`;
+        return `https://graphnode.gulabs.tk/subgraphs/name/${subgraphName}`;
       }
       return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },
@@ -61,7 +61,7 @@ export const useBridgeDirection = () => {
       const subgraphName =
         homeChainId === chainId ? home721Subgraph : foreign721Subgraph;
       if (chainId === 99999) {
-        return `https://graphnode.guswap.tk/subgraphs/name/${subgraphName}`;
+        return `https://graphnode.gulabs.tk/subgraphs/name/${subgraphName}`;
       }
       return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },
@@ -73,7 +73,7 @@ export const useBridgeDirection = () => {
       const subgraphName =
         homeChainId === chainId ? home1155Subgraph : foreign1155Subgraph;
       if (chainId === 99999) {
-        return `https://graphnode.guswap.tk/subgraphs/name/${subgraphName}`;
+        return `https://graphnode.gulabs.tk/subgraphs/name/${subgraphName}`;
       }
       return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },

@@ -31,7 +31,15 @@
     "dapp:lint": "yarn workspace @omnibridge-nft/dapp lint",
     "lint": "eslint --ignore-path .gitignore \"./packages/**/*.{ts,tsx,js,jsx}\"",
     "format": "prettier --ignore-path .gitignore --write \"{*,**/*}.{ts,tsx,js,jsx,json,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gu-bridge-eip721:codegen": "yarn workspace @omnibridge-nft/gu-bridge-eip721 codegen",
+    "gu-bridge-eip721:build": "yarn workspace @omnibridge-nft/gu-bridge-eip721 build",
+    "gu-bridge-eip721:prepare-gusandbox": "yarn workspace @omnibridge-nft/gu-bridge-eip721 prepare-gusandbox",
+    "gu-bridge-eip721:prepare-goerli": "yarn workspace @omnibridge-nft/gu-bridge-eip721 prepare-goerli",
+    "gu-bridge-eip721:create": "yarn workspace @omnibridge-nft/gu-bridge-eip721 create",
+    "gu-bridge-eip721:deploy": "yarn workspace @omnibridge-nft/gu-bridge-eip721 deploy",
+    "gu-bridge-eip721:remove": "yarn workspace @omnibridge-nft/gu-bridge-eip721 remove",
+    "gu-bridge-eip721:deploy-goerli": "yarn workspace @omnibridge-nft/gu-bridge-eip721 deploy-goerli"
   },
   "workspaces": {
     "nohoist": [
