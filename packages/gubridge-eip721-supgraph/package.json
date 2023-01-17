@@ -6,9 +6,9 @@
     "build": "graph build",
     "prepare-gusandbox": "mustache config/gusandbox.json subgraph.template.yaml > subgraph.yaml",
     "prepare-goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
-    "create": "graph create cuonghx1108/gu-bridge-eip721-dev --node http://34.84.183.81:8020",
-    "deploy": "graph deploy cuonghx1108/gu-bridge-eip721-dev --ipfs https://api.thegraph.com/ipfs/ --node http://34.85.33.121:8020",
-    "remove": "graph remove cuonghx1108/gu-bridge-eip721-dev --node http://34.84.183.81:8020",
+    "create": "graph create cuonghx1108/gu-bridge-eip721-dev-1 --node http://34.85.33.121:8020",
+    "deploy": "graph deploy cuonghx1108/gu-bridge-eip721-dev-1 --node http://34.85.33.121:8020 --ipfs http://34.85.33.121:5001",
+    "remove": "graph remove cuonghx1108/gu-bridge-eip721-dev-1 --node http://34.85.33.121:8020",
     "deploy-goerli": "graph deploy --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --debug --access-token f3862233d5a74dcf8c20028b29b37a33 cuonghx1108/gu-bridge-eip721-dev-1"
   },
   "license": "MIT",
