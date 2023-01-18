@@ -1,7 +1,7 @@
 name: Deploy to Dev environment
 on:
   push:
-    branches: ['chore/fix-workflow']
+    branches: ['main']
 
 env:
   PROJECT_ID: gu-bridge
