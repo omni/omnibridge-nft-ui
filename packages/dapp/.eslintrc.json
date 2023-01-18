@@ -24,6 +24,8 @@
     "simple-import-sort/exports": "warn",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
-    "arrow-body-style": "warn"
+    "arrow-body-style": "warn",
+    "react/no-array-index-key": "off",
+    "react/jsx-no-bind": "off"
   }
 }
