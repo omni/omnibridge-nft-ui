@@ -62,7 +62,7 @@ jobs:
 
           # rpc
           REACT_APP_GUSANBOX_RPC_URL: https://sandbox1.japanopenchain.org:8545/
-          REACT_APP_GOERLI_RPC_URL: https://eth-goerli.g.alchemy.com/v2/HkYkNKeP9ObMS1ukI2TmWtBTdzSBwT-k/
+          REACT_APP_GOERLI_RPC_URL: https://eth-goerli.g.alchemy.com/v2/DBUXMoMrk8Z8KX-NaYQLawbAekt-GASs/
           REACT_APP_VERSION: 1.0.0
 
           # REACT_APP_OPENSEA_API_KEY:
