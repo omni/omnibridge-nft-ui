@@ -61,8 +61,8 @@ jobs:
           REACT_APP_GRAPH_HEALTH_THRESHOLD_BLOCKS: 10
 
           # rpc
-          REACT_APP_GUSANBOX_RPC_URL: https://sandbox1.japanopenchain.org:8545/
-          REACT_APP_GOERLI_RPC_URL: https://eth-goerli.g.alchemy.com/v2/DBUXMoMrk8Z8KX-NaYQLawbAekt-GASs/
+          REACT_APP_GUSANBOX_RPC_URL: https://sandbox1.japanopenchain.org:8545
+          REACT_APP_GOERLI_RPC_URL: https://goerli.infura.io/v3/236b516553c546a1893b7fc82f661a4d
           REACT_APP_VERSION: 1.0.0
 
           # REACT_APP_OPENSEA_API_KEY:
