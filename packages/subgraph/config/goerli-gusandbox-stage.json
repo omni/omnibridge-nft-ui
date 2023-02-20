@@ -1,0 +1,6 @@
+{
+  "network": "goerli",
+  "startBlock": "8506214",
+  "omnibridge": "0x6DCCf3ffdD865A845DBaE5383d72E1B85a6013A7",
+  "amb": "0xd1cda03Dc71DbccD32801770eEa4d6e4fe833691"
+}

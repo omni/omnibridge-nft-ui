@@ -1,5 +1,6 @@
 export const GUSANDBOX_GOERLI_DEV_BRIDGE = 'gusandbox-goerli-dev';
 export const GUSANDBOX_GOERLI_TEST_BRIDGE = 'gusandbox-goerli-test';
+export const GUSANDBOX_GOERLI_STAGE_BRIDGE = 'gusandbox-goerli-stage';
 
 const GUSANDBOX_GOERLI_BRIDGE_DEV_CONFIG = {
   label: 'G.U.Sandbox⥊Görli',
@@ -45,6 +46,28 @@ const GUSANDBOX_GOERLI_BRIDGE_TEST_CONFIG = {
   tokenFactoryAddress: '0xcBcEB313701faA8Bd102D9fa34cbf4D8b5fCcfbD',
 };
 
+const GUSANDBOX_GOERLI_BRIDGE_STAGE_CONFIG = {
+  label: 'G.U.Sandbox⥊Görli',
+  homeChainId: 99999,
+  foreignChainId: 5,
+  foreignMediatorAddress:
+    '0x6DCCf3ffdD865A845DBaE5383d72E1B85a6013A7'.toLowerCase(),
+  homeMediatorAddress:
+    '0x9673b8774818DeDDe56F664bD7c6d48Cd90de2c5'.toLowerCase(),
+  foreignAmbAddress: '0xd1cda03Dc71DbccD32801770eEa4d6e4fe833691'.toLowerCase(),
+  homeAmbAddress: '0xCc1C5f822dCFBF0DD98a442FeDB7b44062f5cb71'.toLowerCase(),
+  ambLiveMonitorPrefix: 'https://alm.stage.nft-bridge.gu.net',
+  foreignBridgeSubgraph: 'kumikotamura/gu-nft-subgraph-staging',
+  homeBridgeSubgraph: 'kumikotamura/gu-nft-subgraph-staging',
+  home721Subgraph: 'kumikotamura/gu-nft-eip721-staging-v2',
+  foreign721Subgraph: 'kumikotamura/gu-nft-eip721-staging-v2',
+  home1155Subgraph: '',
+  foreign1155Subgraph: '',
+  claimDisabled: false,
+  tokensClaimDisabled: [],
+  tokenFactoryAddress: '0x3fD323734104Bf4FdE0E60E620B94051787F14A3',
+};
+
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
   b => b.toLowerCase(),
 );
@@ -52,6 +75,7 @@ const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
 const bridgeInfo = {
   [GUSANDBOX_GOERLI_DEV_BRIDGE]: GUSANDBOX_GOERLI_BRIDGE_DEV_CONFIG,
   [GUSANDBOX_GOERLI_TEST_BRIDGE]: GUSANDBOX_GOERLI_BRIDGE_TEST_CONFIG,
+  [GUSANDBOX_GOERLI_STAGE_BRIDGE]: GUSANDBOX_GOERLI_BRIDGE_STAGE_CONFIG,
 };
 
 const getNetworkConfig = bridges => {
